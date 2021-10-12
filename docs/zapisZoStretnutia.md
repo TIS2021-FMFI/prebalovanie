@@ -48,3 +48,14 @@ Udalosti – login aby sme vedeli kto čo spravil, poprípade kde nastala chyba 
 Odhlásenie – hore v rohu je tlačidlo Odhlásiť sa, a hneď potom vyskočí začiatočné užívateľské okno.
 Menu užívateľa, v logu bude GEFCO, môže byť aj naša značka, prezentácia – vizuál je podľa nich ale môžeme ju/ho aj zmeniť, hlavne aby to fungovalo.
 
+Prihlásenie- chcú využívať scanery na prihlásenie(čiarový kód), čiarový kód sa premietne ako ID číslo.
+
+Scanery - bežný /obyčajný
+
+Referencia má prefix, aj IDP má prefix (to nám pošle)
+
+tri údaje sa budú scanovať.
+
+Etikety ´neriešime, to si tam operátor nalepí/dodá.
+
+
