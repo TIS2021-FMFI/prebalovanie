@@ -15,3 +15,36 @@ Moment...
 Ok...
 
 Takže vlastne čo by sme chceli, uuuhhh... Takže mám informáciu že vaša skupina by mala spraviť nejakú aplikáciu. Aplikácia by mala byť na nejakom webovom rozhraní a ak tomu správne rozumiem, je to také niečo, čo dokáže každý užívateľ na každom počítači spustiť automaticky. Hej? To znamená že to je jedno či je to Windows, či je to linux alebo nejaký [nezrozumiteľné], pokiaľ mám pripojenie na internet, a nejaký webový prehliadač, tak to dokážem spustiť. No, a my by sme si vlastne do tej aplikácie vlastne želali alebo chceli by sme vlastne, nejaké body som napísal, čo by sme chceli aby tá aplikácia dokázala.
+
+
+Aby sme tam vedeli vložiť údaje: číslo referencie, typ obalu, počet dielov v balení, hmotnosť dielu, čas prebalu( ktorý by aplikácia vypočítala, na základe stlačenia tlačidla), okrem toho vloženie fotiek atď..
+Na základe týchto údajov by sme chceli aby tá aplikácia dala pracovný postup, tzv. údaje a referencie  k nej a keď si dám zobraziť nejakú referenciu , tak sa mi zobrazí template, kde budú poznámky k pracovnému postupu, ako má ten operátor postupovať. Tj. aby tá aplikácia dokázala zobraziť pracovný postup, nejaké tlačidlo na tlačenie toho čo je na obrazovke. Tlačidlá začiatku a konca prebaľovania na vypočítanie času, tiež sa musí vypočítať koľko ten zamestnanec preložil dielov – čiže vypočítanie preloženej hmotnosti. Aplikácia by mala spraviť nejaký export, poprípade nejaké reporty rozposielať.
+Ukážka odhadovaného návrhu.-----------
+Hlavička a prihlasovacie údaje (kontrola prihlásenia „Zle zadané meno alebo heslo“ alebo niečo podobné..)
+
+Meno heslo – nejakých 8znakov (číslice, písmená, špeciálne znaky)
+
+-Hlavné menu – to by bolo rozdelené na referencia, prebal ( funkcia samostatného prebaľovania), operatíva( história záznamov, export údajov ktoré sú zahrnuté v aplikácii, prístupy, skupiny, práva), profil (meno a priezvisko), a nastavenia ( meno, login, kto sa kedy prihlásil, čo tam spravil, na aký PC/IP adresu sa to spustilo ),
+
+- Nastavenia SKU- nejaká tabuľka zo všetkými údajmi, ktoré bude potrebovať ( referencia SKU, COFOR, destinácia, ....). Vloženie cez nejaký editor, aby to bolo čo najjednoduchšie pre operátora. Fotky aby sa tam zmestili (na A4) – nastaviť veľkosť/rozmer, ostatok sú číselné hodnoty, poznámka – maximálny počet znakov nastaviť.
+
+-Spustenie prebaľovania- (to je na nás, to si nejako nevie pán predstaviť), ak sa prebaľuje, tak jedna referencia. 
+Operátor musí mať svoj čiarový kód, aby vedeli identifikovať, ktorý operátor čo robil, aby ich vedeli rozoznať/rozdeliť. Musí sa prihlásiť aj operátor (nejaký bar/čiarový kód/ 4 písmená).
+Niekedy 1referenciu prebaľuje 1operátor, keď je ťažšia tak ju môžu prebaľovať 2operátori, alebo keď sa blíži koniec-začiatok (predel zmien)  zmeny, tak si vypomôžu operátori s prácou. Mal by sa vedieť prihlásiť aj druhý operátor. Môže byť funkcia na pridanie ďalšieho operátora.
+Operátor sa prihlási, vyjde tam okno, kde musí zadať referenciu, referenciu preto lebo na základe referencie sa zobrazí ten štandard. IDP je číslo palety, nie každá paleta má  svoje IDP, je to len nejaký údaj. Pri spustení tam musí byť referencia. Niekedy sa stane, že jedna referencia má dva štandardy, tzv. že referenciu inak prebalia keď ide napr. do Trnavy a inak keď ide napr. do Francúzska, tak to tam treba spraviť (nejaký výber), že referencia má dva body spotreby, vyber kde to má ísť (len klikneš/vyberieš) a ideš ďalej. Je to jednoznačne určené tým, kam to ide. To je ten zdroj údajov, ktorý by sme chceli do tej aplikácie vložiť, a na základe tej referencie, by sa menili všetky tie obdĺžniky, to znamená počet kusov, typ balenia, čas prebalu, jednotková váha + poznámka – čo sa s balením má robiť-postupovať a nejaké ďalšie veci, ktoré má operátor vedieť. Nejaké tlačidlo aby sme vedeli koľko trvá prebal pre daného operátora (spusti nový prebal – prebalené/ukončené ). Skončí klikne na prebal a vyberie ďalšiu referenciu. Aby sa vedel začiatok a koniec prebalu.
+Dokončí jeden obal/box/kontajner = prebal, preto tam je IDP, lebo referencia môže byť rovnaká ale číslo palety/ IDP môže byť rôzne, aby sme to vedeli rozlíšiť. Dokončí prebal a vráti ho to na Základné menu.
+
+- História prebalov- videli by sme čo ten operátor robil, kedy začal, vlastne údaje z prebalu, dodávateľ, aký obal, koľko bolo na začiatku – všetky tie údaje z tej hlavnej stránky, plus export kde by bola podobná hlavička, podobný formát, hodnoty. Plus filter na referenciu, aby sme vedeli nájsť čo sa robilo, poprípade hmotnosť.
+
+-Nastavenie exportov – nejaká stránka, mailová adresa a čas odosielania(za nejaké časové obdobie) za posledných 24 hodín by sme posielali údaje o prebaloch, plus čas odosielania – čo sa za ten čas spravilo, referenciu – ks – hmotnosť...všetky tie údaje.
+
+-Používatelia – chceli by aplikáciu rozdeliť aby operátor videl len nejakú časť a len nejakú funkcionalitu alebo tlačidlo prebal. Aby nevidel ostatné veci, aby tam nevedel dávať údaje alebo ich mazať. Čiže rozlíšiť používateľov.
+
+-Skupiny – vytvoríš čo chceš aby ten používateľ videl poprípade vedel čo má kde exportovať, čítať. Hore je okno kde vyberieš skupinu a vyberieš možnosti práv ktoré chceš aby mala.
+Profil – taký úplný základ, aby vedeli kto si, kedy si bol vytvorený(účet), ID .
+
+Udalosti – login aby sme vedeli kto čo spravil, poprípade kde nastala chyba – padla aplikácia, aby sa vedelo kto čo/to spravil, čo sa v systéme udialo.
+
+Odhlásenie – hore v rohu je tlačidlo Odhlásiť sa, a hneď potom vyskočí začiatočné užívateľské okno.
+Menu užívateľa, v logu bude GEFCO, môže byť aj naša značka, prezentácia – vizuál je podľa nich ale môžeme ju/ho aj zmeniť, hlavne aby to fungovalo.
+
