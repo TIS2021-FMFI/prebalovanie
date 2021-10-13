@@ -58,4 +58,28 @@ tri údaje sa budú scanovať.
 
 Etikety ´neriešime, to si tam operátor nalepí/dodá.
 
+Cieľ pre GEFCO je rýchlejšia tvorba štandardov a následné využitie pri pracovnom postupe/zjednodušenie pracovných postupov.
 
+Na príjme by prišla nová paleta, bola by naskenovaná a keby neexistoval štandard/referencia v databáze, prišiel by zamestnanec a vytvoril štandard.
+
+Čas prebalu je na jednu referenciu/box.
+
+Budú robiť na úrovni boxov.
+
+Fotky sa odfotia a nahrajú do počítača kde sa pridajú do databázy.
+
+Zistenie typu skeneru.
+
+Importovanie a exportovanie dát má byť možné.
+
+Zatiaľ GEFCO funguje v exceli.
+
+Prezentácia by sa dala poslať týmu.
+
+Gefco má prenajatý server.
+
+Dokument s korporátnou identitou sa pošle týmu.
+
+Predstava webovej aplikácie spúšťanej cez prehliedač.
+
+Počítače nie dotykové, I/O je klávesnica a myš.
