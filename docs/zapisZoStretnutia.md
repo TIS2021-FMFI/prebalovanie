@@ -74,7 +74,7 @@ Prezentácia by sa dala poslať tímu.
 
 Gefco má prenajatý server.
 
-Dokument s korporátnou identitou sa pošle týmu.
+Dokument s korporátnou identitou sa pošle tímu.
 
 Predstava webovej aplikácie spúšťanej cez prehliedač.
 
