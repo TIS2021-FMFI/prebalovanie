@@ -52,7 +52,7 @@ Referencia má prefix, aj IDP má prefix (to nám pošle)
 
 tri údaje sa budú scanovať.
 
-Etikety ´neriešime, to si tam operátor nalepí/dodá.
+Etikety netreba riešiť, to si tam operátor nalepí/dodá.
 
 Cieľ pre GEFCO je rýchlejšia tvorba štandardov a následné využitie pri pracovnom postupe/zjednodušenie pracovných postupov.
 
