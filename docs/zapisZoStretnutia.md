@@ -2,19 +2,15 @@ Kolega vám potom povie viacej o projekte a o tom čo sa teda od vás očakáva 
 
 Áno.
 
-Ja som v kontakte s vami teda kvôli tomu že mám na starosti spoluprácu so školami, či už strednými alebo vysokými, tam spadajú aj tieto projekty. Čiže ja som pre vás taká kontaktná osoba vzhľadom takých vecí organizačných, alebo keď budete potrebovať nejaké informácie, nie vyslovene k projektu, napríklad do školy alebo niečo podobné, alebo že by niečo nefungovalo, skrátka ako taký kordinátor. Tak kľudne sa ozvite na mňa, Prípadne ešte kolegyňa Zuzka Trízňová, ktorá, tiež myslímže, bola uvedená u profesora Petroviča ako ďalší kontakt. Čiže keby bolo čokoľvek, tak sme vám k dispozícii. Ale inak bude s vami komunikovať, čo sa projektu týka, takých tých technických vecí a špecifikácií, ohľadom toho projektu primárne teda kolega Mário Červenka alebo ešte jeden kolega Martin Stríž. Čiže oni dvaja sú takí garanti celého projektu a tej technickej stránky. Na Mária vám potom dám kontakt aby ste si mohli písať. V každom prípade budete mať potom nejakú mailovú komunikáciu, tak by som vás veľmi pekne chcela poprosiť aby ste tam udržiavali v kópii aj mňa alebo teda tú kolegyňu Trízňovú, vzhľadom na to že sa nám v minulosti stalo že potom nám unikali informácie že niečo ste od nás chceli aby sme pomohli niečo dohladať alebo niečo poskytnúť. Čo sa týka nejakej technickej podpory a napríklad [nezrozumiteľné] keď sa objednával a ďalej. Bolo to potom pre nás jednoduchšie keď sme si to vedeli vyhladať a kontaktovať jednu stranu, druhú stranu a informácie zisťovať, takže z tohto hladiska by sme vás chceli poprosiť, keď budete ohľadom čohokoľvek komunikovať, držte nás v kópii. Aaaa, ja by som možno za mňa aj skončila a nechám teraz slovo kolegovi aby vám predstavil viacej o projekte na ktorým, chceme aby ste sa venovali.
+Ja som v kontakte s vami teda kvôli tomu že mám na starosti spoluprácu so školami, či už strednými alebo vysokými, tam spadajú aj tieto projekty. Čiže ja som pre vás taká kontaktná osoba vzhľadom takých vecí organizačných, alebo keď budete potrebovať nejaké informácie, nie vyslovene k projektu, napríklad do školy alebo niečo podobné, alebo že by niečo nefungovalo, skrátka ako taký kordinátor. Tak kľudne sa ozvite na mňa, Prípadne ešte kolegyňa Zuzka Trízňová, ktorá, tiež myslímže, bola uvedená u profesora Petroviča ako ďalší kontakt. Čiže keby bolo čokoľvek, tak sme vám k dispozícii. Ale inak bude s vami komunikovať, čo sa projektu týka, takých tých technických vecí a špecifikácií, ohľadom toho projektu primárne teda kolega Mário Červenka alebo ešte jeden kolega Martin Stríž. Čiže oni dvaja sú takí garanti celého projektu a tej technickej stránky. Na Mária vám potom dám kontakt aby ste si mohli písať. V každom prípade budete mať potom nejakú mailovú komunikáciu, tak by som vás veľmi pekne chcela poprosiť aby ste tam udržiavali v kópii aj mňa alebo teda tú kolegyňu Trízňovú, vzhľadom na to že sa nám v minulosti stalo že potom nám unikali informácie že niečo ste od nás chceli aby sme pomohli niečo dohladať alebo niečo poskytnúť. Čo sa týka nejakej technickej podpory a napríklad [nezrozumiteľné] keď sa objednával a ďalej. Bolo to potom pre nás jednoduchšie keď sme si to vedeli vyhladať a kontaktovať jednu stranu, druhú stranu a informácie zisťovať, takže z tohto hladiska by sme vás chceli poprosiť, keď budete ohľadom čohokoľvek komunikovať, držte nás v kópii. A ja by som možno za mňa aj skončila a nechám teraz slovo kolegovi aby vám predstavil viacej o projekte na ktorom, chceme aby ste sa venovali.
 
 Ok, tak volám sa Mário Červenka, pracujem tu ako projektový koordinátor. To znamená že nejaké prerábky skladu, nejaké optimalizácie a jednoducho všetko čo súvisí s operatívou a vedelo by nám to vlastne pomôcť, tak to ide väčšinou cezo mňa. Táto naša aktivita GEFCO VRP má na starosti príjem teraz nejakého materiálu od rôznych dodávateľov, následné zaskladnenie a potom expedícia. Pri tej expedícii je ešte prebal, a to bude vlastne taká tá vaša úloha. Všetko čo k nám chodí je väčšinou v kartóne. Ale dodávatelia, vačšinou sú to nejaké závody, buď je to trnavská automobilka alebo potom to ide niekam  do Francúzska, do [nezrozumiteľné], alebo nejaký iní závody. Takže vlastne vždycky ten materiálprebalujeme z kartónu do nejakých iných vratných obalov. Aby to jednoducho na tej linke operátori nejako lahšie zmanipulovali a jednoduchšie aby sa to vlastne vložilo, vložil, zakomponovali do tých áut. Takže ten prebal vlastne spočíva v tom, že na začiatku príde vlastne monitor. Monitor, to je operátor ktorý má na starosti nejakú skupinu ľudí.
 
-Niečo ako tým líder aby ste si predstavili.
+Pani Andrášiková: Niečo ako tým líder aby ste si predstavili.
 
 Ešte niečo nižšie než tím líder. Tím líder má vlastne na starosti celú zmenu, ale ten monitor má vlastne len časť, časť tej skupiny. Takže on teraz si vytiahne zoznam referencií, referencia je diel, zoznam referencií ktoré sa majú dneska prebalovať. Takže on s tým zoznamom teraz ide do skladu, zoberie všetky palety odtiaľ a povozí ich na jednu kopu a pomaličky dávkuje vlastne tie referencie tým operátorom a tí operátori na základe toho aká je to referencia podľa štandardu, urobia ten samostatný prebal. To znamená že na jednej strane majú nejakú kartónovú paletu, kartónový obal a na druhej majú vlastne štandardný obal ktorý je buď nejaká kovová klietka alebo nejaký polystyrén alebo nejaký plastový obal. Takže zoberú teraz vlastne ten diel a vložia ho do toho plastového boxu, obalu nejakého iného, aby sme ho mohli potom ďalej expedovať. Okrem toho že presunú ten samostatný box, tak musia spraviť aj nové etikety. Každý ten jeden box, každá tá prepravka musí mať vlastne svoju etiketu. Na tej etikete je už napísané vlastne kam to ide, koľko je kusov v tom boxe a poprípade nejaké ďalšie výrobné dávky, že kedy by sa to malo už spotrebovať na samostatnej linke. Ak sa toto už celé spraví, palety sa zapáskujú, niektoré sa páskujú, niektoré nie, podľa toho aký to je štandard. Tie palety sa potom zoberú na vlnu, vlna, to je kvázi také miesto odkiaľ sa už palety expedujú ďalej. Takže paleta sa presunie do vlny a od vlny už ide do toho kamióna, príjem do expedície a potom už do zákazníkovej nejakej automobilky. Takže od vás by sme chceli, ja som si tu pripravil také, niečo jednoduché...
 
-Moment...
-
-Ok...
-
-Takže vlastne čo by sme chceli, uuuhhh... Takže mám informáciu že vaša skupina by mala spraviť nejakú aplikáciu. Aplikácia by mala byť na nejakom webovom rozhraní a ak tomu správne rozumiem, je to také niečo, čo dokáže každý užívateľ na každom počítači spustiť automaticky. Hej? To znamená že to je jedno či je to Windows, či je to linux alebo nejaký [nezrozumiteľné], pokiaľ mám pripojenie na internet, a nejaký webový prehliadač, tak to dokážem spustiť. No, a my by sme si vlastne do tej aplikácie vlastne želali alebo chceli by sme vlastne, nejaké body som napísal, čo by sme chceli aby tá aplikácia dokázala.
+Takže vlastne čo by sme chceli... Takže mám informáciu že vaša skupina by mala spraviť nejakú aplikáciu. Aplikácia by mala byť na nejakom webovom rozhraní a ak tomu správne rozumiem, je to také niečo, čo dokáže každý užívateľ na každom počítači spustiť automaticky. Hej? To znamená že to je jedno či je to Windows, či je to linux alebo nejaký [nezrozumiteľné], pokiaľ mám pripojenie na internet, a nejaký webový prehliadač, tak to dokážem spustiť. No, a my by sme si vlastne do tej aplikácie vlastne želali alebo chceli by sme vlastne, nejaké body som napísal, čo by sme chceli aby tá aplikácia dokázala.
 
 
 Aby sme tam vedeli vložiť údaje: číslo referencie, typ obalu, počet dielov v balení, hmotnosť dielu, čas prebalu( ktorý by aplikácia vypočítala, na základe stlačenia tlačidla), okrem toho vloženie fotiek atď..
@@ -82,4 +78,66 @@ Dokument s korporátnou identitou sa pošle týmu.
 
 Predstava webovej aplikácie spúšťanej cez prehliedač.
 
-Počítače nie dotykové, I/O je klávesnica a myš.
+K prebalovacím pultom sa plánujú pristaviť počítače.
+
+Počítač bude s klávesnicou a myšou, nebude dotyková obrazovka.
+
+Nie je preferovaný žiadny programovací jazyk.
+
+Koľko operátorov? Je osem prebalovacích stolov ana každé dva stoly bude jeden počítač. Maximálne štyria operátori naraz používajú, poprípade admin.
+
+Jeden stôl je jedno prebalovacie miesto, vykonáva sa tam jeden prebal. Zatiaľ sa na druhom stole v dvojici pripraví ďalšia referencia.
+
+Na počítačoch bude operačný systém Windows 10.
+
+Ešte možnosť pridania/zrušenia údajov do/z požiadaviek.
+
+Prihlasovanie do aplikácie pod menom a heslom. Prihlasovanie do aplikácie je odlišné od prihlásenia operátora na prebal.
+
+Preferuje sa jednoduchý a ľahko zrozumiteľný dizajn.
+
+Kód má prefix, podľa ktorého sa dá rozlíšiť typ kódu, či je to preferencia alebo niečo iné.
+
+V profile je kód operátora, ktorým sa zapíše na prebaľovanie.
+
+Ku kódu operátora budú pripojené všetky záznamy o práci toho operátora, teda s akou preferenciou kedy pracoval, koľko mu to trvalo, a tak ďalej.
+
+Každý kód operátora má byť unikátny. Kód sa vytvorí pri pridaní nového používateľa.
+
+Môže to byť aj aplikácia na počítač, nemusí byť webová.
+
+Nebude sa využívať prihlasovanie cez mobily.
+
+Do mailu budú poslané kontaktné údaje.
+
+Predpokladané ďalšie rozhovory, treba ich dohodnúť.
+
+Spracovanie katalógu požiadaviek a poslanie na overenie.
+
+Informácie o používaných databázach a serveroch sa neskôr pošle.
+
+Pokračovanie rozhovorom v hale:
+
+Pokiaľ sa robí jedna referencia, nemieša sa do toho druhá. Vždy záleží od štandardu.
+
+Viacero operátorov robí jednu referenciu. Preto je potrebné mať zakomponovaný do programu prepočet času pre jednotlivých operátorov na referenciu.
+
+Výsledné údaje upraviť podľa počtu operátorov. Je potrebné zistiť koľko kusov operátor spravil, a potom prerátať na hmotnosť akú preložil. To je dôležité vedieť kvôli normám, aby sa vedelo dokázať čo kto a koľko spravil.
+
+Operátori sa nemôžu pridať v strede spusteného prebalu, vždy iba na začiatku.
+
+Prebal by mal začínať od chvíle keď príde paleta s dielmi na prebal. Preto tam má byť operátor vždy skôr.
+
+Prebal sa robí okolo dvoch dní pred expedíciou. Vytváranie plánu prebaľovania na deň sa vždy vytvára podľa situácie. Toto nastavujú Team Leaderi.
+
+Prebaľovanie funguje na dve zmeny.
+
+Potrebné je načítanie referencie, podľa toho sa ukáže štandard prebalu. Ako doplňujúci údaj je číslo palety, to len kvôli dodatočným informáciám o pôvode dielov.
+
+Je rozdiel v počte dielov pri príchode a počte dielov pri ich expedícii, niekedy pošlú iba potrebnú časť dielov a ostatné si nechajú uskladnené.
+
+Ukážka etikety a vysvetlenie informácií nachádzajúcich sa na etikete. Nás zaujíma iba referencia, má prefix "P". Poprípade kód palety.
+
+Existujú kódy paliet a ich kódy boxov. Toto sú dve samostatné veci. Pre nás to ale nie je rozdiel, berie sa to ako jedna a tá istá referencia, ktorá bude už špecifikovaná priamo v štandarde.
+
+Dostali sme štítky na referenciu. IDP palety má prefix "S".
