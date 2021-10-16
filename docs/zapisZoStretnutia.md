@@ -70,7 +70,7 @@ Importovanie a exportovanie dát má byť možné.
 
 Zatiaľ GEFCO funguje v exceli.
 
-Prezentácia by sa dala poslať týmu.
+Prezentácia by sa dala poslať tímu.
 
 Gefco má prenajatý server.
 
