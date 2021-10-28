@@ -1,3 +1,9 @@
 from django.test import TestCase
 
-# Create your tests here.
+from .models import repacking_standard
+
+
+class RepackingStandardsModelTests(TestCase):
+
+    def test_dummy(self):
+        self.assertIs(True, True)
