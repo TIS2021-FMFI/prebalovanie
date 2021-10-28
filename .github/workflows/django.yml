@@ -28,5 +28,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
+      env: 
+        SECRET_KEY: rvaqw%y7jlmqytnovg50%r5x38rtieklmd7k&w&0$%0z4i63s4
       run: |
         python repacking_site/manage.py test
