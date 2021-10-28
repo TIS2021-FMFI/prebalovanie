@@ -12,6 +12,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./repacking_site
     strategy:
       max-parallel: 4
       matrix:
@@ -31,5 +34,4 @@ jobs:
       env: 
         SECRET_KEY: rvaqw%y7jlmqytnovg50%r5x38rtieklmd7k&w&0$%0z4i63s4
       run: |
-        cd ./repacking_site |
         python manage.py test
