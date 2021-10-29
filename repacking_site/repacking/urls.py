@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
 	path('', views.index, name='index'),
+	path('<str:sku_code>/', views.detail, name='detail')
 ]

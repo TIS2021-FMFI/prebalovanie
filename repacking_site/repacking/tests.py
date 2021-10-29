@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from .models import repacking_standard
+from .models import RepackingStandard
 
 
 class RepackingStandardsModelTests(TestCase):

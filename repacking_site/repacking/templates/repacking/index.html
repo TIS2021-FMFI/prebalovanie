@@ -1,0 +1,9 @@
+{% if repacking_list %}
+    <ul>
+    {% for standard in repacking_list %}
+        <li><a href="/repacking/{{ standard.SKU_code }}/">{{ standard.SKU_code }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No standards are available.</p>
+{% endif %}
