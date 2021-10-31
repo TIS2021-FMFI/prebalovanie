@@ -28,8 +28,18 @@ class RepackingStandard(models.Model):
 	def __str__(self):
 		return str(self.SKU_code)+"\t"+str(self.COFOR_code)
 
+	@staticmethod
+	def get_repacking_standard_by_sku(sku_code):
+		try:
+			standard = RepackingStandard.objects.get(SKU_code=sku_code)
+			return standard
+		except RepackingStandard.DoesNotExist:
+			return None
+
 
 class Repack(models.Model):
 	repacking_standard = models.ForeignKey(RepackingStandard, on_delete=models.SET_NULL, null=True)
 	repack_datetime = models.DateTimeField(auto_now=True)
 	idp = models.CharField(max_length=50)
+
+

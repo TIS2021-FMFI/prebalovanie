@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'repacking/style.css' %}">
+</head>
+
+<body>
+
+<nav>
+    <ul>
+      <li><a href="/repacking/standards">Štandardy</a></li>
+      <li><a href="/repacking/history">História prebalov</a></li>
+      <li><a href="#">Page 2</a></li>
+      <li><a href="#">Page 3</a></li>
+    </ul>
+</nav>
+
+{% block content %}
+
+
+
+{% endblock %}
+
+<footer>
+    (c) 2021, 3ML
+</footer>
+
+</body>
+</html>

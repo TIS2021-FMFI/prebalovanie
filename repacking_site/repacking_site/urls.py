@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-	path('repacking/', include('repacking.urls')),
-	path('admin/', admin.site.urls),
+    path('', include('repacking.urls')),
+    path('repacking/', include('repacking.urls')),
+    path('admin/', admin.site.urls),
 ]

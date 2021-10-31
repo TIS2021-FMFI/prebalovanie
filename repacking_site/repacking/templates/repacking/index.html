@@ -1,9 +1,18 @@
-{% if repacking_list %}
-    <ul>
-    {% for standard in repacking_list %}
-        <li><a href="/repacking/{{ standard.SKU_code }}/">{{ standard.SKU_code }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No standards are available.</p>
-{% endif %}
+{% extends "common/base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <h1>Štandardy</h1>
+
+    {% if repacking_standards_list %}
+        <ul>
+        {% for standard in repacking_standards_list %}
+            <li><a href="/repacking/{{ standard.SKU_code }}/">{{ standard.SKU_code }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No standards are available.</p>
+    {% endif %}
+
+{% endblock %}
