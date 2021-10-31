@@ -3,7 +3,7 @@ import datetime
 
 
 class RepackingStandard(models.Model):
-	SKU_code = models.CharField(max_length=50, default="")
+	SKU_code = models.CharField(max_length=50, default="", unique=True)
 	COFOR_code = models.CharField(max_length=50, default="")
 	supplier = models.CharField(max_length=50, default="")
 	destination = models.CharField(max_length=50, default="")

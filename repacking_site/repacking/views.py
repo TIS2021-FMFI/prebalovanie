@@ -38,6 +38,8 @@ def make_new_standard(request):
     if request.method == 'POST':
         form = RepackingStandardForm(request.POST)
         if form.is_valid():
+            if RepackingStandard.get_repacking_standard_by_sku(form.cleaned_data['SKU_code']) is not None:
+                raise FileExistsError("Repacking standard w/ this SKU already exists")
             RepackingStandard(
                 SKU_code=form.cleaned_data['SKU_code'],
                 COFOR_code=form.cleaned_data['COFOR_code'],
