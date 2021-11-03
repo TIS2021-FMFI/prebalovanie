@@ -1,0 +1,69 @@
+table groups{
+  id integer [pk]
+  name char(60)
+  descript text
+  auth bit(8) [note: "number of all auths = number of bits"]
+}
+
+table users{
+  id integer [pk]
+  login char(50) [not null]
+  password char(60) [not null, note: "this will be a hash, also need to figure out salting"]
+  full_name char(60) [not null]
+  group_id integer [not null, ref: > groups.id]
+  active bit(1) [not null]
+  phone char(13) [not null]
+  email char(50) [not null]
+}
+
+table standards{
+  SKU char(15) [pk]
+  COFOR char(20)
+  supplier char(60)
+  destination char(60)
+  input_count_of_items_in_package integer
+  input_count_of_boxes_on_pallet integer
+  input_count_of_items_on_pallet integer
+  input_type_of_package char(50)
+  output_count_of_items_in_package integer
+  output_count_of_boxes_on_pallet integer
+  output_count_of_items_on_pallet integer
+  output_type_of_package char(50)
+  items_on_one_move integer
+  weight_of_one_item numeric [note: "need to know what unit type to use"]
+  duration integer [note: "in seconds"]
+  creator_id integer [ref: > users.id]
+  created datetime
+  tools bit(6) [note: "one bit is one type of tool needed"]
+  instruct text
+}
+
+table photos{
+  id integer [pk]
+  SKU_id char(15) [ref: > standards.SKU]
+  type bit(1) [note: "if input or output photo"]
+  photo_name char(60)
+  photo_data mediumblob
+}
+
+Enum priority{
+  high
+  med
+  low
+}
+
+table logs{
+  id integer [pk]
+  type bit(5) [note: "type of log, can be repacking, user/group creation, or else"]
+  prior_level priority [note: "this needs consult"]
+  action_start datetime
+  action_finish datetime
+  action_duration integer
+  SKU_id integer [ref: > standards.SKU]
+  info text
+}
+
+table log_to_user{
+  user_id integer [ref: > users.id]
+  log_id integer [ref: > logs.id]
+}
