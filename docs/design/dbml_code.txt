@@ -74,7 +74,7 @@ table sys_logs{
   id integer [pk]
   user_id integer [ref: > users.id]
   prior_level priority [note: "this needs consult"]
-  action_start datetime
+  action_time datetime
   type bit(8)
   info text
 }
