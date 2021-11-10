@@ -38,6 +38,7 @@ table standards{
 }
 
 table tools{
+  id integer [pk]
   SKU_id char(15) [ref: > standards.SKU]
   name char(60)
 }
@@ -45,7 +46,7 @@ table tools{
 table photos{
   id integer [pk]
   SKU_id char(15) [ref: > standards.SKU]
-  type bit(1) [note: "if input or output photo"]
+  is_input bit(1) [note: "if input or output photo"]
   photo_name char(60)
   photo_data mediumblob
 }
@@ -58,12 +59,10 @@ Enum priority{
 
 table prebal_logs{
   id integer [pk]
-  prior_level priority [note: "this needs consult"]
   action_start datetime
   action_finish datetime
   action_duration integer
   SKU_id integer [ref: > standards.SKU]
-  info text
 }
 
 table log_to_user{
@@ -81,5 +80,6 @@ table sys_logs{
 }
 
 table emails{
+  id integer [pk]
   email char(50) [not null]
 }
