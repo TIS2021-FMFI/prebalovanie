@@ -34,8 +34,12 @@ table standards{
   duration integer [note: "in seconds"]
   creator_id integer [ref: > users.id]
   created datetime
-  tools bit(6) [note: "one bit is one type of tool needed"]
   instruct text
+}
+
+table tools{
+  SKU_id char(15) [ref: > standards.SKU]
+  name var(60)
 }
 
 table photos{
@@ -52,9 +56,8 @@ Enum priority{
   low
 }
 
-table logs{
+table prebal_logs{
   id integer [pk]
-  type bit(5) [note: "type of log, can be repacking, user/group creation, or else"]
   prior_level priority [note: "this needs consult"]
   action_start datetime
   action_finish datetime
@@ -65,5 +68,14 @@ table logs{
 
 table log_to_user{
   user_id integer [ref: > users.id]
-  log_id integer [ref: > logs.id]
+  log_id integer [ref: > prebal_logs.id]
+}
+
+table sys_logs{
+  id integer [pk]
+  user_id integer [ref: > users.id]
+  prior_level priority [note: "this needs consult"]
+  action_start datetime
+  type bit(8)
+  info text
 }
