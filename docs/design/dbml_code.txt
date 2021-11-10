@@ -39,7 +39,7 @@ table standards{
 
 table tools{
   SKU_id char(15) [ref: > standards.SKU]
-  name var(60)
+  name char(60)
 }
 
 table photos{
@@ -78,4 +78,8 @@ table sys_logs{
   action_start datetime
   type bit(8)
   info text
+}
+
+table emails{
+  email char(50) [not null]
 }
