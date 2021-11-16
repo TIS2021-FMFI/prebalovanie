@@ -1,5 +1,5 @@
 from django.db import models
-import datetime
+from datetime import *
 from django.conf import settings
 
 
@@ -18,7 +18,7 @@ class RepackingStandard(models.Model):
     destination = models.CharField(max_length=50, default="")
     items_per_move = models.IntegerField(default=0)
     unit_weight = models.DecimalField(max_digits=6, decimal_places=4, default=0)
-    repacking_duration = models.DurationField(default=datetime.timedelta(minutes=0))
+    repacking_duration = models.DurationField(default=timedelta(minutes=0))
     instructions = models.CharField(max_length=1200, default="")
     tools = models.ManyToManyField(Tools, related_name='tools', blank=True)
 
@@ -57,6 +57,8 @@ class RepackHistory(models.Model):
                                            on_delete=models.SET_NULL,
                                            null=True,
                                            related_name='repacking_standard')
-    repack_datetime = models.DateTimeField(auto_now=True)
+    repack_start = models.DateTimeField(default=datetime.now, blank=True)
+    repack_finish = models.DateTimeField(auto_now=True)
+    repack_duration = models.DurationField(default=timedelta(minutes=0))
     idp = models.CharField(max_length=50)
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='users')
