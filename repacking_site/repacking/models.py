@@ -1,45 +1,62 @@
 from django.db import models
 import datetime
+from django.conf import settings
+
+
+class Tools(models.Model):
+    photo = models.ImageField(upload_to='tools')
+
+
+class Photos(models.Model):
+    photo = models.ImageField(upload_to='photos')
 
 
 class RepackingStandard(models.Model):
-	SKU_code = models.CharField(max_length=50, default="", unique=True)
-	COFOR_code = models.CharField(max_length=50, default="")
-	supplier = models.CharField(max_length=50, default="")
-	destination = models.CharField(max_length=50, default="")
-	pcs_per_move = models.IntegerField(default=0)
-	datetime_of_create = models.DateTimeField(auto_now=True)
-	unit_weight = models.DecimalField(max_digits=6, decimal_places=4, default=0)
-	repacking_time = models.DurationField(default=datetime.timedelta(minutes=0))
-	remark = models.CharField(max_length=1200, default="")
+    SKU = models.CharField(max_length=50, default="", unique=True)
+    COFOR = models.CharField(max_length=50, default="")
+    supplier = models.CharField(max_length=50, default="")
+    destination = models.CharField(max_length=50, default="")
+    items_per_move = models.IntegerField(default=0)
+    unit_weight = models.DecimalField(max_digits=6, decimal_places=4, default=0)
+    repacking_duration = models.DurationField(default=datetime.timedelta(minutes=0))
+    instructions = models.CharField(max_length=1200, default="")
+    tools = models.ManyToManyField(Tools, related_name='tools', blank=True)
 
-	pcs_package_in = models.IntegerField(default=0)
-	pcs_package_out = models.IntegerField(default=0)
+    input_count_of_items_in_package = models.IntegerField(default=0)
+    output_count_of_items_in_package = models.IntegerField(default=0)
 
-	boxes_on_pallet_in = models.IntegerField(default=0)
-	boxes_on_pallet_out = models.IntegerField(default=0)
+    input_count_of_boxes_on_pallet = models.IntegerField(default=0)
+    output_count_of_boxes_on_pallet = models.IntegerField(default=0)
 
-	pcs_on_pallet_in = models.IntegerField(default=0)
-	pcs_on_pallet_out = models.IntegerField(default=0)
+    input_count_of_items_on_pallet = models.IntegerField(default=0)
+    output_count_of_items_on_pallet = models.IntegerField(default=0)
 
-	package_type_in = models.CharField(max_length=50, default="")
-	package_type_out = models.CharField(max_length=50, default="")
+    input_type_of_package = models.CharField(max_length=50, default="")
+    output_type_of_package = models.CharField(max_length=50, default="")
 
-	def __str__(self):
-		return str(self.SKU_code)+"\t"+str(self.COFOR_code)
+    input_photos = models.ManyToManyField(Tools, related_name='input_photos', blank=True)
+    output_photos = models.ManyToManyField(Tools, related_name='output_photos', blank=True)
 
-	@staticmethod
-	def get_repacking_standard_by_sku(sku_code):
-		try:
-			standard = RepackingStandard.objects.get(SKU_code=sku_code)
-			return standard
-		except RepackingStandard.DoesNotExist:
-			return None
+    created = models.DateTimeField(auto_now=True)
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='creator')
+
+    def __str__(self):
+        return str(self.SKU) + "\t" + str(self.COFOR)
+
+    @staticmethod
+    def get_repacking_standard_by_sku(sku_code):
+        try:
+            standard = RepackingStandard.objects.get(SKU=sku_code)
+            return standard
+        except RepackingStandard.DoesNotExist:
+            return None
 
 
-class Repack(models.Model):
-	repacking_standard = models.ForeignKey(RepackingStandard, on_delete=models.SET_NULL, null=True)
-	repack_datetime = models.DateTimeField(auto_now=True)
-	idp = models.CharField(max_length=50)
-
-
+class RepackHistory(models.Model):
+    repacking_standard = models.ForeignKey(RepackingStandard,
+                                           on_delete=models.SET_NULL,
+                                           null=True,
+                                           related_name='repacking_standard')
+    repack_datetime = models.DateTimeField(auto_now=True)
+    idp = models.CharField(max_length=50)
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='users')

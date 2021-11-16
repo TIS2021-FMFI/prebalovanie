@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class RepackingStandardsConfig(AppConfig):
+class RepackingConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'repacking'

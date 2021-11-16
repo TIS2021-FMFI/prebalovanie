@@ -31,7 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'repacking.apps.RepackingStandardsConfig',
+    'repacking.apps.RepackingConfig',
+    'mails.apps.MailsConfig',
+    'logs.apps.LogsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

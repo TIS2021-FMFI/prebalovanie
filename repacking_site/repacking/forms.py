@@ -2,23 +2,23 @@ from django import forms
 
 
 class RepackingStandardForm(forms.Form):
-    SKU_code = forms.CharField(max_length=50, required=False)
-    COFOR_code = forms.CharField(max_length=50, required=False)
+    SKU = forms.CharField(max_length=50, required=False)
+    COFOR = forms.CharField(max_length=50, required=False)
     supplier = forms.CharField(max_length=50, required=False)
     destination = forms.CharField(max_length=50, required=False)
-    pcs_per_move = forms.IntegerField(required=False)
+    items_per_move = forms.IntegerField(required=False)
     unit_weight = forms.DecimalField(max_digits=6, decimal_places=4, required=False)
-    repacking_time = forms.IntegerField(required=False)
-    remark = forms.CharField(max_length=1200, required=False)
+    repacking_duration = forms.IntegerField(required=False)
+    instructions = forms.CharField(max_length=1200, required=False)
 
-    pcs_package_in = forms.IntegerField(required=False)
-    pcs_package_out = forms.IntegerField(required=False)
+    input_count_of_items_in_package = forms.IntegerField(required=False)
+    output_count_of_items_in_package = forms.IntegerField(required=False)
 
-    boxes_on_pallet_in = forms.IntegerField(required=False)
-    boxes_on_pallet_out = forms.IntegerField(required=False)
+    input_count_of_boxes_on_pallet = forms.IntegerField(required=False)
+    output_count_of_boxes_on_pallet = forms.IntegerField(required=False)
 
-    pcs_on_pallet_in = forms.IntegerField(required=False)
-    pcs_on_pallet_out = forms.IntegerField(required=False)
+    input_count_of_items_on_pallet = forms.IntegerField(required=False)
+    output_count_of_items_on_pallet = forms.IntegerField(required=False)
 
-    package_type_in = forms.CharField(max_length=50, required=False)
-    package_type_out = forms.CharField(max_length=50, required=False)
+    input_type_of_package = forms.CharField(max_length=50, required=False)
+    output_type_of_package = forms.CharField(max_length=50, required=False)

@@ -8,7 +8,7 @@
     {% if repacking_standards_list %}
         <ul>
         {% for standard in repacking_standards_list %}
-            <li><a href="/repacking/{{ standard.SKU_code }}/">{{ standard.SKU_code }}</a></li>
+            <li><a href="/repacking/{{ standard.SKU }}/">{{ standard.SKU }}</a></li>
         {% endfor %}
         </ul>
     {% else %}

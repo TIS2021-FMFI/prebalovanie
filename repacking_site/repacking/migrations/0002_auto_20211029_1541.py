@@ -13,12 +13,12 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='repacking_standard',
-            name='boxes_on_pallet_in',
+            name='input_count_of_boxes_on_pallet',
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
             model_name='repacking_standard',
-            name='boxes_on_pallet_out',
+            name='output_count_of_boxes_on_pallet',
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
@@ -28,12 +28,12 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='repacking_standard',
-            name='package_type_in',
+            name='input_type_of_package',
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
             model_name='repacking_standard',
-            name='package_type_out',
+            name='output_type_of_package',
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
@@ -43,32 +43,32 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='repacking_standard',
-            name='pcs_on_pallet_out',
+            name='output_count_of_items_on_pallet',
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
             model_name='repacking_standard',
-            name='pcs_package_in',
+            name='input_count_of_items_in_package',
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
             model_name='repacking_standard',
-            name='pcs_package_out',
+            name='output_count_of_items_in_package',
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
             model_name='repacking_standard',
-            name='pcs_per_move',
+            name='items_per_move',
             field=models.IntegerField(default=0),
         ),
         migrations.AddField(
             model_name='repacking_standard',
-            name='remark',
+            name='instructions',
             field=models.CharField(default='', max_length=1200),
         ),
         migrations.AddField(
             model_name='repacking_standard',
-            name='repacking_time',
+            name='repacking_duration',
             field=models.DurationField(default=datetime.timedelta(0)),
         ),
         migrations.AddField(

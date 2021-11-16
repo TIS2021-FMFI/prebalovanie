@@ -13,16 +13,16 @@ class Migration(migrations.Migration):
         migrations.RenameField(
             model_name='repackingstandard',
             old_name='pcs_on_pallet_im',
-            new_name='pcs_on_pallet_in',
+            new_name='input_count_of_items_on_pallet',
         ),
         migrations.AlterField(
             model_name='repackingstandard',
-            name='package_type_in',
+            name='input_type_of_package',
             field=models.CharField(default='', max_length=50),
         ),
         migrations.AlterField(
             model_name='repackingstandard',
-            name='package_type_out',
+            name='output_type_of_package',
             field=models.CharField(default='', max_length=50),
         ),
     ]
