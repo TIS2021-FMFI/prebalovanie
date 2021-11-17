@@ -29,12 +29,12 @@ table standards{
   output_count_of_boxes_on_pallet integer
   output_count_of_items_on_pallet integer
   output_type_of_package char(50)
-  items_on_one_move integer
-  weight_of_one_item numeric [note: "need to know what unit type to use"]
-  duration integer [note: "in seconds"]
+  items_per_move integer
+  unit_weight numeric [note: "need to know what unit type to use"]
+  repacking_duration integer [note: "in seconds"]
   creator_id integer [ref: > users.id]
   created datetime
-  instruct text
+  instructions text
 }
 
 table tools{
@@ -57,8 +57,9 @@ Enum priority{
   low
 }
 
-table prebal_logs{
+table repacking_history{
   id integer [pk]
+  IDP char(20)
   action_start datetime
   action_finish datetime
   action_duration integer
@@ -67,7 +68,7 @@ table prebal_logs{
 
 table log_to_user{
   user_id integer [ref: > users.id]
-  log_id integer [ref: > prebal_logs.id]
+  log_id integer [ref: > repacking_history.id]
 }
 
 table sys_logs{
