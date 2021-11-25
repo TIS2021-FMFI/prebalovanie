@@ -23,3 +23,7 @@ class Log(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='user')
     priority = models.CharField(max_length=10, choices=Priority.choices)
     app = models.CharField(max_length=15, choices=App.choices)
+
+    @staticmethod
+    def make_log(app, priority, user, text):
+        Log(app=app, priority=priority, user=user, text=text).save()
