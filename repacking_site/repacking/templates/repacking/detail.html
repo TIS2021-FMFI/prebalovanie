@@ -1,0 +1,65 @@
+{% extends "common/base.html" %}
+{% load static %}
+
+    {% block content %}
+
+    <a href="repack_finished">Ukonči prebal</a>
+
+    <table>
+        <tr>
+            <td colspan="2">Referencia:</td>
+            <td colspan="2">Cofor:</td>
+            <td colspan="2">Dodávateľ:</td>
+            <td colspan="2">Destinácia:</td>
+        </tr>
+        <tr>
+            <td colspan="2">{{ standard.SKU_code }}</td>
+            <td colspan="2">{{ standard.COFOR_code }}</td>
+            <td colspan="2">{{ standard.supplier }}</td>
+            <td colspan="2">{{ standard.destination }}</td>
+        </tr>
+        <tr>
+            <td colspan="4">Balenie na príjme</td>
+            <td colspan="4">Balenie na expedícii</td>
+        </tr>
+        <tr>
+            <td colspan="2">Photo 1 placeholder</td>
+            <td colspan="2">Photo 2 placeholder</td>
+            <td colspan="2">Photo 3 placeholder</td>
+            <td colspan="2">Photo 4 placeholder</td>
+        </tr>
+        <tr>
+            <td>Typ balenia:</td>
+            <td>{{ standard.package_type_in }}</td>
+            <td>Počet boxov na palete:</td>
+            <td>{{ standard.boxes_on_pallet_in }}</td>
+            <td>Typ balenia:</td>
+            <td>{{ standard.package_type_out }}</td>
+            <td>Počet boxov na palete:</td>
+            <td>{{ standard.boxes_on_pallet_out }}</td>
+        </tr>
+        <tr>
+            <td>Počet kusov v balení:</td>
+            <td>{{ standard.pcs_package_in }}</td>
+            <td>Počet kusov na palete:</td>
+            <td>{{ standard.pcs_on_pallet_in }}</td>
+            <td>Počet kusov v balení:</td>
+            <td>{{ standard.pcs_package_out }}</td>
+            <td>Počet kusov na palete:</td>
+            <td>{{ standard.pcs_on_pallet_out }}</td>
+        </tr>
+        <tr>
+            <td>Počet kusov na 1 pohyb:</td>
+            <td>{{ standard.pcs_per_move }}</td>
+            <td>Jednotková váha:</td>
+            <td>{{ standard.unit_weight }}</td>
+            <td>Čas prebalu:</td>
+            <td>{{ standard.repacking_time }}</td>
+            <td colspan="2">Poznámka:</td>
+        </tr>
+        <tr>
+            <td colspan="8">{{ standard.remark }}</td>
+        </tr>
+    </table>
+
+    {% endblock %}

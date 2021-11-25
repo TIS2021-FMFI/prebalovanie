@@ -31,7 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-	'repacking_standards.apps.RepackingStandardsConfig',
+    'repacking.apps.RepackingConfig',
+    'mails.apps.MailsConfig',
+    'logs.apps.LogsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -100,6 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+LOGIN_URL = '/admin/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

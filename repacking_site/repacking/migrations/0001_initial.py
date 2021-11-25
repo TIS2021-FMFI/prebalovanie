@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('SKU_code', models.CharField(max_length=50)),
                 ('COFOR_code', models.CharField(max_length=50)),
-                ('datetime_of_create', models.DateTimeField(auto_now=True)),
+                ('created', models.DateTimeField(auto_now=True)),
                 ('unit_weight', models.DecimalField(decimal_places=2, max_digits=6)),
             ],
         ),

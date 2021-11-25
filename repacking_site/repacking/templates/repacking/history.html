@@ -1,0 +1,27 @@
+{% extends "common/base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <h1>História prebalov</h1>
+
+    {% if repackings_list %}
+        <table>
+            <thead>
+                <th>Dátum a čas</th>
+                <th>SKU kód prebalu</th>
+                <th>IDP</th>
+            </thead>
+        {% for repack in repackings_list %}
+            <tr>
+                <td>{{ repack.repack_datetime }}</td>
+                <td>{{ repack.repacking_standard.SKU }}</td>
+                <td>{{ repack.idp }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <p>No repacks are available.</p>
+    {% endif %}
+
+{% endblock %}
