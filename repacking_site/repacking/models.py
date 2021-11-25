@@ -41,7 +41,7 @@ class RepackingStandard(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='creator')
 
     def __str__(self):
-        return str(self.SKU) + "\t" + str(self.COFOR)
+        return str(self.SKU) + " " + str(self.COFOR)
 
     @staticmethod
     def get_repacking_standard_by_sku(sku_code):
@@ -62,3 +62,6 @@ class RepackHistory(models.Model):
     repack_duration = models.DurationField(default=timedelta(minutes=0))
     idp = models.CharField(max_length=50)
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='users')
+
+    def __str__(self):
+        return str(self.repacking_standard) + ", " + str(self.repack_start)
