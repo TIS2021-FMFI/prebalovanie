@@ -29,6 +29,7 @@ def finish(request, sku_code):
     if standard is None:
         raise Http404("Standard does not exist")
 
+
     repack = RepackHistory(repacking_standard=standard, idp=0)
     repack.save()
     return index(request)
