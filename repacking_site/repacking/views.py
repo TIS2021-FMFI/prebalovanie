@@ -4,6 +4,8 @@ from django.shortcuts import render
 from .models import *
 from .forms import *
 
+from logs.models import Log
+
 
 def index(request):
     repacking_standards_list = RepackingStandard.objects.all()
@@ -29,9 +31,11 @@ def finish(request, sku_code):
     if standard is None:
         raise Http404("Standard does not exist")
 
-
     repack = RepackHistory(repacking_standard=standard, idp=0)
     repack.save()
+
+    Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, None, "Repack finished")
+
     return index(request)
 
 
@@ -59,6 +63,8 @@ def make_new_standard(request):
                 input_type_of_package=form.cleaned_data['input_type_of_package'],
                 output_type_of_package=form.cleaned_data['output_type_of_package']
             ).save()
+
+            Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, None, "Repacking standard made")
 
             return HttpResponseRedirect("/")
 
