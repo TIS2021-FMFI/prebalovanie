@@ -8,13 +8,17 @@
     {% if repackings_list %}
         <table>
             <thead>
-                <th>Dátum a čas</th>
+                <th>Začiatok prebalu</th>
+                <th>Koniec prebalu</th>
+                <th>Trvanie prebalu</th>
                 <th>SKU kód prebalu</th>
                 <th>IDP</th>
             </thead>
         {% for repack in repackings_list %}
             <tr>
-                <td>{{ repack.repack_datetime }}</td>
+                <td>{{ repack.repack_start }}</td>
+                <td>{{ repack.repack_finish }}</td>
+                <td>{{ repack.repack_duration }}</td>
                 <td>{{ repack.repacking_standard.SKU }}</td>
                 <td>{{ repack.idp }}</td>
             </tr>

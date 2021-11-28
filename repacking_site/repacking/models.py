@@ -58,7 +58,7 @@ class RepackHistory(models.Model):
                                            null=True,
                                            related_name='repacking_standard')
     repack_start = models.DateTimeField(default=datetime.now, blank=True)
-    repack_finish = models.DateTimeField(auto_now=True)
+    repack_finish = models.DateTimeField(auto_now=False)
     repack_duration = models.DurationField(default=timedelta(minutes=0))
     idp = models.CharField(max_length=50)
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='users')
