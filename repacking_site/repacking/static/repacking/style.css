@@ -2,16 +2,18 @@
 /*    border: 1px solid black;*/
 /*}*/
 
-/* toto nechcelo reagovat na stranke*/
+/* skusanie s hranim sa s CSS
+Potom do htaml som ku css musel pridavat verson, lebo akosi mi to nechcelo
+aktualizovat na stranke, bolo tam nejake cache*/
 table, td, th {
     border: 1px solid black;
 }
 
-
-
 th, td {
-  text-align: center;
-  padding: 8px;
+    text-align: center;
+    padding: 8px;
 }
 
-tr:nth-child(even) {background-color: #f2f2f2;}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
