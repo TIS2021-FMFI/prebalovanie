@@ -51,7 +51,7 @@ def finish(request, sku_code):
                     datetime.now() - datetime.strptime(last_repack_start,
                                                        repack_time_format)).total_seconds()
         repack.repack_duration = timedelta(seconds=repack_duration)
-        print(repack_duration)
+
     else:
         # TODO logging
         ...
@@ -92,7 +92,7 @@ def pause(request, sku_code):
         request.session[repack_duration_key] = request.session.get(repack_duration_key) + \
                                                (repack_paused - datetime.strptime(last_repack_start,
                                                                                   repack_time_format)).total_seconds()
-        print(request.session[repack_duration_key])
+        
     else:
         # TODO logging
         ...
