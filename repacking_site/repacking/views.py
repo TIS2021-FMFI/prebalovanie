@@ -59,8 +59,7 @@ def finish(request, sku_code):
         repack.repack_duration = timedelta(seconds=repack_duration)
 
     else:
-        # TODO logging
-        ...
+        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "Repacking without session finished.")
 
     cancel_sessions(request)
 
@@ -100,8 +99,8 @@ def pause(request, sku_code):
                                                                                   repack_time_format)).total_seconds()
 
     else:
-        # TODO logging
-        ...
+        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "Repacking without session saved.")
+
     context = {'sku_code': sku_code}
     return render(request, 'repacking/pause.html', context)
 
