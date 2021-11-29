@@ -27,3 +27,6 @@ class Log(models.Model):
     @staticmethod
     def make_log(app, priority, user, text):
         Log(app=app, priority=priority, user=user, text=text).save()
+
+    def __str__(self):
+        return str(self.app) + ", " + str(self.priority) + ", " + str(self.text) + ", " + str(self.action_time)
