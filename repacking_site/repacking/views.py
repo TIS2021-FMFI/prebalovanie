@@ -4,11 +4,12 @@ from django.shortcuts import render
 from .models import *
 from .forms import *
 
+from logs.models import Log
+
 repack_start_key = 'repack_start'
 repack_last_start_key = 'repack_last_start'
 repack_duration_key = 'repack_duration'
 repack_time_format = '%Y-%m-%dT%H:%M:%S'
-
 
 def index(request):
     cancel_sessions(request)
@@ -39,6 +40,8 @@ def finish(request, sku_code):
     if standard is None:
         raise Http404("Standard does not exist")
 
+    Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, None, "Repack finished")
+
     repack_finish = datetime.now()
     repack = RepackHistory(repacking_standard=standard, idp=0, repack_finish=repack_finish)
     if request.session.get(repack_start_key, False):
@@ -48,7 +51,7 @@ def finish(request, sku_code):
                     datetime.now() - datetime.strptime(last_repack_start,
                                                        repack_time_format)).total_seconds()
         repack.repack_duration = timedelta(seconds=repack_duration)
-        print(repack_duration)
+
     else:
         # TODO logging
         ...
@@ -89,7 +92,7 @@ def pause(request, sku_code):
         request.session[repack_duration_key] = request.session.get(repack_duration_key) + \
                                                (repack_paused - datetime.strptime(last_repack_start,
                                                                                   repack_time_format)).total_seconds()
-        print(request.session[repack_duration_key])
+        
     else:
         # TODO logging
         ...
@@ -121,6 +124,8 @@ def make_new_standard(request):
                 input_type_of_package=form.cleaned_data['input_type_of_package'],
                 output_type_of_package=form.cleaned_data['output_type_of_package']
             ).save()
+
+            Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, None, "Repacking standard made")
 
             return HttpResponseRedirect("/")
 
