@@ -1,3 +1,17 @@
-table, td, tr{
+/*table, td, tr, th{*/
+/*    border: 1px solid black;*/
+/*}*/
+
+/* toto nechcelo reagovat na stranke*/
+table, td, th {
     border: 1px solid black;
 }
+
+
+
+th, td {
+  text-align: center;
+  padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}

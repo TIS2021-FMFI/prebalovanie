@@ -1,0 +1,63 @@
+{% extends "common/base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <h1>Nastavenie SKU</h1>
+
+    {% if repacking_standards_list %}
+        <table>
+            <tr>
+                <th>Akcia</th>
+                <th>SKU</th>
+                <th>COFOR</th>
+                <th>Destinácia</th>
+                <th>ks IN</th>
+                <th>ks OUT</th>
+                <th>obal IN</th>
+                <th>obal OUT</th>
+                <th>kg ks</th>
+                <th>FOTO IN</th>
+                <th>FOTO OUT</th>
+                <th>Čas prebalu</th>
+                <th>Vytvoril</th>
+                <th>Čas vytvorenia</th>
+                <th>Poznámka</th>
+            </tr>
+            {% for standard in repacking_standards_list %}
+
+                <tr>
+                    <td>
+                        <button type="button">Editovať</button>
+                        <button type="button">Vymazať</button>
+                    </td>
+                    <td>{{ standard.SKU }}</td>
+                    <td>{{ standard.COFOR }}</td>
+                    <td>{{ standard.destination }}</td>
+                    <td>{{ standard.input_count_of_items_in_package }}</td>
+                    <td>{{ standard.output_count_of_items_in_package }}</td>
+                    <td>{{ standard.input_type_of_package }}</td>
+                    <td>{{ standard.output_type_of_package }}</td>
+                    <td>{{ standard.unit_weight }}</td>
+                    {% if standard.input_photos.name != None %}
+                        <td>{{ standard.input_photos }}</td>
+                    {% else %}
+                        <td>Žiadne fotky</td>
+                    {% endif %}
+                    {% if standard.output_photos.name != None %}
+                        <td>{{ standard.output_photos }}</td>
+                    {% else %}
+                        <td>Žiadne fotky</td>
+                    {% endif %}
+                    <td>{{ standard.repacking_duration }}</td>
+                    <td>{{ standard.creator }}</td>
+                    <td>{{ standard.created }}</td>
+                    <td>{{ standard.instructions }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Žiadne štandardy nie sú k dispozícií.</p>
+    {% endif %}
+
+{% endblock %}

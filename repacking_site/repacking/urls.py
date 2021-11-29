@@ -10,4 +10,6 @@ urlpatterns = [
     path('repacking/<str:sku_code>/repack_paused', views.pause),
     path('repacking/<str:sku_code>/repack_cancelled', views.cancel),
     path('repacking/<str:sku_code>/', views.detail),
+
+    path('repacking/sku', views.show_standards),
 ]

@@ -11,11 +11,10 @@ repack_last_start_key = 'repack_last_start'
 repack_duration_key = 'repack_duration'
 repack_time_format = '%Y-%m-%dT%H:%M:%S'
 
+
 def index(request):
     cancel_sessions(request)
-    repacking_standards_list = RepackingStandard.objects.all()
-    context = {"repacking_standards_list": repacking_standards_list}
-    return render(request, 'repacking/index.html', context)
+    return render(request, 'repacking/index.html')
 
 
 def detail(request, sku_code):
@@ -35,6 +34,13 @@ def history(request):
     return render(request, 'repacking/history.html', context)
 
 
+def show_standards(request):
+    cancel_sessions(request)
+    repacking_standards_list = RepackingStandard.objects.all()
+    context = {"repacking_standards_list": repacking_standards_list}
+    return render(request, 'repacking/standards.html', context)
+
+
 def finish(request, sku_code):
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
     if standard is None:
@@ -48,8 +54,8 @@ def finish(request, sku_code):
         repack.repack_start = request.session.get(repack_start_key)
         last_repack_start = request.session.get(repack_last_start_key)
         repack_duration = request.session.get(repack_duration_key) + (
-                    datetime.now() - datetime.strptime(last_repack_start,
-                                                       repack_time_format)).total_seconds()
+                datetime.now() - datetime.strptime(last_repack_start,
+                                                   repack_time_format)).total_seconds()
         repack.repack_duration = timedelta(seconds=repack_duration)
 
     else:
@@ -92,7 +98,7 @@ def pause(request, sku_code):
         request.session[repack_duration_key] = request.session.get(repack_duration_key) + \
                                                (repack_paused - datetime.strptime(last_repack_start,
                                                                                   repack_time_format)).total_seconds()
-        
+
     else:
         # TODO logging
         ...
