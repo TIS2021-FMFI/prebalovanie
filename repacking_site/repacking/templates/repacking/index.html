@@ -3,16 +3,6 @@
 
 {% block content %}
 
-    <h1>Štandardy</h1>
-
-    {% if repacking_standards_list %}
-        <ul>
-        {% for standard in repacking_standards_list %}
-            <li><a href="/repacking/{{ standard.SKU }}/">{{ standard.SKU }}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No standards are available.</p>
-    {% endif %}
+    <h1>Hlavná stránka</h1>
 
 {% endblock %}

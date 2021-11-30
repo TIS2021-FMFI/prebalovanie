@@ -1,3 +1,5 @@
 prebalovanie-env/
 *.pyc
+*.pyd
 repacking_site/.idea/*
+repacking_site/venv/*
