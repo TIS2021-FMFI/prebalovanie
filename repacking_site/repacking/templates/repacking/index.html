@@ -1,16 +1,17 @@
 {% extends "common/base.html" %}
-{% load static %}
+
 
 {% block content %}
 
     <h1>Štandardy</h1>
 
     {% if repacking_standards_list %}
-        <ul>
+        <table>
+            <tr><th>Názov štandardu</th></tr>
         {% for standard in repacking_standards_list %}
-            <li><a href="/repacking/{{ standard.SKU }}/">{{ standard.SKU }}</a></li>
+            <tr><td><a href="/repacking/{{ standard.SKU }}/">{{ standard.SKU }}</a></td></tr>
         {% endfor %}
-        </ul>
+        </table>
     {% else %}
         <p>No standards are available.</p>
     {% endif %}

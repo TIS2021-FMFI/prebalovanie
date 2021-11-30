@@ -1,3 +1,127 @@
+/* base.html css */
+@font-face {
+    font-family: UniviaPro-regular;
+    src: url("UniviaPro-Regular.otf");
+}
+
+body{
+    font-family: UniviaPro-regular;
+}
+
+.content{
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+
+a{
+    text-decoration: none;
+}
+
+nav {
+    background-color: #00538b;
+    margin: 0px 0px 20px 0px;
+    padding: 10px;
+    position: fixed;
+    width: 99%;
+    top: 0;
+    left: 0;
+}
+
+nav #gefco{
+    width: 80px;
+}
+
+nav a{
+    font-size: 20px;
+    color: #ffffff;
+    margin: 0px 10px 0px 10px;
+}
+
+nav a:hover{
+    color: #ffcd00;
+}
+
+nav .user{
+    float: right;
+}
+
+h1{
+    margin-left: 20px;
+}
+
+footer{
+    margin-top: 10px;
+    border-top: 2px solid #ffcd00;
+    background-color: white;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 99%;
+}
+
+footer p{
+    display: inline;
+    float: left;
+}
+
+footer #gefco{
+    display: inline;
+    float: right;
+}
+
+/* end of base.html css */
+
+/* list of standards css */
+
+table{
+    margin-left: auto;
+    margin-right: auto;
+}
+
 table, td, tr{
     border: 1px solid black;
+    width: 50%;
+    text-align: center;
 }
+
+th{
+    border: 1px solid black;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+/* end of list of standards css */
+
+/* forms css */
+
+form{
+    border: 1px solid gray;
+    padding: 10px;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+input{
+    font-size: 16px;
+    width: 100%;
+    padding: 5px 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid grey;
+}
+
+input[type=submit]{
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #00538b;
+    border: none;
+    color: #ffcd00;
+    padding: 10px 30px;
+    border-radius: 10px;
+}
+
+/* end of forms css */
