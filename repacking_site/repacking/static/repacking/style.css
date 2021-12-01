@@ -71,26 +71,32 @@ footer #gefco{
 
 /* end of base.html css */
 
-/* list of standards css */
+/* tables css */
 
 table{
     margin-left: auto;
     margin-right: auto;
 }
 
-table, td, tr{
+table, td, tr, th{
     border: 1px solid black;
     width: 50%;
     text-align: center;
+    padding: 8px;
 }
 
 th{
     border: 1px solid black;
+    background-color: #aaaaaa;
     font-weight: bold;
     font-size: 24px;
 }
 
-/* end of list of standards css */
+tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+/* end of tables css */
 
 /* forms css */
 
@@ -132,15 +138,3 @@ input[type=submit]{
 /* skusanie s hranim sa s CSS
 Potom do htaml som ku css musel pridavat verson, lebo akosi mi to nechcelo
 aktualizovat na stranke, bolo tam nejake cache*/
-table, td, th {
-    border: 1px solid black;
-}
-
-th, td {
-    text-align: center;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
