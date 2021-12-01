@@ -11,11 +11,14 @@
 <body>
 
 <nav>
-    <img id="gefco" src="{% static 'repacking/GEFCO_Logo.svg' %}" alt="GEFCO logo">
-    <a href="/repacking/standards">Štandardy</a>
+    
+	<a href="/"><img id="gefco" src="{% static 'repacking/GEFCO_Logo.svg' %}" alt="GEFCO logo"></a></li>
+	<a href="/">Domov</a></li>
+	<a href="/repacking/sku">Nastavenie SKU</a>
     <a href="/repacking/history">História prebalov</a>
     <a href="/repacking/standards/new/">Nový štandard</a>
     <a class="user" href="#">LOGIN</a>
+
 </nav>
 <div class="content">
 {% block content %}

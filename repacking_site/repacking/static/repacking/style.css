@@ -125,3 +125,22 @@ input[type=submit]{
 }
 
 /* end of forms css */
+/*table, td, tr, th{*/
+/*    border: 1px solid black;*/
+/*}*/
+
+/* skusanie s hranim sa s CSS
+Potom do htaml som ku css musel pridavat verson, lebo akosi mi to nechcelo
+aktualizovat na stranke, bolo tam nejake cache*/
+table, td, th {
+    border: 1px solid black;
+}
+
+th, td {
+    text-align: center;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
