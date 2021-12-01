@@ -11,24 +11,25 @@
 <body>
 
 <nav>
-    <ul>
-        <li><a href="/">Domov</a></li>
-        <li><a href="/repacking/sku">Nastavenie SKU</a></li>
-        <li><a href="/repacking/history">História prebalov</a></li>
-        <li><a href="/repacking/standards/new/">Nový štandard</a></li>
+    
+	<a href="/"><img id="gefco" src="{% static 'repacking/GEFCO_Logo.svg' %}" alt="GEFCO logo"></a></li>
+	<a href="/">Domov</a></li>
+	<a href="/repacking/sku">Nastavenie SKU</a>
+    <a href="/repacking/history">História prebalov</a>
+    <a href="/repacking/standards/new/">Nový štandard</a>
+    <a class="user" href="#">LOGIN</a>
 
-        <li><a href="#">Page 3</a></li>
-    </ul>
 </nav>
-
+<div class="content">
 {% block content %}
 
 
 
 {% endblock %}
-
+</div>
 <footer>
-    (c) 2021, 3ML
+    <p>(c) 2021, 3ML</p>
+    <img id="gefco" src="{% static 'repacking/GEFCO_Logo.svg' %}" alt="GEFCO logo">
 </footer>
 
 </body>
