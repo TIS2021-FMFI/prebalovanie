@@ -5,4 +5,33 @@
 
     <h1>Hlavná stránka</h1>
 
+
+    {% if log_list %}
+        <table>
+                <tr>
+                    <th> Id </th>
+                    <th>Používateľ</th>
+                    <th>Priorita</th>
+
+                    <th>Čas akcie</th>
+                    <th>typ</th>
+                    <th>informácie</th>
+                </tr>
+        {% for log in log_list %}
+
+                    <tr>
+                        <td> Id 1.</td>
+                        <td>{{ log.user }}        </td>
+                        <td>{{ log.priority }}</td>
+                        <td>{{ log.action_time }}</td>
+                        <td>{{ log.app }}</td>
+                        <td>{{ log.text }}</td>
+
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>Žiadne účty nie sú k dispozícií.</p>
+        {% endif %}
+
 {% endblock %}
