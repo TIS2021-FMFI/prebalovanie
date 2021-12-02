@@ -51,6 +51,18 @@ class RepackingStandard(models.Model):
         except RepackingStandard.DoesNotExist:
             return None
 
+    @staticmethod
+    def filter_repacking_standard_by_get(get):
+        repacking_standards = RepackingStandard.objects.filter(
+            SKU__contains=get.get('SKU', ""),
+            COFOR__contains=get.get('COFOR', ""),
+            supplier__contains=get.get('supplier', ""),
+            destination__contains=get.get('destination', ""),
+            input_type_of_package__contains=get.get('input_type_of_package', ""),
+            output_type_of_package__contains=get.get('output_type_of_package', "")
+        )
+        return repacking_standards
+
 
 class RepackHistory(models.Model):
     repacking_standard = models.ForeignKey(RepackingStandard,
