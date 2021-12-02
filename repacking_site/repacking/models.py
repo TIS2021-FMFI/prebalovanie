@@ -4,11 +4,11 @@ from django.conf import settings
 
 
 class Tools(models.Model):
-    photo = models.ImageField(upload_to='tools')
+    photo = models.ImageField(upload_to='tools/%Y/%m/')
 
 
 class Photos(models.Model):
-    photo = models.ImageField(upload_to='photos')
+    photo = models.ImageField(upload_to='photos/%Y/%m/')
 
 
 class RepackingStandard(models.Model):

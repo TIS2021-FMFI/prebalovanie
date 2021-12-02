@@ -17,8 +17,6 @@
                 <th>obal IN</th>
                 <th>obal OUT</th>
                 <th>kg ks</th>
-                <th>FOTO IN</th>
-                <th>FOTO OUT</th>
                 <th>Čas prebalu</th>
                 <th>Vytvoril</th>
                 <th>Čas vytvorenia</th>
@@ -39,16 +37,6 @@
                     <td>{{ standard.input_type_of_package }}</td>
                     <td>{{ standard.output_type_of_package }}</td>
                     <td>{{ standard.unit_weight }}</td>
-                    {% if standard.input_photos.name != None %}
-                        <td>{{ standard.input_photos }}</td>
-                    {% else %}
-                        <td>Žiadne fotky</td>
-                    {% endif %}
-                    {% if standard.output_photos.name != None %}
-                        <td>{{ standard.output_photos }}</td>
-                    {% else %}
-                        <td>Žiadne fotky</td>
-                    {% endif %}
                     <td>{{ standard.repacking_duration }}</td>
                     <td>{{ standard.creator }}</td>
                     <td>{{ standard.created }}</td>

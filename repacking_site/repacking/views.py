@@ -108,11 +108,12 @@ def pause(request, sku_code):
 
 def make_new_standard(request):
     if request.method == 'POST':
-        form = RepackingStandardForm(request.POST)
+        form = RepackingStandardForm(request.POST, request.FILES)
         if form.is_valid() and form.cleaned_data['repacking_duration'] is not None:
             if RepackingStandard.get_repacking_standard_by_sku(form.cleaned_data['SKU']) is not None:
                 raise FileExistsError("Repacking standard w/ this SKU already exists")
-            RepackingStandard(
+
+            standard = RepackingStandard(
                 SKU=form.cleaned_data['SKU'],
                 COFOR=form.cleaned_data['COFOR'],
                 supplier=form.cleaned_data['supplier'],
@@ -129,7 +130,21 @@ def make_new_standard(request):
                 output_count_of_items_on_pallet=form.cleaned_data['output_count_of_items_on_pallet'],
                 input_type_of_package=form.cleaned_data['input_type_of_package'],
                 output_type_of_package=form.cleaned_data['output_type_of_package']
-            ).save()
+            )
+            standard.save()
+
+            if 'input_photos' in form.files:
+                input_photo = Photos(photo=form.files['input_photos'])
+                input_photo.save()
+                standard.input_photos.add(input_photo)
+            if 'output_photos' in form.files:
+                output_photo = Photos(photo=form.files['output_photos'])
+                output_photo.save()
+                standard.output_photos.add(output_photo)
+            if 'tools' in form.files:
+                tool = Tools(photo=form.files['tools'])
+                tool.save()
+                standard.tools.add(tool)
 
             Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, None, "Repacking standard made")
 
