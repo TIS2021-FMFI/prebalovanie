@@ -53,6 +53,7 @@ class RepackingStandard(models.Model):
 
     @staticmethod
     def filter_and_order_repacking_standard_by_get(get):
+        # TODO reverse ordering
         order_by = get.get('order_by', "created")
         try:
             RepackingStandard._meta.get_field(order_by)
