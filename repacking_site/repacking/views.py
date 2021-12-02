@@ -21,6 +21,7 @@ def detail(request, sku_code):
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
     if standard is None:
         raise Http404("Standard does not exist")
+
     if request.session.get(repack_start_key, None) is None:
         request.session[repack_start_key] = datetime.now().strftime(repack_time_format)
         request.session[repack_duration_key] = 0
