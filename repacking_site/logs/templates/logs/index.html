@@ -17,21 +17,21 @@
                     <th>typ</th>
                     <th>informácie</th>
                 </tr>
-        {% for log in log_list %}
+            {% for log in log_list %}
 
                     <tr>
                         <td> Id 1.</td>
-                        <td>{{ log.user }}        </td>
+                        <td>{{ log.user }} </td>
                         <td>{{ log.priority }}</td>
                         <td>{{ log.action_time }}</td>
                         <td>{{ log.app }}</td>
                         <td>{{ log.text }}</td>
 
                     </tr>
-                {% endfor %}
-            </table>
-        {% else %}
+            {% endfor %}
+        </table>
+    {% else %}
             <p>Žiadne účty nie sú k dispozícií.</p>
-        {% endif %}
+    {% endif %}
 
 {% endblock %}
