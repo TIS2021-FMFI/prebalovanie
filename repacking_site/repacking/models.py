@@ -56,7 +56,10 @@ class RepackingStandard(models.Model):
         # TODO reverse ordering
         order_by = get.get('order_by', "created")
         try:
-            RepackingStandard._meta.get_field(order_by)
+            if order_by[0] == '-':
+                RepackingStandard._meta.get_field(order_by[1:])
+            else:
+                RepackingStandard._meta.get_field(order_by)
         except:
             order_by = "created"
         repacking_standards = RepackingStandard.objects.filter(

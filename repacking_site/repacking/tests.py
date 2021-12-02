@@ -46,19 +46,16 @@ class RepackingStandardsModelTests(TestCase):
         standard1.created = time2
 
         repacking_standards = RepackingStandard.filter_and_order_repacking_standard_by_get({})
-
         self.assertEquals(repacking_standards[0], standard2)
         self.assertEquals(repacking_standards[1], standard1)
         self.assertEquals(len(repacking_standards), 2)
 
         repacking_standards = RepackingStandard.filter_and_order_repacking_standard_by_get({'order_by': 'SKU'})
-
         self.assertEquals(repacking_standards[0], standard1)
         self.assertEquals(repacking_standards[1], standard2)
         self.assertEquals(len(repacking_standards), 2)
 
         repacking_standards = RepackingStandard.filter_and_order_repacking_standard_by_get({'order_by': 'COFOR'})
-
         self.assertEquals(repacking_standards[0], standard2)
         self.assertEquals(repacking_standards[1], standard1)
         self.assertEquals(len(repacking_standards), 2)
@@ -68,6 +65,27 @@ class RepackingStandardsModelTests(TestCase):
 
         self.assertEquals(repacking_standards[0], standard2)
         self.assertEquals(repacking_standards[1], standard1)
+        self.assertEquals(len(repacking_standards), 2)
+
+    def test_order_reverse_repacking_standard(self):
+        sku1 = "a"
+        cofor1 = "b"
+        standard1 = RepackingStandard(SKU=sku1, COFOR=cofor1)
+        standard1.save()
+
+        sku2 = 'b'
+        cofor2 = 'a'
+        standard2 = RepackingStandard(SKU=sku2, COFOR=cofor2)
+        standard2.save()
+
+        repacking_standards = RepackingStandard.filter_and_order_repacking_standard_by_get({'order_by': '-SKU'})
+        self.assertEquals(repacking_standards[0], standard2)
+        self.assertEquals(repacking_standards[1], standard1)
+        self.assertEquals(len(repacking_standards), 2)
+
+        repacking_standards = RepackingStandard.filter_and_order_repacking_standard_by_get({'order_by': '-COFOR'})
+        self.assertEquals(repacking_standards[0], standard1)
+        self.assertEquals(repacking_standards[1], standard2)
         self.assertEquals(len(repacking_standards), 2)
 
     def test_filter_repacking_standard(self):
