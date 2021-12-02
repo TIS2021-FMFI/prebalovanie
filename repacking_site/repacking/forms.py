@@ -23,7 +23,7 @@ class RepackingStandardForm(forms.Form):
     input_type_of_package = forms.CharField(max_length=50, required=True)
     output_type_of_package = forms.CharField(max_length=50, required=True)
 
-    input_photos = forms.ImageField(required=False)
-    output_photos = forms.ImageField(required=False)
+    input_photos = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True}))
+    output_photos = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True}))
 
-    tools = forms.ImageField(required=False)
+    tools = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True}))

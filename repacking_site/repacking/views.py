@@ -134,17 +134,20 @@ def make_new_standard(request):
             standard.save()
 
             if 'input_photos' in form.files:
-                input_photo = Photos(photo=form.files['input_photos'])
-                input_photo.save()
-                standard.input_photos.add(input_photo)
+                for photo in form.files.getlist('input_photos'):
+                    input_photo = Photos(photo=photo)
+                    input_photo.save()
+                    standard.input_photos.add(input_photo)
             if 'output_photos' in form.files:
-                output_photo = Photos(photo=form.files['output_photos'])
-                output_photo.save()
-                standard.output_photos.add(output_photo)
+                for photo in form.files.getlist('output_photos'):
+                    output_photo = Photos(photo=photo)
+                    output_photo.save()
+                    standard.output_photos.add(output_photo)
             if 'tools' in form.files:
-                tool = Tools(photo=form.files['tools'])
-                tool.save()
-                standard.tools.add(tool)
+                for photo in form.files.getlist('tools'):
+                    tool = Tools(photo=photo)
+                    tool.save()
+                    standard.tools.add(tool)
 
             Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, None, "Repacking standard made")
 
