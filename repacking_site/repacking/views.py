@@ -21,6 +21,7 @@ def detail(request, sku_code):
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
     if standard is None:
         raise Http404("Standard does not exist")
+
     if request.session.get(repack_start_key, None) is None:
         request.session[repack_start_key] = datetime.now().strftime(repack_time_format)
         request.session[repack_duration_key] = 0
@@ -107,11 +108,12 @@ def pause(request, sku_code):
 
 def make_new_standard(request):
     if request.method == 'POST':
-        form = RepackingStandardForm(request.POST)
+        form = RepackingStandardForm(request.POST, request.FILES)
         if form.is_valid() and form.cleaned_data['repacking_duration'] is not None:
             if RepackingStandard.get_repacking_standard_by_sku(form.cleaned_data['SKU']) is not None:
                 raise FileExistsError("Repacking standard w/ this SKU already exists")
-            RepackingStandard(
+
+            standard = RepackingStandard(
                 SKU=form.cleaned_data['SKU'],
                 COFOR=form.cleaned_data['COFOR'],
                 supplier=form.cleaned_data['supplier'],
@@ -128,7 +130,24 @@ def make_new_standard(request):
                 output_count_of_items_on_pallet=form.cleaned_data['output_count_of_items_on_pallet'],
                 input_type_of_package=form.cleaned_data['input_type_of_package'],
                 output_type_of_package=form.cleaned_data['output_type_of_package']
-            ).save()
+            )
+            standard.save()
+
+            if 'input_photos' in form.files:
+                for photo in form.files.getlist('input_photos'):
+                    input_photo = Photos(photo=photo)
+                    input_photo.save()
+                    standard.input_photos.add(input_photo)
+            if 'output_photos' in form.files:
+                for photo in form.files.getlist('output_photos'):
+                    output_photo = Photos(photo=photo)
+                    output_photo.save()
+                    standard.output_photos.add(output_photo)
+            if 'tools' in form.files:
+                for photo in form.files.getlist('tools'):
+                    tool = Tools(photo=photo)
+                    tool.save()
+                    standard.tools.add(tool)
 
             Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, None, "Repacking standard made")
 

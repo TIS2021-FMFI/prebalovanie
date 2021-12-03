@@ -4,11 +4,11 @@ from django.conf import settings
 
 
 class Tools(models.Model):
-    photo = models.ImageField(upload_to='tools')
+    photo = models.ImageField(upload_to='tools/%Y/%m/')
 
 
 class Photos(models.Model):
-    photo = models.ImageField(upload_to='photos')
+    photo = models.ImageField(upload_to='photos/%Y/%m/')
 
 
 class RepackingStandard(models.Model):
@@ -34,8 +34,8 @@ class RepackingStandard(models.Model):
     input_type_of_package = models.CharField(max_length=50, default="")
     output_type_of_package = models.CharField(max_length=50, default="")
 
-    input_photos = models.ManyToManyField(Tools, related_name='input_photos', blank=True)
-    output_photos = models.ManyToManyField(Tools, related_name='output_photos', blank=True)
+    input_photos = models.ManyToManyField(Photos, related_name='input_photos', blank=True)
+    output_photos = models.ManyToManyField(Photos, related_name='output_photos', blank=True)
 
     created = models.DateTimeField(auto_now=True)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='creator')
