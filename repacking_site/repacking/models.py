@@ -4,11 +4,11 @@ from django.conf import settings
 
 
 class Tools(models.Model):
-    photo = models.ImageField(upload_to='tools')
+    photo = models.ImageField(upload_to='tools/%Y/%m/')
 
 
 class Photos(models.Model):
-    photo = models.ImageField(upload_to='photos')
+    photo = models.ImageField(upload_to='photos/%Y/%m/')
 
 
 class RepackingStandard(models.Model):
@@ -34,8 +34,8 @@ class RepackingStandard(models.Model):
     input_type_of_package = models.CharField(max_length=50, default="")
     output_type_of_package = models.CharField(max_length=50, default="")
 
-    input_photos = models.ManyToManyField(Tools, related_name='input_photos', blank=True)
-    output_photos = models.ManyToManyField(Tools, related_name='output_photos', blank=True)
+    input_photos = models.ManyToManyField(Photos, related_name='input_photos', blank=True)
+    output_photos = models.ManyToManyField(Photos, related_name='output_photos', blank=True)
 
     created = models.DateTimeField(auto_now=True)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='creator')
@@ -51,6 +51,26 @@ class RepackingStandard(models.Model):
         except RepackingStandard.DoesNotExist:
             return None
 
+    @staticmethod
+    def filter_and_order_repacking_standard_by_get(get):
+        order_by = get.get('order_by', "created")
+        try:
+            if order_by[0] == '-':
+                RepackingStandard._meta.get_field(order_by[1:])
+            else:
+                RepackingStandard._meta.get_field(order_by)
+        except:
+            order_by = "created"
+        repacking_standards = RepackingStandard.objects.filter(
+            SKU__contains=get.get('SKU', ""),
+            COFOR__contains=get.get('COFOR', ""),
+            supplier__contains=get.get('supplier', ""),
+            destination__contains=get.get('destination', ""),
+            input_type_of_package__contains=get.get('input_type_of_package', ""),
+            output_type_of_package__contains=get.get('output_type_of_package', "")
+        ).order_by(order_by)
+        return repacking_standards
+
 
 class RepackHistory(models.Model):
     repacking_standard = models.ForeignKey(RepackingStandard,
@@ -64,4 +84,4 @@ class RepackHistory(models.Model):
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='users')
 
     def __str__(self):
-        return str(self.repacking_standard) + ", " + str(self.repack_start)
+        return f'standard: sku:{str(self.repacking_standard)}, cofor:{str(self.repack_start)}'

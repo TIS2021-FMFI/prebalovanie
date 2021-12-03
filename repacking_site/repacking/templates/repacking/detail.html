@@ -15,8 +15,8 @@
             <td colspan="2">Destinácia:</td>
         </tr>
         <tr>
-            <td colspan="2">{{ standard.SKU_code }}</td>
-            <td colspan="2">{{ standard.COFOR_code }}</td>
+            <td colspan="2">{{ standard.SKU }}</td>
+            <td colspan="2">{{ standard.COFOR }}</td>
             <td colspan="2">{{ standard.supplier }}</td>
             <td colspan="2">{{ standard.destination }}</td>
         </tr>
@@ -25,42 +25,70 @@
             <td colspan="4">Balenie na expedícii</td>
         </tr>
         <tr>
-            <td colspan="2">Photo 1 placeholder</td>
-            <td colspan="2">Photo 2 placeholder</td>
-            <td colspan="2">Photo 3 placeholder</td>
-            <td colspan="2">Photo 4 placeholder</td>
+            <td colspan="4">
+                {% if standard.input_photos.all %}
+                    {% for photo in standard.input_photos.all %}
+                        <img src='{{ photo.photo.url }}' alt='Balenie na príjme' height="250px">
+                    {% endfor %}
+                {% else %}
+                    Žiadne fotky
+                {% endif %}
+            </td>
+            <td colspan="4">
+                {% if standard.output_photos.all %}
+                    {% for photo in standard.output_photos.all %}
+                        <img src='{{ photo.photo.url }}' alt='Balenie na výstupe' height="250px">
+                    {% endfor %}
+                {% else %}
+                    Žiadne fotky
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                OPP:
+            </td>
+            <td colspan="7">
+                {% if standard.tools.all %}
+                    {% for photo in standard.tools.all %}
+                        <img src='{{ photo.photo.url }}' alt='OPP' height="50px">
+                    {% endfor %}
+                {% else %}
+                    Žiadne fotky
+                {% endif %}
+            </td>
         </tr>
         <tr>
             <td>Typ balenia:</td>
-            <td>{{ standard.package_type_in }}</td>
+            <td>{{ standard.input_type_of_package }}</td>
             <td>Počet boxov na palete:</td>
-            <td>{{ standard.boxes_on_pallet_in }}</td>
+            <td>{{ standard.input_count_of_boxes_on_pallet }}</td>
             <td>Typ balenia:</td>
-            <td>{{ standard.package_type_out }}</td>
+            <td>{{ standard.output_type_of_package }}</td>
             <td>Počet boxov na palete:</td>
-            <td>{{ standard.boxes_on_pallet_out }}</td>
+            <td>{{ standard.output_count_of_boxes_on_pallet }}</td>
         </tr>
         <tr>
             <td>Počet kusov v balení:</td>
-            <td>{{ standard.pcs_package_in }}</td>
+            <td>{{ standard.input_count_of_items_in_package }}</td>
             <td>Počet kusov na palete:</td>
-            <td>{{ standard.pcs_on_pallet_in }}</td>
+            <td>{{ standard.input_count_of_items_on_pallet }}</td>
             <td>Počet kusov v balení:</td>
-            <td>{{ standard.pcs_package_out }}</td>
+            <td>{{ standard.output_count_of_items_in_package }}</td>
             <td>Počet kusov na palete:</td>
-            <td>{{ standard.pcs_on_pallet_out }}</td>
+            <td>{{ standard.output_count_of_items_on_pallet }}</td>
         </tr>
         <tr>
             <td>Počet kusov na 1 pohyb:</td>
-            <td>{{ standard.pcs_per_move }}</td>
+            <td>{{ standard.items_per_move }}</td>
             <td>Jednotková váha:</td>
             <td>{{ standard.unit_weight }}</td>
             <td>Čas prebalu:</td>
-            <td>{{ standard.repacking_time }}</td>
+            <td>{{ standard.repacking_duration }}</td>
             <td colspan="2">Poznámka:</td>
         </tr>
         <tr>
-            <td colspan="8">{{ standard.remark }}</td>
+            <td colspan="8">{{ standard.instructions }}</td>
         </tr>
     </table>
 

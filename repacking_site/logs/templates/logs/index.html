@@ -9,7 +9,6 @@
     {% if log_list %}
         <table>
                 <tr>
-                    <th> Id </th>
                     <th>Používateľ</th>
                     <th>Priorita</th>
 
@@ -20,7 +19,6 @@
             {% for log in log_list %}
 
                     <tr>
-                        <td> Id 1.</td>
                         <td>{{ log.user }} </td>
                         <td>{{ log.priority }}</td>
                         <td>{{ log.action_time }}</td>
@@ -31,7 +29,7 @@
             {% endfor %}
         </table>
     {% else %}
-            <p>Žiadne účty nie sú k dispozícií.</p>
+            <p>Žiadne logy nie sú k dispozícií.</p>
     {% endif %}
 
 {% endblock %}
