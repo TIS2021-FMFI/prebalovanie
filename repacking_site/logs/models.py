@@ -28,5 +28,22 @@ class Log(models.Model):
     def make_log(app, priority, user, text):
         Log(app=app, priority=priority, user=user, text=text).save()
 
+    @staticmethod
+    def filter_and_order_logs_by_get(get):
+        order_by = get.get('order_by', "action_time")
+        try:
+            if order_by[0] == '-':
+                Log._meta.get_field(order_by[1:])
+            else:
+                Log._meta.get_field(order_by)
+        except:
+            order_by = "action_time"
+        logs = Log.objects.filter(
+            text__contains=get.get('text', ""),
+            priority__contains=get.get('priority', ""),
+            app__contains=get.get('app', ""),
+        ).order_by(order_by)
+        return logs
+
     def __str__(self):
         return str(self.app) + ", " + str(self.priority) + ", " + str(self.text) + ", " + str(self.action_time)

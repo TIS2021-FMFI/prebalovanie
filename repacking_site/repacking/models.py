@@ -64,4 +64,4 @@ class RepackHistory(models.Model):
     users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='users')
 
     def __str__(self):
-        return str(self.repacking_standard) + ", " + str(self.repack_start)
+        return f'standard: sku:{str(self.repacking_standard)}, cofor:{str(self.repack_start)}'
