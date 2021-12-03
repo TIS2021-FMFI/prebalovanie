@@ -30,6 +30,7 @@ class Log(models.Model):
 
     @staticmethod
     def filter_and_order_logs_by_get(get):
+        # TODO filter by username
         order_by = get.get('order_by', "action_time")
         try:
             if order_by[0] == '-':
