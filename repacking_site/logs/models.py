@@ -30,10 +30,11 @@ class Log(models.Model):
 
     @staticmethod
     def filter_and_order_logs_by_get(get):
-        # TODO filter by username
         order_by = get.get('order_by', "action_time")
         try:
-            if order_by[0] == '-':
+            if order_by in ('user__username', '-user__username'):
+                pass
+            elif order_by[0] == '-':
                 Log._meta.get_field(order_by[1:])
             else:
                 Log._meta.get_field(order_by)
@@ -43,6 +44,7 @@ class Log(models.Model):
             text__contains=get.get('text', ""),
             priority__contains=get.get('priority', ""),
             app__contains=get.get('app', ""),
+            user__username__contains=get.get('username', ""),
         ).order_by(order_by)
         return logs
 
