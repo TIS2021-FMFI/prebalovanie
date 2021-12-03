@@ -51,6 +51,26 @@ class RepackingStandard(models.Model):
         except RepackingStandard.DoesNotExist:
             return None
 
+    @staticmethod
+    def filter_and_order_repacking_standard_by_get(get):
+        order_by = get.get('order_by', "created")
+        try:
+            if order_by[0] == '-':
+                RepackingStandard._meta.get_field(order_by[1:])
+            else:
+                RepackingStandard._meta.get_field(order_by)
+        except:
+            order_by = "created"
+        repacking_standards = RepackingStandard.objects.filter(
+            SKU__contains=get.get('SKU', ""),
+            COFOR__contains=get.get('COFOR', ""),
+            supplier__contains=get.get('supplier', ""),
+            destination__contains=get.get('destination', ""),
+            input_type_of_package__contains=get.get('input_type_of_package', ""),
+            output_type_of_package__contains=get.get('output_type_of_package', "")
+        ).order_by(order_by)
+        return repacking_standards
+
 
 class RepackHistory(models.Model):
     repacking_standard = models.ForeignKey(RepackingStandard,

@@ -36,7 +36,7 @@ def history(request):
 
 def show_standards(request):
     cancel_sessions(request)
-    repacking_standards_list = RepackingStandard.objects.all()
+    repacking_standards_list = RepackingStandard.filter_and_order_repacking_standard_by_get(request.GET)
     context = {"repacking_standards_list": repacking_standards_list}
     return render(request, 'repacking/standards.html', context)
 
