@@ -64,14 +64,24 @@ class LogModelTests(TestCase):
         self.assertEquals(logs[1], log1)
         self.assertEquals(len(logs), 2)
 
-    def test_order_reverse_repacking_standard(self):
+    def test_order_reverse_logs(self):
         text1 = "abc"
+        time1 = datetime.datetime(2010, 10, 10)
         log1 = Log(text=text1)
         log1.save()
 
+        # workaround because of auto_now on created field
+        Log.objects.filter(text=text1).update(action_time=time1)
+        log1.created = time1
+
         text2 = 'xyz'
+        time2 = datetime.datetime(2014, 12, 12)
         log2 = Log(text=text2)
         log2.save()
+
+        # workaround because of auto_now on created field
+        Log.objects.filter(text=text2).update(action_time=time2)
+        log1.created = time2
 
         logs = Log.filter_and_order_logs_by_get({'order_by': '-text'})
         self.assertEquals(logs[0], log2)
@@ -79,11 +89,11 @@ class LogModelTests(TestCase):
         self.assertEquals(len(logs), 2)
 
         logs = Log.filter_and_order_logs_by_get({'order_by': '-action_time'})
-        self.assertEquals(logs[0], log1)
-        self.assertEquals(logs[1], log2)
+        self.assertEquals(logs[0], log2)
+        self.assertEquals(logs[1], log1)
         self.assertEquals(len(logs), 2)
 
-    def test_filter_repacking_standard(self):
+    def test_filter_logs(self):
         text1 = "abcd"
         priority1 = Log.Priority.TRACE
         app1 = Log.App.REPACKING
