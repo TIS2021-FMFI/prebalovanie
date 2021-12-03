@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+    <h1>Používateľské účty</h1>
+         {% if logs_sys_l %}
+        <table>
+                <tr>
+                    <th>Akcia</th>
+                    <th>Login</th>
+                    <th>Meno a priezvisko</th>
+                    <th>Identifikačné číslo</th>
+                    <th>Skupina</th>
+                    <th>Zablokovanie</th>
+                </tr>
+        {% for l in logs_sys_l %}
+
+                    <tr>
+                        <td>
+                            <button type="button">Editovať</button>
+                            <button type="button">Vymazať</button>
+                            <button type="button">Blokovať</button>
+                            <button type="button">Reset hesla</button>
+                        </td>
+                        <td>{{ users.login }}</td>
+                        <td>{{ users.full_name }}</td>
+                        <td>{{ users.id }}</td>
+                        <td>{{ groups.name }}</td>
+                        <td>{{ users.active }}</td>
+
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>Žiadne používateľské účty nie sú k dispozícií.</p>
+        {% endif %}
+
+{% endblock %}
