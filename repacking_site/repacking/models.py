@@ -53,7 +53,6 @@ class RepackingStandard(models.Model):
 
     @staticmethod
     def filter_and_order_repacking_standard_by_get(get):
-        # TODO reverse ordering
         order_by = get.get('order_by', "created")
         try:
             if order_by[0] == '-':
