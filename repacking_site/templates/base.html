@@ -10,10 +10,17 @@
 
 <body>
 
+<!-- Navod implementacie dropdown menu v static man_drop_menu.txt -->
+
 <nav>
-    
-	<a href="/"><img id="gefco" src="{% static 'GEFCO_Logo.svg' %}" alt="GEFCO logo"></a></li>
-	<a href="/">Domov</a></li>
+	<a href="/"><img id="gefco" src="{% static 'GEFCO_Logo.svg' %}" alt="GEFCO logo"></a>
+    <div class="dropdown">
+        <button class="dropbtn">Domov</button>
+        <div class="dropdown-content">
+            <a href="/">Domov</a>
+            <a href="#">Nieco dalsie</a>
+        </div>
+    </div>
 	<a href="/repacking/sku">Nastavenie SKU</a>
     <a href="/repacking/history">História prebalov</a>
     <a href="/repacking/standards/new/">Nový štandard</a>
