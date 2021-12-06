@@ -13,7 +13,7 @@ body{
 }
 
 .content{
-    margin-top: 80px;
+    margin-top: 60px;
     margin-bottom: 80px;
 }
 
@@ -21,18 +21,64 @@ a{
     text-decoration: none;
 }
 
-nav {
+/* navigation css */
+
+nav{
     background-color: #00538b;
     margin: 0px 0px 20px 0px;
-    padding: 10px;
     position: fixed;
-    width: 99%;
     top: 0;
     left: 0;
+    width: 100%;
+    min-width: 500px;
+    z-index: 1;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
 }
 
 nav #gefco{
     width: 80px;
+}
+
+.dropbtn{
+    background-color: rgba(0,0,0,0);
+    color: white;
+    font-family: UniviaPro-regular;
+    font-size: 20px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content{
+    display: none;
+    position: absolute;
+    background-color: rgb(0, 82, 139);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a{
+    font-size: 20px;
+    color: #ffffff;
+    padding: 12px 16px;
+    display: block;
+}
+
+.dropdown-content a:hover{
+    background-color: gray;
+}
+
+.dropdown:hover .dropdown-content{
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    color: #ffcd00;
 }
 
 nav a{
@@ -47,7 +93,11 @@ nav a:hover{
 
 nav .user{
     float: right;
+    padding: 10px 0px;
+    margin-right: 20px;
 }
+
+/* navigation css */
 
 h1{
     margin-left: 20px;
@@ -60,11 +110,12 @@ footer{
     position: fixed;
     left: 0;
     bottom: 0;
-    width: 99%;
+    width: 100%;
 }
 
 footer p{
     display: inline;
+    margin-left: 20px;
     float: left;
 }
 
@@ -82,22 +133,45 @@ table{
     margin-right: auto;
 }
 
-table, td, tr, th{
-    border: 1px solid black;
-    width: 50%;
+table{
+    border-collapse: collapse;
+    border: 1px solid rgba(0,0,0,0.25);
     text-align: center;
     padding: 8px;
+    min-width: 600px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
+
+td, tr, th{
+    text-align: center;
+    padding: 12px;
+    margin: 0;
+}
+
+td, th{
+    border-right: 1px solid #777777;
 }
 
 th{
-    border: 1px solid black;
-    background-color: #aaaaaa;
+    position: sticky;
+    z-index: 0;
+    top: 43px;
+    border-bottom: 3px solid rgba(0,0,0,0.55);
+    background-color: #ffcd00;
     font-weight: bold;
     font-size: 24px;
 }
 
+td:last-child, th:last-child{
+    border-right: none;
+}
+
 tr:nth-child(even){
     background-color: #f2f2f2;
+}
+
+tr:hover{
+    background-color: rgba(256,205,0,0.5);
 }
 
 /* end of tables css */

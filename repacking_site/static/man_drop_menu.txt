@@ -1,0 +1,11 @@
+toto je predloha jednej polozky dropdown menu
+
+<div class="dropdown">
+    <button class="dropbtn"> YOUR_MENU_NAME_HERE </button>
+    <div class="dropdown-content">
+        <a href="YOUR_LINK_HERE"> LINK_NAME_HERE </a>
+        <a href="YOUR_LINK_HERE"> LINK_NAME_HERE </a>
+        ....
+        ....
+    </div>
+</div>
