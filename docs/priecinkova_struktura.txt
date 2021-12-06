@@ -1,0 +1,60 @@
+repacking_site:
+	logs:
+		migrations: - priečinok s python scriptami, ktoré vytvárajú databázu (migráciami) 
+		templates: - priečinok s html templatami pre tento modul
+			logs: - priečinok s html templatami pre tento modul
+				....html - templaty
+		urls.py - zoznam urliek po poradí v akom sa majú hľadať
+		views.py - funkcie, ktoré sa volajú z urls.py, ktorých úlohou je získať dáta pre html template, a poslať ich rendereru
+		admin.py - registrácia tabuliek, ktoré sa dajú upravovať z django admina
+		forms.py - definícia formov, a polí, ktoré v nich sú
+		models.py - definícia tabuliek a stĺpcov, ktoré sú v tomto module
+		tests.py - testy 
+	
+	mails:
+		migrations: - priečinok s python scriptami, ktoré vytvárajú databázu (migráciami) 
+		templates: - priečinok s html templatami pre tento modul
+			mails: - priečinok s html templatami pre tento modul
+				....html - templaty
+		urls.py - zoznam urliek po poradí v akom sa majú hľadať
+		views.py - funkcie, ktoré sa volajú z urls.py, ktorých úlohou je získať dáta pre html template, a poslať ich rendereru
+		admin.py - registrácia tabuliek, ktoré sa dajú upravovať z django admina
+		forms.py - definícia formov, a polí, ktoré v nich sú
+		models.py - definícia tabuliek a stĺpcov, ktoré sú v tomto module
+		tests.py - testy 
+		
+	media: - priečinok s fotkami
+		photos: - fotky k prebalom
+			%year:
+				%month:
+					....jpg
+		tools: - ikonky OPP
+			%year:
+				%month:
+					....jpg
+	
+	repacking: - modul (app), ktorý sa zaoberá prebaľovaním
+		migrations: - priečinok s python scriptami, ktoré vytvárajú databázu (migráciami) 
+		templates: - priečinok s html templatami pre tento modul
+			repacking: - priečinok s html templatami pre tento modul
+				....html - templaty
+		urls.py - zoznam urliek po poradí v akom sa majú hľadať
+		views.py - funkcie, ktoré sa volajú z urls.py, ktorých úlohou je získať dáta pre html template, a poslať ich rendereru
+		admin.py - registrácia tabuliek, ktoré sa dajú upravovať z django admina
+		forms.py - definícia formov, a polí, ktoré v nich sú
+		models.py - definícia tabuliek a stĺpcov, ktoré sú v tomto module
+		tests.py - testy 
+	
+	repacking_site: - priečinok s django súbormi pre celú stránku
+		urls.py - zoznam urliek po poradí v akom sa majú hľadať
+		settings.py - django súbor s nastaveniami celej stránky
+	
+	static: - statické súbory, ktoré sú spoločné pre celú stránku
+		style.css - css súbor pre celú stránku
+		logá, fonty...
+	
+	templates: - priečinok s html templatami, ktoré sú spoločné pre celú stránku 
+		base.html - html template, ktorý obsahuje hlavičku, pätičku, import csska
+	
+	manage.py - django súbor, pomocou ktorého sa spúšťa stránka, migruje db. Použitie: "python manage.py runserver", "python manage.py migrate", ...
+		
