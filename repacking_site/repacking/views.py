@@ -30,7 +30,7 @@ def detail(request, sku_code):
 
 
 def history(request):
-    repackings_list = RepackHistory.objects.all()
+    repackings_list = RepackHistory.filter_and_order_repacking_history_by_get(request.GET)
     context = {"repackings_list": repackings_list}
     return render(request, 'repacking/history.html', context)
 

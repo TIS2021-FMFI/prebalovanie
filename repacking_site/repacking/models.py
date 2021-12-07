@@ -85,3 +85,24 @@ class RepackHistory(models.Model):
 
     def __str__(self):
         return f'standard: sku:{str(self.repacking_standard)}, cofor:{str(self.repack_start)}'
+
+    @staticmethod
+    def filter_and_order_repacking_history_by_get(get):
+        order_by = get.get('order_by', "repack_start")
+        try:
+            if order_by[0] == '-':
+                RepackHistory._meta.get_field(order_by[1:])
+            else:
+                RepackHistory._meta.get_field(order_by)
+        except:
+            order_by = "repack_start"
+        repacking_history = RepackHistory.objects.filter(
+            idp__contains=get.get('idp', ""),
+            repacking_standard__SKU__contains=get.get('repacking_standard__SKU', ""),
+            repacking_standard__COFOR__contains=get.get('repacking_standard__COFOR', ""),
+            repacking_standard__supplier__contains=get.get('repacking_standard__supplier', ""),
+            repacking_standard__destination__contains=get.get('repacking_standard__destination', ""),
+            repacking_standard__input_type_of_package__contains=get.get('repacking_standard__input_type_of_package', ""),
+            repacking_standard__output_type_of_package__contains=get.get('repacking_standard__output_type_of_package', "")
+        ).order_by(order_by)
+        return repacking_history
