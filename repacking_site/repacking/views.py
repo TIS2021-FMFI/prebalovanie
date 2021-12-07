@@ -1,10 +1,10 @@
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 
-from .models import *
-from .forms import *
-
 from logs.models import Log
+from .filters import *
+from .forms import *
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 repack_start_key = 'repack_start'
 repack_last_start_key = 'repack_last_start'
@@ -37,8 +37,26 @@ def history(request):
 
 def show_standards(request):
     cancel_sessions(request)
-    repacking_standards_list = RepackingStandard.filter_and_order_repacking_standard_by_get(request.GET)
-    context = {"repacking_standards_list": repacking_standards_list}
+    repacking_standards_list_all = RepackingStandard.filter_and_order_repacking_standard_by_get(request.GET)
+    # inspiracia: https://www.youtube.com/watch?v=G-Rct7Na0UQ
+    standards_filter = RepackingStandardFilter(request.GET, queryset=repacking_standards_list_all)
+    repacking_standards_list_filtered = standards_filter.queryset
+
+    # paginacia  https://www.youtube.com/watch?v=N-PB-HMFmdo
+    # pocet udajov na stranke https://stackoverflow.com/questions/57487336/change-value-for-paginate-by-on-the-fly
+    paginate_by = request.GET.get('paginate_by', 10) or 10
+    p = Paginator(repacking_standards_list_filtered, paginate_by)
+    page = request.GET.get('page')
+
+    try:
+        repacking_standards_list = p.get_page(page)
+    except PageNotAnInteger:
+        repacking_standards_list = p.get_page(1)
+    except EmptyPage:
+        repacking_standards_list = p.get_page(1)
+
+    context = {"repacking_standards_list": repacking_standards_list,
+               'standards_filter': standards_filter, 'paginate_by': paginate_by}
     return render(request, 'repacking/standards.html', context)
 
 
