@@ -3,11 +3,14 @@
 
 {% block content %}
 
+    <script src="{% static 'add-operator.js' %}"></script>
+
     <h1>Spustenie prebaľovania</h1>
 
-    <form method="post">
+    <form method="post" id="repack-start">
         {% csrf_token %}
         {{ form }}
+        <button type="button" onclick="add_operator()" id="add-operator">+</button>
         <button type="submit">Začni prebal</button>
     </form>
 

@@ -32,4 +32,4 @@ class RepackingStandardForm(forms.Form):
 class RepackingForm(forms.Form):
     SKU = forms.CharField(max_length=50, required=True)
     IDP = forms.CharField(max_length=50, required=True)
-    operator = forms.CharField(max_length=50, required=True)
+    operator_1 = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'id': 'id_operator-1'}))

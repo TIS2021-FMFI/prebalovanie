@@ -44,11 +44,17 @@ def start(request):
             if RepackingStandard.get_repacking_standard_by_sku(form.cleaned_data['SKU']) is None:
                 raise FileExistsError("RepackingForm standard w/ this SKU does not exists")
 
-            for operator in [form.cleaned_data["operator"]]:
-                Employee.objects.get(barcode_number=operator)
+            operators = set()
+            i = 1
+            while f'operator_{i}' in request.POST.keys():
+                operator = request.POST[f'operator_{i}']
+                if operator != '':
+                    Employee.objects.get(barcode_number=operator)
+                    operators.add(operator)
+                i += 1
 
             return HttpResponseRedirect(
-                f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["IDP"]}/{",".join([form.cleaned_data["operator"]])}/')
+                f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["IDP"]}/{",".join(operators)}/')
 
     else:
         form = RepackingForm()
@@ -138,7 +144,8 @@ def pause(request, sku_code, idp_code, operators):
     repack_paused = datetime.now()
     if request.session.get(repack_duration_key, None) is not None:
         last_repack_start = request.session.get(repack_last_start_key)
-        request.session[repack_duration_key] = request.session.get(repack_duration_key) + (repack_paused - datetime.strptime(last_repack_start, repack_time_format)).total_seconds()
+        request.session[repack_duration_key] = request.session.get(repack_duration_key) + (
+                repack_paused - datetime.strptime(last_repack_start, repack_time_format)).total_seconds()
 
     else:
         Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "RepackingForm without session saved.")
