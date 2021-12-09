@@ -28,7 +28,15 @@ def repacking(request, sku_code, idp_code, operators):
         request.session[repack_duration_key] = 0
     request.session[repack_last_start_key] = datetime.now().strftime(repack_time_format)
 
-    return render(request, 'repacking/detail.html', {'standard': standard, 'idp': idp_code, 'operators': operators})
+    return render(request, 'repacking/repack.html', {'standard': standard, 'idp': idp_code, 'operators': operators})
+
+
+def detail(request, sku_code):
+    cancel_sessions(request)
+    standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
+    if standard is None:
+        raise Http404("Standard does not exist")
+    return render(request, 'repacking/detail.html', {'standard': standard})
 
 
 def history(request):
@@ -136,7 +144,7 @@ def cancel_sessions(request):
         pass
 
 
-def cancel(request, sku_code):
+def cancel(request, sku_code, idp_code, operators):
     cancel_sessions(request)
     return HttpResponseRedirect('/repacking/')
 

@@ -4,6 +4,7 @@ from django.conf import settings
 
 from employees.models import *
 
+
 class Tools(models.Model):
     photo = models.ImageField(upload_to='tools/%Y/%m/')
 
@@ -103,7 +104,9 @@ class RepackHistory(models.Model):
             repacking_standard__COFOR__contains=get.get('repacking_standard__COFOR', ""),
             repacking_standard__supplier__contains=get.get('repacking_standard__supplier', ""),
             repacking_standard__destination__contains=get.get('repacking_standard__destination', ""),
-            repacking_standard__input_type_of_package__contains=get.get('repacking_standard__input_type_of_package', ""),
-            repacking_standard__output_type_of_package__contains=get.get('repacking_standard__output_type_of_package', "")
+            repacking_standard__input_type_of_package__contains=get.get('repacking_standard__input_type_of_package',
+                                                                        ""),
+            repacking_standard__output_type_of_package__contains=get.get('repacking_standard__output_type_of_package',
+                                                                         "")
         ).order_by(order_by)
         return repacking_history
