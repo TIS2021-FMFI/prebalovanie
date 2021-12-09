@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'employees.apps.EmployeesConfig',
     'repacking.apps.RepackingConfig',
     'mails.apps.MailsConfig',
     'logs.apps.LogsConfig',

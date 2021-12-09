@@ -2,6 +2,8 @@ from django.db import models
 from datetime import *
 from django.conf import settings
 
+from employees.models import *
+
 
 class Tools(models.Model):
     photo = models.ImageField(upload_to='tools/%Y/%m/')
@@ -41,7 +43,7 @@ class RepackingStandard(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='creator')
 
     def __str__(self):
-        return str(self.SKU) + " " + str(self.COFOR)
+        return f'sku: {str(self.SKU)} cofor:{str(self.COFOR)}'
 
     @staticmethod
     def get_repacking_standard_by_sku(sku_code):
@@ -81,7 +83,7 @@ class RepackHistory(models.Model):
     repack_finish = models.DateTimeField(auto_now=False)
     repack_duration = models.DurationField(default=timedelta(minutes=0))
     idp = models.CharField(max_length=50)
-    users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='users')
+    users = models.ManyToManyField(Employee, related_name='users')
 
     def __str__(self):
         return f'standard: sku:{str(self.repacking_standard)}, cofor:{str(self.repack_start)}'
@@ -102,7 +104,9 @@ class RepackHistory(models.Model):
             repacking_standard__COFOR__contains=get.get('repacking_standard__COFOR', ""),
             repacking_standard__supplier__contains=get.get('repacking_standard__supplier', ""),
             repacking_standard__destination__contains=get.get('repacking_standard__destination', ""),
-            repacking_standard__input_type_of_package__contains=get.get('repacking_standard__input_type_of_package', ""),
-            repacking_standard__output_type_of_package__contains=get.get('repacking_standard__output_type_of_package', "")
+            repacking_standard__input_type_of_package__contains=get.get('repacking_standard__input_type_of_package',
+                                                                        ""),
+            repacking_standard__output_type_of_package__contains=get.get('repacking_standard__output_type_of_package',
+                                                                         "")
         ).order_by(order_by)
         return repacking_history

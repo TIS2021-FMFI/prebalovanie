@@ -27,3 +27,9 @@ class RepackingStandardForm(forms.Form):
     output_photos = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True}))
 
     tools = forms.ImageField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+
+class RepackingForm(forms.Form):
+    SKU = forms.CharField(max_length=50, required=True)
+    IDP = forms.CharField(max_length=50, required=True)
+    operator_1 = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'id': 'id_operator-1'}))
