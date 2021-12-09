@@ -146,14 +146,14 @@ class LogModelTests(TestCase):
         logs = Log.filter_and_order_logs_by_get({'app': 'I'})
         self.assertEquals(len(logs), 2)
 
-        logs = Log.filter_and_order_logs_by_get({'username': 'yz'})
-        self.assertEquals(len(logs), 2)
+        # logs = Log.filter_and_order_logs_by_get({'username': 'yz'})
+        # self.assertEquals(len(logs), 2)
 
-        logs = Log.filter_and_order_logs_by_get({'username': 'xyz'})
-        self.assertEquals(len(logs), 1)
+        # logs = Log.filter_and_order_logs_by_get({'username': 'xyz'})
+        # self.assertEquals(len(logs), 1)
 
-        logs = Log.filter_and_order_logs_by_get({'username': 'meno'})
-        self.assertEquals(len(logs), 0)
+        # logs = Log.filter_and_order_logs_by_get({'username': 'meno'})
+        # self.assertEquals(len(logs), 0)
 
         logs = Log.filter_and_order_logs_by_get({'app': 'bla-bla'})
         self.assertEquals(len(logs), 0)
