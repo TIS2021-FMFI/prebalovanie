@@ -11,6 +11,7 @@
         {% csrf_token %}
         {{ form }}
         <button type="button" onclick="add_operator()" id="add-operator">+</button>
+        <button type="button" onclick="remove_last_operator()" id="remove-operator">X</button>
         <button type="submit">Začni prebal</button>
     </form>
 

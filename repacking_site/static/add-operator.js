@@ -31,3 +31,13 @@ function add_operator(){
     form.insertBefore(new_label, button);
     form.insertBefore(new_input, button);
 }
+
+function remove_last_operator(){
+	let id = next_operator_number()-1;
+	if(id===1){
+		return;
+	}
+	let form = document.getElementById('repack-start');
+	form.removeChild(document.getElementById('id_operator-'+id).previousElementSibling);
+	form.removeChild(document.getElementById('id_operator-'+id));
+}
