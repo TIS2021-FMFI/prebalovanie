@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('text', models.CharField(default='', max_length=500)),
                 ('action_time', models.DateTimeField(auto_now=True)),
                 ('priority', models.CharField(choices=[('TRACE', 'Trace'), ('DEBUG', 'Debug'), ('INFO', 'Info'), ('WARNING', 'Warning'), ('ERROR', 'Error'), ('FATAL', 'Fatal')], max_length=10)),
-                ('app', models.CharField(choices=[('REPACKING', 'Repacking'), ('USER_MANAGMENT', 'User Managment'), ('MAIL_REPORTS', 'Mail Reports'), ('LOGGING', 'Logging')], max_length=15)),
+                ('app', models.CharField(choices=[('REPACKING', 'RepackingForm'), ('USER_MANAGMENT', 'User Managment'), ('MAIL_REPORTS', 'Mail Reports'), ('LOGGING', 'Logging')], max_length=15)),
                 ('user', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='user', to=settings.AUTH_USER_MODEL)),
             ],
         ),

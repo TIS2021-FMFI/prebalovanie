@@ -1,6 +1,7 @@
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 
+from employees.models import *
 from logs.models import Log
 from .filters import *
 from .forms import *
@@ -17,7 +18,7 @@ def index(request):
     return render(request, 'repacking/index.html')
 
 
-def detail(request, sku_code):
+def repacking(request, sku_code, idp_code, operators):
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
     if standard is None:
         raise Http404("Standard does not exist")
@@ -26,13 +27,30 @@ def detail(request, sku_code):
         request.session[repack_start_key] = datetime.now().strftime(repack_time_format)
         request.session[repack_duration_key] = 0
     request.session[repack_last_start_key] = datetime.now().strftime(repack_time_format)
-    return render(request, 'repacking/detail.html', {'standard': standard})
+
+    return render(request, 'repacking/detail.html', {'standard': standard, 'idp': idp_code, 'operators': operators})
 
 
 def history(request):
     repackings_list = RepackHistory.filter_and_order_repacking_history_by_get(request.GET)
     context = {"repackings_list": repackings_list}
     return render(request, 'repacking/history.html', context)
+
+
+def start(request):
+    if request.method == 'POST':
+        form = RepackingForm(request.POST)
+        if form.is_valid():
+            if RepackingStandard.get_repacking_standard_by_sku(form.cleaned_data['SKU']) is None:
+                raise FileExistsError("RepackingForm standard w/ this SKU does not exists")
+
+            return HttpResponseRedirect(
+                f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["IDP"]}/{",".join([form.cleaned_data["operator"]])}/')
+
+    else:
+        form = RepackingForm()
+
+    return render(request, 'repacking/start.html', {'form': form})
 
 
 def show_standards(request):
@@ -60,7 +78,8 @@ def show_standards(request):
     return render(request, 'repacking/standards.html', context)
 
 
-def finish(request, sku_code):
+def finish(request, sku_code, idp_code, operators):
+    print(sku_code, idp_code, operators)
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
     if standard is None:
         raise Http404("Standard does not exist")
@@ -68,7 +87,7 @@ def finish(request, sku_code):
     Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, None, "Repack finished")
 
     repack_finish = datetime.now()
-    repack = RepackHistory(repacking_standard=standard, idp=0, repack_finish=repack_finish)
+    repack = RepackHistory(repacking_standard=standard, idp=idp_code, repack_finish=repack_finish)
     if request.session.get(repack_start_key, False):
         repack.repack_start = request.session.get(repack_start_key)
         last_repack_start = request.session.get(repack_last_start_key)
@@ -78,11 +97,15 @@ def finish(request, sku_code):
         repack.repack_duration = timedelta(seconds=repack_duration)
 
     else:
-        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "Repacking without session finished.")
+        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "RepackingForm without session finished.")
 
     cancel_sessions(request)
 
     repack.save()
+
+    for operator in operators.split(','):
+        repack.users.add(Employee.objects.get(barcode_number=operator))
+
     return HttpResponseRedirect('/repacking/')
 
 
@@ -109,7 +132,7 @@ def cancel(request, sku_code):
     return HttpResponseRedirect('/repacking/')
 
 
-def pause(request, sku_code):
+def pause(request, sku_code, idp_code, operators):
     repack_paused = datetime.now()
     if request.session.get(repack_duration_key, None) is not None:
         last_repack_start = request.session.get(repack_last_start_key)
@@ -118,9 +141,9 @@ def pause(request, sku_code):
                                                                                   repack_time_format)).total_seconds()
 
     else:
-        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "Repacking without session saved.")
+        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "RepackingForm without session saved.")
 
-    context = {'sku_code': sku_code}
+    context = {'sku_code': sku_code, 'idp_code': idp_code, 'operators': operators}
     return render(request, 'repacking/pause.html', context)
 
 
@@ -129,7 +152,7 @@ def make_new_standard(request):
         form = RepackingStandardForm(request.POST, request.FILES)
         if form.is_valid() and form.cleaned_data['repacking_duration'] is not None:
             if RepackingStandard.get_repacking_standard_by_sku(form.cleaned_data['SKU']) is not None:
-                raise FileExistsError("Repacking standard w/ this SKU already exists")
+                raise FileExistsError("RepackingForm standard w/ this SKU already exists")
 
             standard = RepackingStandard(
                 SKU=form.cleaned_data['SKU'],
@@ -167,7 +190,7 @@ def make_new_standard(request):
                     tool.save()
                     standard.tools.add(tool)
 
-            Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, None, "Repacking standard made")
+            Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, None, "RepackingForm standard made")
 
             return HttpResponseRedirect("/")
 

@@ -2,6 +2,7 @@ from django.db import models
 from datetime import *
 from django.conf import settings
 
+from employees.models import *
 
 class Tools(models.Model):
     photo = models.ImageField(upload_to='tools/%Y/%m/')
@@ -81,7 +82,7 @@ class RepackHistory(models.Model):
     repack_finish = models.DateTimeField(auto_now=False)
     repack_duration = models.DurationField(default=timedelta(minutes=0))
     idp = models.CharField(max_length=50)
-    users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='users')
+    users = models.ManyToManyField(Employee, related_name='users')
 
     def __str__(self):
         return f'standard: sku:{str(self.repacking_standard)}, cofor:{str(self.repack_start)}'
