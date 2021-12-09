@@ -42,7 +42,7 @@ class RepackingStandard(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='creator')
 
     def __str__(self):
-        return str(self.SKU) + " " + str(self.COFOR)
+        return f'sku: {str(self.SKU)} cofor:{str(self.COFOR)}'
 
     @staticmethod
     def get_repacking_standard_by_sku(sku_code):

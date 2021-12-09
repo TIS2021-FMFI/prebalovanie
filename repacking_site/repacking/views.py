@@ -32,12 +32,14 @@ def repacking(request, sku_code, idp_code, operators):
 
 
 def history(request):
+    cancel_sessions(request)
     repackings_list = RepackHistory.filter_and_order_repacking_history_by_get(request.GET)
     context = {"repackings_list": repackings_list}
     return render(request, 'repacking/history.html', context)
 
 
 def start(request):
+    cancel_sessions(request)
     if request.method == 'POST':
         form = RepackingForm(request.POST)
         if form.is_valid():
@@ -88,7 +90,6 @@ def show_standards(request):
 
 
 def finish(request, sku_code, idp_code, operators):
-    print(sku_code, idp_code, operators)
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
     if standard is None:
         raise Http404("Standard does not exist")
@@ -155,6 +156,7 @@ def pause(request, sku_code, idp_code, operators):
 
 
 def make_new_standard(request):
+    cancel_sessions(request)
     if request.method == 'POST':
         form = RepackingStandardForm(request.POST, request.FILES)
         if form.is_valid() and form.cleaned_data['repacking_duration'] is not None:
