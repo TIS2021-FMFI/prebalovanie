@@ -13,27 +13,54 @@
 <!-- Navod implementacie dropdown menu v static man_drop_menu.txt -->
 
 <nav>
-	<a href="/"><img id="gefco" src="{% static 'GEFCO_Logo.svg' %}" alt="GEFCO logo"></a>
+    <a href="/"><img id="gefco" src="{% static 'GEFCO_Logo.svg' %}" alt="GEFCO logo"></a>
     <div class="dropdown">
-        <button class="dropbtn">Domov</button>
+        <button class="dropbtn">Hlavné údaje</button>
         <div class="dropdown-content">
-            <a href="/">Domov</a>
-            <a href="#">Nieco dalsie</a>
+            <a href="/repacking/sku/">Nastavenie SKU</a>
         </div>
     </div>
-	<a href="/repacking/sku">Nastavenie SKU</a>
-    <a href="/repacking/history">História prebalov</a>
-    <a href="/repacking/standards/new/">Nový štandard</a>
-    <a href="/logs/">Systémové logy</a>
+    <div class="dropdown">
+        <button class="dropbtn">Prebal</button>
+        <div class="dropdown-content">
+            <a href="#">Spustenie prebaľovania</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Operatíva</button>
+        <div class="dropdown-content">
+            <a href="/repacking/history">História prebaľovania</a>
+            <a href="#">Nastavenie exportov</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Prístup</button>
+        <div class="dropdown-content">
+            <a href="#">Používatelia</a>
+            <a href="#">Skupiny</a>
+            <a href="#">Práva</a>
+            <a href="#">Profil</a>
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Nastavenie</button>
+        <div class="dropdown-content">
+            <a href="/logs/">Udalosti</a>
+        </div>
+    </div>
+    {#	<a href="/repacking/sku">Nastavenie SKU</a>#}
+    {#    <a href="/repacking/history">História prebalov</a>#}
+    {#    <a href="/repacking/standards/new/">Nový štandard</a>#}
+    {#    <a href="/logs/">Systémové logy</a>#}
     <a class="user" href="#">LOGIN</a>
 
 </nav>
 <div class="content">
-{% block content %}
+    {% block content %}
 
 
 
-{% endblock %}
+    {% endblock %}
 </div>
 <footer>
     <p>(c) 2021, 3ML</p>

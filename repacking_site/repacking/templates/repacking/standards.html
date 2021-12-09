@@ -5,6 +5,46 @@
 
     <h1>Nastavenie SKU</h1>
 
+    <form method="get">
+        {{ standards_filter.form }}
+        <button type="submit">Vyhľadať</button>
+        <button type="button"><a href="/repacking/standards/">Vymazať</a></button>
+    </form>
+
+    <div class="btn-group">
+        <button type="button">Export</button>
+        <button type="button"><a href="/repacking/standards/new/">Pridať nový</a></button>
+    </div>
+
+    <form method="GET">
+        <select name="paginate_by" id="">
+            <option value="10">10</option>
+            <option value="20">10</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+        </select>
+        <input type="submit" value="Paginate">
+    </form>
+
+    <div class="pagination">
+    <span class="step-links">
+        {% if repacking_standards_list.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ repacking_standards_list.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            {{ repacking_standards_list.number }}/
+            {{ repacking_standards_list.paginator.num_pages }}
+        </span>
+
+        {% if repacking_standards_list.has_next %}
+            <a href="?page={{ repacking_standards_list.next_page_number }}">next</a>
+            <a href="?page={{ repacking_standards_list.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+
     {% if repacking_standards_list %}
         <table>
             <tr>
@@ -26,6 +66,8 @@
 
                 <tr>
                     <td>
+                        {#                    zdroj: https://stackoverflow.com/questions/21916835/django-button-link/21917002  da sa to aj takto: https://stackoverflow.com/questions/48438575/call-django-on-html-button-click/48438962 #}
+                        <button type="button"><a href="/repacking/{{ standard.SKU }}/">Detail</a></button>
                         <button type="button">Editovať</button>
                         <button type="button">Vymazať</button>
                     </td>
@@ -47,5 +89,8 @@
     {% else %}
         <p>Žiadne štandardy nie sú k dispozícií.</p>
     {% endif %}
+
+
+
 
 {% endblock %}
