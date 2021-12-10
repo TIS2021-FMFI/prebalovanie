@@ -18,20 +18,20 @@ class RepackingStandard(models.Model):
     COFOR = models.CharField(max_length=50, default="")
     supplier = models.CharField(max_length=50, default="")
     destination = models.CharField(max_length=50, default="")
-    items_per_move = models.IntegerField(default=0)
+    items_per_move = models.PositiveIntegerField(default=0)
     unit_weight = models.DecimalField(max_digits=6, decimal_places=4, default=0)
     repacking_duration = models.DurationField(default=timedelta(minutes=0))
     instructions = models.CharField(max_length=1200, default="")
     tools = models.ManyToManyField(Tools, related_name='tools', blank=True)
 
-    input_count_of_items_in_package = models.IntegerField(default=0)
-    output_count_of_items_in_package = models.IntegerField(default=0)
+    input_count_of_items_in_package = models.PositiveIntegerField(default=0)
+    output_count_of_items_in_package = models.PositiveIntegerField(default=0)
 
-    input_count_of_boxes_on_pallet = models.IntegerField(default=0)
-    output_count_of_boxes_on_pallet = models.IntegerField(default=0)
+    input_count_of_boxes_on_pallet = models.PositiveIntegerField(default=0)
+    output_count_of_boxes_on_pallet = models.PositiveIntegerField(default=0)
 
-    input_count_of_items_on_pallet = models.IntegerField(default=0)
-    output_count_of_items_on_pallet = models.IntegerField(default=0)
+    input_count_of_items_on_pallet = models.PositiveIntegerField(default=0)
+    output_count_of_items_on_pallet = models.PositiveIntegerField(default=0)
 
     input_type_of_package = models.CharField(max_length=50, default="")
     output_type_of_package = models.CharField(max_length=50, default="")
@@ -83,7 +83,7 @@ class RepackHistory(models.Model):
     repack_finish = models.DateTimeField(auto_now=False)
     repack_duration = models.DurationField(default=timedelta(minutes=0))
     idp = models.CharField(max_length=50)
-    users = models.ManyToManyField(Employee, related_name='users')
+    users = models.ManyToManyField(User, related_name='users')
 
     def __str__(self):
         return f'standard: sku:{str(self.repacking_standard)}, cofor:{str(self.repack_start)}'

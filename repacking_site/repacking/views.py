@@ -59,7 +59,7 @@ def start(request):
             while f'operator_{i}' in request.POST.keys():
                 operator = request.POST[f'operator_{i}']
                 if operator != '':
-                    Employee.objects.get(barcode_number=operator)
+                    User.objects.get(barcode=operator)
                     operators.add(operator)
                 i += 1
 
@@ -122,7 +122,7 @@ def finish(request, sku_code, idp_code, operators):
     repack.save()
 
     for operator in operators.split(','):
-        repack.users.add(Employee.objects.get(barcode_number=operator))
+        repack.users.add(User.objects.get(barcode=operator))
 
     return HttpResponseRedirect('/repacking/start/')
 
