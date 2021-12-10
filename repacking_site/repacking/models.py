@@ -2,7 +2,7 @@ from django.db import models
 from datetime import *
 from django.conf import settings
 
-from employees.models import *
+from accounts.models import *
 
 
 class Tools(models.Model):

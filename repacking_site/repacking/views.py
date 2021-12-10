@@ -1,7 +1,7 @@
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 
-from employees.models import *
+from accounts.models import *
 from logs.models import Log
 from .filters import *
 from .forms import *
@@ -15,7 +15,7 @@ repack_time_format = '%Y-%m-%dT%H:%M:%S'
 
 def index(request):
     cancel_sessions(request)
-    return render(request, 'repacking/index.html')
+    return render(request, 'index.html')
 
 
 def repacking(request, sku_code, idp_code, operators):

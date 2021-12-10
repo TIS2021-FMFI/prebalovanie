@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'employees.apps.EmployeesConfig',
+    'accounts.apps.EmployeesConfig',
     'repacking.apps.RepackingConfig',
     'mails.apps.MailsConfig',
     'logs.apps.LogsConfig',
@@ -86,7 +86,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'employees.User'
+AUTH_USER_MODEL = 'accounts.User'
 LOGIN_REDIRECT_URL = '/'
 
 
