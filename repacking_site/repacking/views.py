@@ -63,8 +63,7 @@ def start(request):
                     operators.add(operator)
                 i += 1
 
-            return HttpResponseRedirect(
-                f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["IDP"]}/{",".join(operators)}/')
+            return HttpResponseRedirect(f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["IDP"]}/{",".join(operators)}/')
 
     else:
         form = RepackingForm()
