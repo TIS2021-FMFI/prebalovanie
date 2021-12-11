@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    User: {{ user }} <br>
+    <a href="/accounts/password_change/">Zmeň heslo</a>
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Zmeň</button>
+    </form>
+    <br>
+
+{% endblock %}

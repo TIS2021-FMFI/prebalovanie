@@ -1,10 +1,11 @@
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 
-from .models import *
-from .forms import *
-
+from accounts.models import *
 from logs.models import Log
+from .filters import *
+from .forms import *
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 repack_start_key = 'repack_start'
 repack_last_start_key = 'repack_last_start'
@@ -14,10 +15,10 @@ repack_time_format = '%Y-%m-%dT%H:%M:%S'
 
 def index(request):
     cancel_sessions(request)
-    return render(request, 'repacking/index.html')
+    return render(request, 'index.html')
 
 
-def detail(request, sku_code):
+def repacking(request, sku_code, idp_code, operators):
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
     if standard is None:
         raise Http404("Standard does not exist")
@@ -26,23 +27,76 @@ def detail(request, sku_code):
         request.session[repack_start_key] = datetime.now().strftime(repack_time_format)
         request.session[repack_duration_key] = 0
     request.session[repack_last_start_key] = datetime.now().strftime(repack_time_format)
+
+    return render(request, 'repacking/repack.html', {'standard': standard, 'idp': idp_code, 'operators': operators})
+
+
+def detail(request, sku_code):
+    cancel_sessions(request)
+    standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
+    if standard is None:
+        raise Http404("Standard does not exist")
     return render(request, 'repacking/detail.html', {'standard': standard})
 
 
 def history(request):
+    cancel_sessions(request)
     repackings_list = RepackHistory.filter_and_order_repacking_history_by_get(request.GET)
     context = {"repackings_list": repackings_list}
     return render(request, 'repacking/history.html', context)
 
 
+def start(request):
+    cancel_sessions(request)
+    if request.method == 'POST':
+        form = RepackingForm(request.POST)
+        if form.is_valid():
+            if RepackingStandard.get_repacking_standard_by_sku(form.cleaned_data['SKU']) is None:
+                raise FileExistsError("RepackingForm standard w/ this SKU does not exists")
+
+            operators = set()
+            i = 1
+            while f'operator_{i}' in request.POST.keys():
+                operator = request.POST[f'operator_{i}']
+                if operator != '':
+                    User.objects.get(barcode=operator)
+                    operators.add(operator)
+                i += 1
+
+            return HttpResponseRedirect(f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["IDP"]}/{",".join(operators)}/')
+
+    else:
+        form = RepackingForm()
+
+    return render(request, 'repacking/start.html', {'form': form})
+
+
 def show_standards(request):
     cancel_sessions(request)
-    repacking_standards_list = RepackingStandard.filter_and_order_repacking_standard_by_get(request.GET)
-    context = {"repacking_standards_list": repacking_standards_list}
+    repacking_standards_list_all = RepackingStandard.filter_and_order_repacking_standard_by_get(request.GET)
+    # inspiracia: https://www.youtube.com/watch?v=G-Rct7Na0UQ
+    standards_filter = RepackingStandardFilter(request.GET, queryset=repacking_standards_list_all)
+    repacking_standards_list_filtered = standards_filter.queryset
+
+    # paginacia  https://www.youtube.com/watch?v=N-PB-HMFmdo
+    # pocet udajov na stranke https://stackoverflow.com/questions/57487336/change-value-for-paginate-by-on-the-fly
+    paginate_by = request.GET.get('paginate_by', 10) or 10
+    p = Paginator(repacking_standards_list_filtered, paginate_by)
+    page = request.GET.get('page')
+
+    try:
+        repacking_standards_list = p.get_page(page)
+    except PageNotAnInteger:
+        repacking_standards_list = p.get_page(1)
+    except EmptyPage:
+        repacking_standards_list = p.get_page(1)
+
+    context = {"repacking_standards_list": repacking_standards_list,
+               'standards_filter': standards_filter, 'paginate_by': paginate_by}
     return render(request, 'repacking/standards.html', context)
 
 
-def finish(request, sku_code):
+def finish(request, sku_code, idp_code, operators):
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
     if standard is None:
         raise Http404("Standard does not exist")
@@ -50,7 +104,7 @@ def finish(request, sku_code):
     Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, None, "Repack finished")
 
     repack_finish = datetime.now()
-    repack = RepackHistory(repacking_standard=standard, idp=0, repack_finish=repack_finish)
+    repack = RepackHistory(repacking_standard=standard, idp=idp_code, repack_finish=repack_finish)
     if request.session.get(repack_start_key, False):
         repack.repack_start = request.session.get(repack_start_key)
         last_repack_start = request.session.get(repack_last_start_key)
@@ -60,12 +114,16 @@ def finish(request, sku_code):
         repack.repack_duration = timedelta(seconds=repack_duration)
 
     else:
-        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "Repacking without session finished.")
+        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "RepackingForm without session finished.")
 
     cancel_sessions(request)
 
     repack.save()
-    return HttpResponseRedirect('/repacking/')
+
+    for operator in operators.split(','):
+        repack.users.add(User.objects.get(barcode=operator))
+
+    return HttpResponseRedirect('/repacking/start/')
 
 
 def cancel_sessions(request):
@@ -85,33 +143,32 @@ def cancel_sessions(request):
         pass
 
 
-def cancel(request, sku_code):
+def cancel(request, sku_code, idp_code, operators):
     cancel_sessions(request)
-
     return HttpResponseRedirect('/repacking/')
 
 
-def pause(request, sku_code):
+def pause(request, sku_code, idp_code, operators):
     repack_paused = datetime.now()
     if request.session.get(repack_duration_key, None) is not None:
         last_repack_start = request.session.get(repack_last_start_key)
-        request.session[repack_duration_key] = request.session.get(repack_duration_key) + \
-                                               (repack_paused - datetime.strptime(last_repack_start,
-                                                                                  repack_time_format)).total_seconds()
+        request.session[repack_duration_key] = request.session.get(repack_duration_key) + (
+                repack_paused - datetime.strptime(last_repack_start, repack_time_format)).total_seconds()
 
     else:
-        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "Repacking without session saved.")
+        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "RepackingForm without session saved.")
 
-    context = {'sku_code': sku_code}
+    context = {'sku_code': sku_code, 'idp_code': idp_code, 'operators': operators}
     return render(request, 'repacking/pause.html', context)
 
 
 def make_new_standard(request):
+    cancel_sessions(request)
     if request.method == 'POST':
         form = RepackingStandardForm(request.POST, request.FILES)
         if form.is_valid() and form.cleaned_data['repacking_duration'] is not None:
             if RepackingStandard.get_repacking_standard_by_sku(form.cleaned_data['SKU']) is not None:
-                raise FileExistsError("Repacking standard w/ this SKU already exists")
+                raise FileExistsError("RepackingForm standard w/ this SKU already exists")
 
             standard = RepackingStandard(
                 SKU=form.cleaned_data['SKU'],
@@ -149,7 +206,7 @@ def make_new_standard(request):
                     tool.save()
                     standard.tools.add(tool)
 
-            Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, None, "Repacking standard made")
+            Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, None, "RepackingForm standard made")
 
             return HttpResponseRedirect("/")
 

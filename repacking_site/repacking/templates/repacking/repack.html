@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 
-{% block content %}
+    {% block content %}
 
-    <h1>Detail štandardu {{ standard.SKU }}</h1>
-
-    <a href="{% url 'start' %}">Začni prebal</a>
+    <a href="repack_finished">Ukonči prebal</a>
+    <a href="repack_paused">Pozastav prebal</a>
+    <a href="repack_cancelled">Zruš prebal</a>
 
     <table>
         <tr>
@@ -92,4 +92,4 @@
         </tr>
     </table>
 
-{% endblock %}
+    {% endblock %}

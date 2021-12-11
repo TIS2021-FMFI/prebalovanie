@@ -44,7 +44,7 @@ class Log(models.Model):
             text__contains=get.get('text', ""),
             priority__contains=get.get('priority', ""),
             app__contains=get.get('app', ""),
-            user__username__contains=get.get('username', ""),
+            #user__username__contains=get.get('username', ""),
         ).order_by(order_by)
         return logs
 
