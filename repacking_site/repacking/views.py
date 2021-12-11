@@ -1,7 +1,7 @@
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 
-from employees.models import *
+from accounts.models import *
 from logs.models import Log
 from .filters import *
 from .forms import *
@@ -15,7 +15,7 @@ repack_time_format = '%Y-%m-%dT%H:%M:%S'
 
 def index(request):
     cancel_sessions(request)
-    return render(request, 'repacking/index.html')
+    return render(request, 'index.html')
 
 
 def repacking(request, sku_code, idp_code, operators):
@@ -59,12 +59,11 @@ def start(request):
             while f'operator_{i}' in request.POST.keys():
                 operator = request.POST[f'operator_{i}']
                 if operator != '':
-                    Employee.objects.get(barcode_number=operator)
+                    User.objects.get(barcode=operator)
                     operators.add(operator)
                 i += 1
 
-            return HttpResponseRedirect(
-                f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["IDP"]}/{",".join(operators)}/')
+            return HttpResponseRedirect(f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["IDP"]}/{",".join(operators)}/')
 
     else:
         form = RepackingForm()
@@ -122,7 +121,7 @@ def finish(request, sku_code, idp_code, operators):
     repack.save()
 
     for operator in operators.split(','):
-        repack.users.add(Employee.objects.get(barcode_number=operator))
+        repack.users.add(User.objects.get(barcode=operator))
 
     return HttpResponseRedirect('/repacking/start/')
 

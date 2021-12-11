@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'employees.apps.EmployeesConfig',
+    'accounts.apps.EmployeesConfig',
     'repacking.apps.RepackingConfig',
     'mails.apps.MailsConfig',
     'logs.apps.LogsConfig',
@@ -85,6 +85,9 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+AUTH_USER_MODEL = 'accounts.User'
+LOGIN_REDIRECT_URL = '/'
 
 
 # Password validation
