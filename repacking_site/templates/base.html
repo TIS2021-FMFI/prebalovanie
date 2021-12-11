@@ -55,7 +55,6 @@
 
 
     {% if user.is_authenticated %}
-
         <a class="user" href="/accounts/logout/"> Hi {{ user.username }}, LOGOUT</a>
     {% else %}
         <a class="user" href="/accounts/login/">LOGIN</a>
