@@ -2,6 +2,7 @@ from django.http import Http404, HttpResponseRedirect
 
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
 
 from .forms import *
 
@@ -22,5 +23,9 @@ def profile(request):
         return render(request, 'accounts/profile.html', {'form': form})
 
 
-def user_list(request):
-    return render(request, 'accounts/user_list.html', {'users': get_user_model().objects.all()})
+def users_list(request):
+    return render(request, 'accounts/users_list.html', {'users': get_user_model().objects.all()})
+
+
+def groups_list(request):
+    return render(request, 'accounts/groups_list.html', {'groups': Group.objects.all()})
