@@ -19,7 +19,10 @@ def profile(request):
             return render(request, 'accounts/profile.html', {'form': form})
 
     else:
-        form = ProfileForm({'first_name': request.user.first_name, 'last_name': request.user.last_name})
+        if request.user.is_authenticated:
+            form = ProfileForm({'first_name': request.user.first_name, 'last_name': request.user.last_name})
+        else:
+            form = ProfileForm()
         return render(request, 'accounts/profile.html', {'form': form})
 
 
