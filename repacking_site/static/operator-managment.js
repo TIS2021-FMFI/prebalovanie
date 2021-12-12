@@ -41,3 +41,13 @@ function remove_last_operator(){
 	form.removeChild(document.getElementById('id_operator-'+id).previousElementSibling);
 	form.removeChild(document.getElementById('id_operator-'+id));
 }
+
+function make_timer(){
+	function time(){
+		let time = document.getElementById('time');
+		let t = 1*time.innerHTML;
+		time.innerHTML = t+1+'';
+	}
+
+setInterval(time,1000);
+}

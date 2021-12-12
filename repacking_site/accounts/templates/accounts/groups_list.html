@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <h1>Zoznam skupín</h1>
+
+    <table>
+    <tr>
+        <th>Meno</th>
+        <th>Počet užívateľov</th>
+        <th>Edit</th>
+    </tr>
+    {% for group in groups %}
+        <tr>
+            <td>{{ group.name }}</td>
+            <td>{{ group.user_set.count }}</td>
+            <td><a href="#">Edit</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}

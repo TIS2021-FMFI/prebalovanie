@@ -5,27 +5,89 @@
 
     <h1>História prebalov</h1>
 
-    {% if repackings_list %}
+    <form method="get">
+        {{ repack_history_filter.form }}
+        <button type="submit">Vyhľadať</button>
+        <button type="button"><a href="/repacking/history/">Vymazať</a></button>
+    </form>
+
+    <div class="btn-group">
+        <button type="button">Export</button>
+    </div>
+
+    <form method="GET">
+        <select name="paginate_by" id="">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+        </select>
+        <input type="submit" value="Paginate">
+    </form>
+
+    <div class="pagination">
+    <span class="step-links">
+        {% if repacking_history_list.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ repacking_history_list.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            {{ repacking_history_list.number }}/
+            {{ repacking_history_list.paginator.num_pages }}
+        </span>
+
+        {% if repacking_history_list.has_next %}
+            <a href="?page={{ repacking_history_list.next_page_number }}">next</a>
+            <a href="?page={{ repacking_history_list.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+
+    {% if repacking_history_list %}
         <table>
-            <thead>
-                <th>Začiatok prebalu</th>
-                <th>Koniec prebalu</th>
-                <th>Trvanie prebalu</th>
-                <th>SKU kód prebalu</th>
-                <th>IDP</th>
-            </thead>
-        {% for repack in repackings_list %}
-            <tr>
-                <td>{{ repack.repack_start }}</td>
-                <td>{{ repack.repack_finish }}</td>
-                <td>{{ repack.repack_duration }}</td>
-                <td>{{ repack.repacking_standard.SKU }}</td>
-                <td>{{ repack.idp }}</td>
-            </tr>
-        {% endfor %}
+
+            <th>SKU</th>
+            <th>COFOR</th>
+
+            <th>Destinácia</th>
+            <th>Dodávateľ</th>
+            <th>Typ obalu OUT</th>
+            <th>Počet ks v balení OUT</th>
+            <th>Počet boxov na palete OUT</th>
+            <th>Počet kusov na palete OUT</th>
+            <th>Počet kusov na jeden pohyb</th>
+            <th>Jednotková váha dielu</th>
+            <th>Čas prebalu</th>
+
+            <th>Začiatok prebalu</th>
+            <th>Koniec prebalu</th>
+            <th>Celkový čas prebalu</th>
+            <th>Operátor</th>
+
+            {% for repack in repacking_history_list %}
+                <tr>
+                    <td>{{ repack.repacking_standard.SKU }}</td>
+                    <td>{{ repack.repacking_standard.COFOR }}</td>
+                    <td>{{ repack.repacking_standard.destination }}</td>
+                    <td>{{ repack.repacking_standard.supplier }}</td>
+                    <td>{{ repack.repacking_standard.output_type_of_package }}</td>
+                    <td>{{ repack.repacking_standard.output_count_of_items_in_package }}</td>
+                    <td>{{ repack.repacking_standard.output_count_of_boxes_on_pallet }}</td>
+                    <td>{{ repack.repacking_standard.output_count_of_items_on_pallet }}</td>
+                    <td>{{ repack.repacking_standard.items_per_move }}</td>
+                    <td>{{ repack.repacking_standard.unit_weight }}</td>
+                    <td>{{ repack.repacking_standard.repacking_duration }}</td>
+
+                    <td>{{ repack.repack_start }}</td>
+                    <td>{{ repack.repack_finish }}</td>
+                    <td>{{ repack.repack_duration }}</td>
+                    <td>{{ repack.users.all|join:", " }}</td>
+                </tr>
+            {% endfor %}
         </table>
     {% else %}
-        <p>No repacks are available.</p>
+        <p>Žiadne údaje nie sú k dispozícií.</p>
     {% endif %}
 
 {% endblock %}

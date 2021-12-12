@@ -1,8 +1,9 @@
-from django.http import Http404, HttpResponseRedirect
-
-from django.shortcuts import render
 from django.contrib.auth import get_user_model
+from django.shortcuts import render
+from django.contrib.auth.models import Group
 
+from repacking_site.methods import filtered_records
+from .filters import *
 from .forms import *
 
 
@@ -18,9 +19,23 @@ def profile(request):
             return render(request, 'accounts/profile.html', {'form': form})
 
     else:
-        form = ProfileForm({'first_name': request.user.first_name, 'last_name': request.user.last_name})
+        if request.user.is_authenticated:
+            form = ProfileForm({'first_name': request.user.first_name, 'last_name': request.user.last_name})
+        else:
+            form = ProfileForm()
         return render(request, 'accounts/profile.html', {'form': form})
 
 
-def user_list(request):
-    return render(request, 'accounts/user_list.html', {'users': get_user_model().objects.all()})
+def users_list(request):
+    users_list_all = get_user_model().objects.all()
+    users_filter = UserFilter(request.GET, queryset=users_list_all)
+    paginate_by = request.GET.get('paginate_by', 10) or 10
+
+    users_list = filtered_records(request, users_filter, paginate_by)
+    context = {"users_list": users_list,
+               'users_filter': users_filter, 'paginate_by': paginate_by}
+    return render(request, 'accounts/users_list.html', context)
+
+
+def groups_list(request):
+    return render(request, 'accounts/groups_list.html', {'groups': Group.objects.all()})
