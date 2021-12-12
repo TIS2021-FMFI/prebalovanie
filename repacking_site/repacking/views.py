@@ -28,7 +28,8 @@ def repacking(request, sku_code, idp_code, operators):
         request.session[repack_duration_key] = 0
     request.session[repack_last_start_key] = datetime.now().strftime(repack_time_format)
 
-    return render(request, 'repacking/repack.html', {'standard': standard, 'idp': idp_code, 'operators': operators})
+    return render(request, 'repacking/repack.html', {'standard': standard, 'idp': idp_code, 'operators': operators,
+                                                     'duration': int(request.session[repack_duration_key])})
 
 
 def detail(request, sku_code):
@@ -63,7 +64,8 @@ def start(request):
                     operators.add(operator)
                 i += 1
 
-            return HttpResponseRedirect(f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["IDP"]}/{",".join(operators)}/')
+            return HttpResponseRedirect(
+                f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["IDP"]}/{",".join(operators)}/')
 
     else:
         form = RepackingForm()
@@ -158,7 +160,8 @@ def pause(request, sku_code, idp_code, operators):
     else:
         Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "RepackingForm without session saved.")
 
-    context = {'sku_code': sku_code, 'idp_code': idp_code, 'operators': operators}
+    context = {'sku_code': sku_code, 'idp_code': idp_code, 'operators': operators,
+               'duration': int(request.session[repack_duration_key])}
     return render(request, 'repacking/pause.html', context)
 
 
