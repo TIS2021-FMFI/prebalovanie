@@ -5,30 +5,69 @@
 
     <h1>Udalosti</h1>
 
+    <form method="get">
+        {{ log_filter.form }}
+        <button type="submit">Vyhľadať</button>
+        <button type="button"><a href="index/">Vymazať</a></button>
+    </form>
+
+    <div class="btn-group">
+        <button type="button">Export</button>
+    </div>
+
+    <form method="GET">
+        <select name="paginate_by" id="">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+        </select>
+        <input type="submit" value="Paginate">
+    </form>
+
+    <div class="pagination">
+    <span class="step-links">
+        {% if log_list.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ log_list.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            {{ log_list.number }}/
+            {{ log_list.paginator.num_pages }}
+        </span>
+
+        {% if log_list.has_next %}
+            <a href="?page={{ log_list.next_page_number }}">next</a>
+            <a href="?page={{ log_list.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+
     {% if log_list %}
         <table>
-                <tr>
-                    <th>Používateľ</th>
-                    <th>Priorita</th>
+            <tr>
+                <th>Vytvorené</th>
+                <th>Typ</th>
 
-                    <th>Čas akcie</th>
-                    <th>typ</th>
-                    <th>informácie</th>
-                </tr>
+                <th>Úroveň</th>
+                <th>Používateľ</th>
+                <th>Informácie</th>
+            </tr>
             {% for log in log_list %}
 
-                    <tr>
-                        <td>{{ log.user }} </td>
-                        <td>{{ log.priority }}</td>
-                        <td>{{ log.action_time }}</td>
-                        <td>{{ log.app }}</td>
-                        <td>{{ log.text }}</td>
+                <tr>
+                    <td>{{ log.action_time }}</td>
+                    <td>{{ log.app }}</td>
+                    <td>{{ log.priority }}</td>
+                    <td>{{ log.user }} </td>
+                    <td>{{ log.text }}</td>
 
-                    </tr>
+                </tr>
             {% endfor %}
         </table>
     {% else %}
-            <p>Žiadne udalosti nie sú k dispozícií.</p>
+        <p>Žiadne udalosti nie sú k dispozícií.</p>
     {% endif %}
 
 {% endblock %}

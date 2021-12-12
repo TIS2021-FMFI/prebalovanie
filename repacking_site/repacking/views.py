@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 from accounts.models import *
 from logs.models import Log
+from repacking_site.methods import filtered_records
 from .filters import *
 from .forms import *
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -41,8 +42,12 @@ def detail(request, sku_code):
 
 def history(request):
     cancel_sessions(request)
-    repackings_list = RepackHistory.filter_and_order_repacking_history_by_get(request.GET)
-    context = {"repackings_list": repackings_list}
+    repacking_history_list_all = RepackHistory.filter_and_order_repacking_history_by_get(request.GET)
+    repack_history_filter = RepackHistoryFilter(request.GET, queryset=repacking_history_list_all)
+    paginate_by = request.GET.get('paginate_by', 10) or 10
+    repacking_history_list = filtered_records(request, repack_history_filter, paginate_by)
+    context = {"repacking_history_list": repacking_history_list,
+               'repack_history_filter': repack_history_filter, 'paginate_by': paginate_by}
     return render(request, 'repacking/history.html', context)
 
 
@@ -74,23 +79,10 @@ def start(request):
 def show_standards(request):
     cancel_sessions(request)
     repacking_standards_list_all = RepackingStandard.filter_and_order_repacking_standard_by_get(request.GET)
-    # inspiracia: https://www.youtube.com/watch?v=G-Rct7Na0UQ
     standards_filter = RepackingStandardFilter(request.GET, queryset=repacking_standards_list_all)
-    repacking_standards_list_filtered = standards_filter.queryset
-
-    # paginacia  https://www.youtube.com/watch?v=N-PB-HMFmdo
-    # pocet udajov na stranke https://stackoverflow.com/questions/57487336/change-value-for-paginate-by-on-the-fly
     paginate_by = request.GET.get('paginate_by', 10) or 10
-    p = Paginator(repacking_standards_list_filtered, paginate_by)
-    page = request.GET.get('page')
 
-    try:
-        repacking_standards_list = p.get_page(page)
-    except PageNotAnInteger:
-        repacking_standards_list = p.get_page(1)
-    except EmptyPage:
-        repacking_standards_list = p.get_page(1)
-
+    repacking_standards_list = filtered_records(request, standards_filter, paginate_by)
     context = {"repacking_standards_list": repacking_standards_list,
                'standards_filter': standards_filter, 'paginate_by': paginate_by}
     return render(request, 'repacking/standards.html', context)

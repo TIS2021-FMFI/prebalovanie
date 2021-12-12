@@ -1,8 +1,8 @@
-from django.http import Http404, HttpResponseRedirect
-
-from django.shortcuts import render
 from django.contrib.auth import get_user_model
+from django.shortcuts import render
 
+from repacking_site.methods import filtered_records
+from .filters import *
 from .forms import *
 
 
@@ -23,4 +23,11 @@ def profile(request):
 
 
 def user_list(request):
-    return render(request, 'accounts/user_list.html', {'users': get_user_model().objects.all()})
+    users_list_all = get_user_model().objects.all()
+    users_filter = UserFilter(request.GET, queryset=users_list_all)
+    paginate_by = request.GET.get('paginate_by', 10) or 10
+
+    users_list = filtered_records(request, users_filter, paginate_by)
+    context = {"users_list": users_list,
+               'users_filter': users_filter, 'paginate_by': paginate_by}
+    return render(request, 'accounts/user_list.html', context)
