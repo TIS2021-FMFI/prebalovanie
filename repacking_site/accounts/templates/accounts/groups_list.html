@@ -7,15 +7,17 @@
 
     <table>
     <tr>
+        <th>Akcie</th>
         <th>Meno</th>
         <th>Počet užívateľov</th>
-        <th>Edit</th>
     </tr>
     {% for group in groups %}
         <tr>
+            <td>
+                <button type="button"><a href="/admin/auth/group/{{ group.id }}/change/">Editovať</a></button>
+            </td>
             <td>{{ group.name }}</td>
             <td>{{ group.user_set.count }}</td>
-            <td><a href="#">Edit</a></td>
         </tr>
     {% endfor %}
     </table>

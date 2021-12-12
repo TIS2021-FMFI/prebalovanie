@@ -12,7 +12,7 @@
     </form>
 
     <div class="btn-group">
-        <button type="button">Export</button>
+        <button type="button"><a href="/repacking/export/">Export</a></button>
         <button type="button"><a href="/repacking/standards/new/">Pridať nový</a></button>
     </div>
 
@@ -56,7 +56,9 @@
                 <th>ks OUT</th>
                 <th>obal IN</th>
                 <th>obal OUT</th>
-                <th>kg ks</th>
+                <th>boxy IN</th>
+                <th>boxy OUT</th>
+                <th>kg/ks</th>
                 <th>Čas prebalu</th>
                 <th>Vytvoril</th>
                 <th>Čas vytvorenia</th>
@@ -78,6 +80,8 @@
                     <td>{{ standard.output_count_of_items_in_package }}</td>
                     <td>{{ standard.input_type_of_package }}</td>
                     <td>{{ standard.output_type_of_package }}</td>
+                    <td>{{ standard.input_count_of_boxes_on_pallet }}</td>
+                    <td>{{ standard.output_count_of_boxes_on_pallet }}</td>
                     <td>{{ standard.unit_weight }}</td>
                     <td>{{ standard.repacking_duration }}</td>
                     <td>{{ standard.creator }}</td>

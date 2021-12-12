@@ -1,4 +1,6 @@
-from django.http import Http404, HttpResponseRedirect
+import csv
+
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 from accounts.models import *
@@ -50,6 +52,25 @@ def history(request):
     context = {"repacking_history_list": repacking_history_list,
                'repack_history_filter': repack_history_filter, 'paginate_by': paginate_by}
     return render(request, 'repacking/history.html', context)
+
+
+def export(request):
+    response = HttpResponse(
+        content_type='text/csv',
+        headers={'Content-Disposition': 'attachment; filename="SKU-export.csv"'},
+    )
+
+    response.write(u'\ufeff'.encode('utf8'))
+    writer = csv.writer(response, dialect='excel', delimiter=';')
+    writer.writerow(['SKU', 'COFOR', 'Destinácia', 'ks IN', 'ks OUT', 'ks v obale IN', 'ks v obale OUT',
+                     'boxy IN', 'boxy OUT', 'kg/ks', 'vytvoril', 'Čas vytvorenia', 'Poznámka'])
+    for standard in RepackingStandard.objects.all():
+        writer.writerow([standard.SKU, standard.COFOR, standard.destination,
+                         standard.input_count_of_items_on_pallet, standard.output_count_of_items_on_pallet,
+                         standard.input_count_of_items_in_package, standard.output_count_of_items_in_package,
+                         standard.input_count_of_boxes_on_pallet, standard.output_count_of_boxes_on_pallet,
+                         standard.unit_weight, standard.creator, standard.created, standard.instructions])
+    return response
 
 
 def start(request):
