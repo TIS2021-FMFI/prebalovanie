@@ -38,4 +38,5 @@ class User(AbstractUser):
     barcode = models.CharField(max_length=100)
 
     def __str__(self):
-        return f'(username:{str(self.username)}, barcode:{str(self.barcode)})'
+        #return f'(username:{str(self.username)}, barcode:{str(self.barcode)})'
+        return f'{str(self.username)}'
