@@ -69,7 +69,7 @@
                         {#                    zdroj: https://stackoverflow.com/questions/21916835/django-button-link/21917002  da sa to aj takto: https://stackoverflow.com/questions/48438575/call-django-on-html-button-click/48438962 #}
                         <button type="button"><a href="/repacking/{{ standard.SKU }}/">Detail</a></button>
                         <button type="button">Editovať</button>
-                        <button type="button">Vymazať</button>
+                        <button type="button"><a href="/repacking/delete/{{ standard.SKU }}/">Vymazať</a></button>
                     </td>
                     <td>{{ standard.SKU }}</td>
                     <td>{{ standard.COFOR }}</td>

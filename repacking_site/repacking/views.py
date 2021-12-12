@@ -120,6 +120,16 @@ def finish(request, sku_code, idp_code, operators):
     return HttpResponseRedirect('/repacking/start/')
 
 
+def delete(request, sku_code):
+    standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
+    if standard is None:
+        deleted = False
+    else:
+        standard.delete()
+        deleted = True
+    return render(request, 'repacking/standard_deleted.html', {'deleted': deleted})
+
+
 def cancel_sessions(request):
     try:
         del request.session[repack_start_key]
