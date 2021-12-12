@@ -2,15 +2,17 @@
 
 {% block content %}
 
+    {% if user.is_authenticated %}
+        User: {{ user }} <br>
+        <a href="/accounts/password_change/">Zmeň heslo</a>
 
-    User: {{ user }} <br>
-    <a href="/accounts/password_change/">Zmeň heslo</a>
-    <br>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Zmeň</button>
-    </form>
-    <br>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Zmeň</button>
+        </form>
+    {% else %}
+        Please, <a href="/accounts/login/">log in</a> to see your profile.
+    {% endif %}
 
 {% endblock %}

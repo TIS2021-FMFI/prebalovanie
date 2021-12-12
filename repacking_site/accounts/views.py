@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
+from django.contrib.auth.models import Group
 
 from repacking_site.methods import filtered_records
 from .filters import *
@@ -18,7 +19,10 @@ def profile(request):
             return render(request, 'accounts/profile.html', {'form': form})
 
     else:
-        form = ProfileForm({'first_name': request.user.first_name, 'last_name': request.user.last_name})
+        if request.user.is_authenticated:
+            form = ProfileForm({'first_name': request.user.first_name, 'last_name': request.user.last_name})
+        else:
+            form = ProfileForm()
         return render(request, 'accounts/profile.html', {'form': form})
 
 
@@ -31,3 +35,7 @@ def user_list(request):
     context = {"users_list": users_list,
                'users_filter': users_filter, 'paginate_by': paginate_by}
     return render(request, 'accounts/user_list.html', context)
+
+
+def groups_list(request):
+    return render(request, 'accounts/groups_list.html', {'groups': Group.objects.all()})

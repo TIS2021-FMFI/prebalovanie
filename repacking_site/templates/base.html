@@ -10,7 +10,9 @@
 
 <body>
 
-<!-- Navod implementacie dropdown menu v static man_drop_menu.txt -->
+    <script src="{% static 'operator-managment.js' %}"></script>
+
+    <!-- Navod implementacie dropdown menu v static man_drop_menu.txt -->
 
 <nav>
     <a href="/"><img id="gefco" src="{% static 'GEFCO_Logo.svg' %}" alt="GEFCO logo"></a>
@@ -37,7 +39,7 @@
         <button class="dropbtn">Prístup</button>
         <div class="dropdown-content">
             <a href="/accounts/user_list/">Používatelia</a>
-            <a href="#">Skupiny</a>
+            <a href="/accounts/groups_list/">Skupiny</a>
             <a href="#">Práva</a>
             <a href="/accounts/profile/">Profil</a>
         </div>
@@ -55,7 +57,6 @@
 
 
     {% if user.is_authenticated %}
-
         <a class="user" href="/accounts/logout/"> Hi {{ user.username }}, LOGOUT</a>
     {% else %}
         <a class="user" href="/accounts/login/">LOGIN</a>
