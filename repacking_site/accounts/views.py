@@ -26,7 +26,7 @@ def profile(request):
         return render(request, 'accounts/profile.html', {'form': form})
 
 
-def user_list(request):
+def users_list(request):
     users_list_all = get_user_model().objects.all()
     users_filter = UserFilter(request.GET, queryset=users_list_all)
     paginate_by = request.GET.get('paginate_by', 10) or 10
@@ -34,7 +34,7 @@ def user_list(request):
     users_list = filtered_records(request, users_filter, paginate_by)
     context = {"users_list": users_list,
                'users_filter': users_filter, 'paginate_by': paginate_by}
-    return render(request, 'accounts/user_list.html', context)
+    return render(request, 'accounts/users_list.html', context)
 
 
 def groups_list(request):
