@@ -187,6 +187,67 @@ form{
 
 }
 
+button, .repack-btn{
+    padding: 5px 10px;
+    font-family: UniviaPro-regular;
+    font-size: 17px;
+    width: 120px;
+    margin-bottom: 3px;
+    border: 1px solid #00538b;
+    border-radius: 5px;
+    background-color: #00538b;
+}
+
+input{
+    font-family: UniviaPro-regular;
+}
+
+.dropbtn{
+    width: auto;
+}
+
+button a{
+    color: #ffcd00;
+    font-family: UniviaPro-regular;
+    font-size: 17px;
+}
+
+.inactive-btn{
+    padding: 5px 10px;
+    font-family: UniviaPro-regular;
+    font-size: 17px;
+    width: 120px;
+    margin-bottom: 3px;
+    border: 1px solid #00538b;
+    border-radius: 5px;
+    background-color: #00538b;
+    color: red;
+}
+
+.active-btn, .repack-btn{
+    padding: 5px 10px;
+    font-family: UniviaPro-regular;
+    font-size: 17px;
+    width: 120px;
+    margin-bottom: 3px;
+    border: 1px solid #00538b;
+    border-radius: 5px;
+    background-color: #00538b;
+    color: #ffcd00;
+    cursor: pointer;
+}
+
+.repack-btn{
+
+}
+.active-btn:hover, .active-btn:hover a{
+    color: white;
+}
+
+.repack-btn-group{
+    margin-bottom: 10px;
+}
+
 input{
     font-size: 16px;
     width: 95%;
@@ -208,4 +269,82 @@ input[type=submit]{
     border-radius: 10px;
 }
 
+nav #gefco{
+    width: 80px;
+}
+
+.filter_div{
+    border: 1px solid black;
+    border-radius: 5px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    padding: 10px;
+}
+
+.dropbtn_filter{
+    display: block;
+    background-color: #00538b;
+    color: #ffcd00;
+    font-family: UniviaPro-regular;
+    font-size: 20px;
+    padding: 10px 20px;
+    margin-right: 20px;
+    cursor: pointer;
+    border: 1px solid #00538b;
+    border-radius: 10px;
+}
+
+.dropbtn_filter:hover {
+    color: white;
+}
+
+#filter{
+    display: none;
+    width: auto;
+    margin-right: auto;
+    margin-left: auto;
+    column-count: 3;
+}
+
+#filter button{
+    margin-top: 20px;
+    margin-right: 10px;
+}
+
 /* end of forms css */
+
+/* sku list */
+
+.btn-group{
+    margin-top: 10px;
+}
+
+/* end of sku list */
+
+/* standard detail */
+
+.standard-table td{
+    border: 1px solid black;
+    margin: 10px;
+}
+
+.main-info{
+    background-color: #f3d39b;
+    font-size: 14px;
+}
+
+.sku-code{
+    font-size: 26px;
+    color: #00538b;
+}
+
+.input-info{
+    background-color: #b3e4f3;
+    font-size: 14px;
+}
+
+.output-info{
+    background-color: #b9e5a0;
+    font-size: 14px;
+}
+
+/* end of standard detail */
