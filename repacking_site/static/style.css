@@ -187,8 +187,61 @@ form{
 
 }
 
-button{
+button, .repack-btn{
     padding: 5px 10px;
+    font-family: UniviaPro-regular;
+    font-size: 17px;
+    width: 120px;
+    margin-bottom: 3px;
+    border: 1px solid #00538b;
+    border-radius: 5px;
+    background-color: #00538b;
+}
+
+input{
+    font-family: UniviaPro-regular;
+}
+
+.dropbtn{
+    width: auto;
+}
+
+button a{
+    color: #ffcd00;
+    font-family: UniviaPro-regular;
+    font-size: 17px;
+}
+
+#pause-btn{
+    padding: 5px 10px;
+    font-family: UniviaPro-regular;
+    font-size: 17px;
+    width: 120px;
+    margin-bottom: 3px;
+    border: 1px solid #00538b;
+    border-radius: 5px;
+    background-color: #00538b;
+}
+
+.inactive-btn{
+    color: red;
+}
+
+.active-btn, .repack-btn{
+    color: #ffcd00;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.repack-btn{
+
+}
+.active-btn:hover, .active-btn:hover a{
+    color: white;
+}
+
+.repack-btn-group{
+    margin-bottom: 10px;
 }
 
 input{
@@ -264,7 +317,5 @@ nav #gefco{
 /* end of sku list */
 
 /* repack */
-
-
 
 /* end of repack */

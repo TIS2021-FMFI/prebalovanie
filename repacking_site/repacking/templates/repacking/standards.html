@@ -26,8 +26,8 @@
     </div>
 
     <div class="btn-group">
-        <button type="button">Export</button>
-        <button type="button"><a href="/repacking/standards/new/">Pridať nový</a></button>
+        <button type="button" class="inactive-btn">Export</button>
+        <button type="button" class="active-btn"><a href="/repacking/standards/new/">Pridať nový</a></button>
     </div>
 
     <form method="GET">
@@ -37,7 +37,7 @@
             <option value="30">30</option>
             <option value="50">50</option>
         </select>
-        <input type="submit" value="Paginate">
+        <input type="submit" class="active-btn" value="Paginate">
     </form>
 
     <div class="pagination">
@@ -81,9 +81,9 @@
                 <tr>
                     <td>
                         {#                    zdroj: https://stackoverflow.com/questions/21916835/django-button-link/21917002  da sa to aj takto: https://stackoverflow.com/questions/48438575/call-django-on-html-button-click/48438962 #}
-                        <button type="button"><a href="/repacking/{{ standard.SKU }}/">Detail</a></button>
-                        <button type="button">Editovať</button>
-                        <button type="button">Vymazať</button>
+                        <button type="button" class="active-btn"><a href="/repacking/{{ standard.SKU }}/">Detail</a></button>
+                        <button type="button" class="inactive-btn">Editovať</button>
+                        <button type="button" class="inactive-btn">Vymazať</button>
                     </td>
                     <td>{{ standard.SKU }}</td>
                     <td>{{ standard.COFOR }}</td>
