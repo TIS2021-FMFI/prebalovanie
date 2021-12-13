@@ -3,13 +3,27 @@
 
 {% block content %}
 
+    <script>
+        function open_close_filter_menu(){
+            let filter = document.getElementById('filter')
+            if (filter.style.display == 'none'){
+                filter.style.display = 'block';
+            }else{
+                filter.style.display = 'none';
+            }
+        }
+    </script>
+
     <h1>Nastavenie SKU</h1>
 
-    <form method="get">
-        {{ standards_filter.form }}
-        <button type="submit">Vyhľadať</button>
-        <button type="button"><a href="/repacking/standards/">Vymazať</a></button>
-    </form>
+    <div class="filter_div">
+        <button class="dropbtn_filter" onclick="open_close_filter_menu()">Filter</button>
+        <form method="get" id="filter">
+            {{ standards_filter.form }}
+            <button type="submit">Vyhľadať</button>
+            <button type="button"><a href="/repacking/standards/">Vymazať</a></button>
+        </form>
+    </div>
 
     <div class="btn-group">
         <button type="button">Export</button>
