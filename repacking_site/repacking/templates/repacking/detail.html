@@ -7,22 +7,22 @@
 
     <a class="active-btn" href="{% url 'start' %}">Začni prebal</a>
 
-    <table>
+    <table class="standard-table">
         <tr>
-            <td colspan="2">Referencia:</td>
-            <td colspan="2">Cofor:</td>
-            <td colspan="2">Dodávateľ:</td>
-            <td colspan="2">Destinácia:</td>
+            <td colspan="2" class="main-info">Referencia:</td>
+            <td colspan="2" class="main-info">Cofor:</td>
+            <td colspan="2" class="main-info">Dodávateľ:</td>
+            <td colspan="2" class="main-info">Destinácia:</td>
         </tr>
         <tr>
-            <td colspan="2">{{ standard.SKU }}</td>
+            <td colspan="2" class="sku-code">{{ standard.SKU }}</td>
             <td colspan="2">{{ standard.COFOR }}</td>
             <td colspan="2">{{ standard.supplier }}</td>
             <td colspan="2">{{ standard.destination }}</td>
         </tr>
         <tr>
-            <td colspan="4">Balenie na príjme</td>
-            <td colspan="4">Balenie na expedícii</td>
+            <td colspan="4" class="input-info">Balenie na príjme</td>
+            <td colspan="4" class="output-info">Balenie na expedícii</td>
         </tr>
         <tr>
             <td colspan="4">
@@ -59,33 +59,33 @@
             </td>
         </tr>
         <tr>
-            <td>Typ balenia:</td>
+            <td class="input-info">Typ balenia:</td>
             <td>{{ standard.input_type_of_package }}</td>
-            <td>Počet boxov na palete:</td>
+            <td class="input-info">Počet boxov na palete:</td>
             <td>{{ standard.input_count_of_boxes_on_pallet }}</td>
-            <td>Typ balenia:</td>
+            <td  class="output-info">Typ balenia:</td>
             <td>{{ standard.output_type_of_package }}</td>
-            <td>Počet boxov na palete:</td>
+            <td  class="output-info">Počet boxov na palete:</td>
             <td>{{ standard.output_count_of_boxes_on_pallet }}</td>
         </tr>
         <tr>
-            <td>Počet kusov v balení:</td>
+            <td class="input-info">Počet kusov v balení:</td>
             <td>{{ standard.input_count_of_items_in_package }}</td>
-            <td>Počet kusov na palete:</td>
+            <td class="input-info">Počet kusov na palete:</td>
             <td>{{ standard.input_count_of_items_on_pallet }}</td>
-            <td>Počet kusov v balení:</td>
+            <td  class="output-info">Počet kusov v balení:</td>
             <td>{{ standard.output_count_of_items_in_package }}</td>
-            <td>Počet kusov na palete:</td>
+            <td  class="output-info">Počet kusov na palete:</td>
             <td>{{ standard.output_count_of_items_on_pallet }}</td>
         </tr>
         <tr>
-            <td>Počet kusov na 1 pohyb:</td>
+            <td class="main-info">Počet kusov na 1 pohyb:</td>
             <td>{{ standard.items_per_move }}</td>
-            <td>Jednotková váha:</td>
+            <td class="main-info">Jednotková váha:</td>
             <td>{{ standard.unit_weight }}</td>
-            <td>Čas prebalu:</td>
+            <td class="main-info">Čas prebalu:</td>
             <td>{{ standard.repacking_duration }}</td>
-            <td colspan="2">Poznámka:</td>
+            <td colspan="2"  class="main-info">Poznámka:</td>
         </tr>
         <tr>
             <td colspan="8">{{ standard.instructions }}</td>

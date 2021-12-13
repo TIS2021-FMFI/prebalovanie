@@ -320,6 +320,31 @@ nav #gefco{
 
 /* end of sku list */
 
-/* repack */
+/* standard detail */
 
-/* end of repack */
+.standard-table td{
+    border: 1px solid black;
+    margin: 10px;
+}
+
+.main-info{
+    background-color: #f3d39b;
+    font-size: 14px;
+}
+
+.sku-code{
+    font-size: 26px;
+    color: #00538b;
+}
+
+.input-info{
+    background-color: #b3e4f3;
+    font-size: 14px;
+}
+
+.output-info{
+    background-color: #b9e5a0;
+    font-size: 14px;
+}
+
+/* end of standard detail */
