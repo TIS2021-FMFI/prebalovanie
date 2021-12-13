@@ -212,7 +212,7 @@ button a{
     font-size: 17px;
 }
 
-#pause-btn{
+.inactive-btn{
     padding: 5px 10px;
     font-family: UniviaPro-regular;
     font-size: 17px;
@@ -221,15 +221,19 @@ button a{
     border: 1px solid #00538b;
     border-radius: 5px;
     background-color: #00538b;
-}
-
-.inactive-btn{
     color: red;
 }
 
 .active-btn, .repack-btn{
-    color: #ffcd00;
+    padding: 5px 10px;
+    font-family: UniviaPro-regular;
     font-size: 17px;
+    width: 120px;
+    margin-bottom: 3px;
+    border: 1px solid #00538b;
+    border-radius: 5px;
+    background-color: #00538b;
+    color: #ffcd00;
     cursor: pointer;
 }
 
