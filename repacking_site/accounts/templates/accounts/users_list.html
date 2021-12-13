@@ -46,17 +46,29 @@
 
     <table>
     <tr>
+        <th>Akcie</th>
         <th>Username</th>
         <th>First name</th>
         <th>Last name</th>
         <th>Barcode</th>
+        <th>Blokovaný</th>
     </tr>
     {% for user in users_list %}
         <tr>
+            <td>
+                <button type="button"><a href="/admin/accounts/user/{{ user.id }}/change/">Editovať</a></button>
+            </td>
             <td>{{ user.username }}</td>
             <td>{{ user.first_name }}</td>
             <td>{{ user.last_name }}</td>
             <td>{{ user.barcode }}</td>
+            <td>
+                {% if user.is_active %}
+                    Nie
+                {% else %}
+                    Áno
+                {% endif %}
+            </td>
         </tr>
     {% endfor %}
     </table>

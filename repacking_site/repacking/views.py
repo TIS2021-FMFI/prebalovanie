@@ -1,4 +1,6 @@
-from django.http import Http404, HttpResponseRedirect
+import csv
+
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 from accounts.models import *
@@ -50,6 +52,55 @@ def history(request):
     context = {"repacking_history_list": repacking_history_list,
                'repack_history_filter': repack_history_filter, 'paginate_by': paginate_by}
     return render(request, 'repacking/history.html', context)
+
+
+def sku_export(request):
+    response = HttpResponse(
+        content_type='text/csv',
+        headers={'Content-Disposition': 'attachment; filename="SKU-export.csv"'},
+    )
+
+    response.write(u'\ufeff'.encode('utf8'))
+    writer = csv.writer(response, dialect='excel', delimiter=';')
+    writer.writerow(['SKU', 'COFOR', 'Destinácia', 'ks IN', 'ks OUT', 'ks v obale IN', 'ks v obale OUT',
+                     'boxy IN', 'boxy OUT', 'kg/ks', 'vytvoril', 'Čas vytvorenia', 'Poznámka'])
+    for standard in RepackingStandard.objects.all():
+        writer.writerow([standard.SKU, standard.COFOR, standard.destination,
+                         standard.input_count_of_items_on_pallet, standard.output_count_of_items_on_pallet,
+                         standard.input_count_of_items_in_package, standard.output_count_of_items_in_package,
+                         standard.input_count_of_boxes_on_pallet, standard.output_count_of_boxes_on_pallet,
+                         standard.unit_weight, standard.creator, standard.created, standard.instructions])
+    return response
+
+
+def history_export(request):
+    response = HttpResponse(
+        content_type='text/csv',
+        headers={'Content-Disposition': 'attachment; filename="history-export.csv"'},
+    )
+
+    response.write(u'\ufeff'.encode('utf8'))
+    writer = csv.writer(response, dialect='excel', delimiter=';')
+    writer.writerow(['Čas začiatku prebalu', 'Čas konca prebalu', 'Čas prebalu', 'operátori',
+                     'SKU', 'COFOR', 'Destinácia', 'ks IN', 'ks OUT',
+                     'ks v obale IN', 'ks v obale OUT', 'boxy IN', 'boxy OUT',
+                     'Trvanie prebalu podľa štandardu', 'kg/ks', 'vytvoril', 'Čas vytvorenia', 'Poznámka'])
+
+    for repack in RepackHistory.objects.all():
+        writer.writerow([repack.repack_start, repack.repack_finish, repack.repack_duration,
+                         ', '.join(map(str, repack.users.all())),
+                         repack.repacking_standard.SKU, repack.repacking_standard.COFOR,
+                         repack.repacking_standard.destination,
+                         repack.repacking_standard.input_count_of_items_on_pallet,
+                         repack.repacking_standard.output_count_of_items_on_pallet,
+                         repack.repacking_standard.input_count_of_items_in_package,
+                         repack.repacking_standard.output_count_of_items_in_package,
+                         repack.repacking_standard.input_count_of_boxes_on_pallet,
+                         repack.repacking_standard.output_count_of_boxes_on_pallet,
+                         repack.repacking_standard.repacking_duration,
+                         repack.repacking_standard.unit_weight, repack.repacking_standard.creator,
+                         repack.repacking_standard.created, repack.repacking_standard.instructions])
+    return response
 
 
 def start(request):
@@ -118,6 +169,16 @@ def finish(request, sku_code, idp_code, operators):
         repack.users.add(User.objects.get(barcode=operator))
 
     return HttpResponseRedirect('/repacking/start/')
+
+
+def delete(request, sku_code):
+    standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
+    if standard is None:
+        deleted = False
+    else:
+        standard.delete()
+        deleted = True
+    return render(request, 'repacking/standard_deleted.html', {'deleted': deleted})
 
 
 def cancel_sessions(request):

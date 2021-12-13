@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+    {% if deleted %}
+        <h1>Štandard vymazaný</h1>
+    {% else %}
+        <h1>Zlé číslo štandardu</h1>
+    {% endif %}
+
+{% endblock %}
