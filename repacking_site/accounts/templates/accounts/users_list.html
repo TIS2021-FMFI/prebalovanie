@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+    <h1>Zoznam používateľov</h1>
+
+    <form method="get">
+        {{ users_filter.form }}
+        <button type="submit">Vyhľadať</button>
+        <button type="button"><a href="index/">Vymazať</a></button>
+    </form>
+
+    <div class="btn-group">
+        <button type="button">Export</button>
+    </div>
+
+    <form method="GET">
+        <select name="paginate_by" id="">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+        </select>
+        <input type="submit" value="Paginate">
+    </form>
+
+    <div class="pagination">
+    <span class="step-links">
+        {% if users_list.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ users_list.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            {{ users_list.number }}/
+            {{ users_list.paginator.num_pages }}
+        </span>
+
+        {% if users_list.has_next %}
+            <a href="?page={{ users_list.next_page_number }}">next</a>
+            <a href="?page={{ users_list.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+    </div>
+
+    <table>
+    <tr>
+        <th>Akcie</th>
+        <th>Username</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Barcode</th>
+        <th>Blokovaný</th>
+    </tr>
+    {% for user in users_list %}
+        <tr>
+            <td>
+                <button type="button"><a href="/admin/accounts/user/{{ user.id }}/change/">Editovať</a></button>
+            </td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.barcode }}</td>
+            <td>
+                {% if user.is_active %}
+                    Nie
+                {% else %}
+                    Áno
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}

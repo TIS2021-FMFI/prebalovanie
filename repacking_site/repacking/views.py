@@ -1,8 +1,11 @@
-from django.http import Http404, HttpResponseRedirect
+import csv
+
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 
 from accounts.models import *
 from logs.models import Log
+from repacking_site.methods import filtered_records
 from .filters import *
 from .forms import *
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
@@ -28,7 +31,8 @@ def repacking(request, sku_code, idp_code, operators):
         request.session[repack_duration_key] = 0
     request.session[repack_last_start_key] = datetime.now().strftime(repack_time_format)
 
-    return render(request, 'repacking/repack.html', {'standard': standard, 'idp': idp_code, 'operators': operators})
+    return render(request, 'repacking/repack.html', {'standard': standard, 'idp': idp_code, 'operators': operators,
+                                                     'duration': int(request.session[repack_duration_key])})
 
 
 def detail(request, sku_code):
@@ -41,9 +45,62 @@ def detail(request, sku_code):
 
 def history(request):
     cancel_sessions(request)
-    repackings_list = RepackHistory.filter_and_order_repacking_history_by_get(request.GET)
-    context = {"repackings_list": repackings_list}
+    repacking_history_list_all = RepackHistory.filter_and_order_repacking_history_by_get(request.GET)
+    repack_history_filter = RepackHistoryFilter(request.GET, queryset=repacking_history_list_all)
+    paginate_by = request.GET.get('paginate_by', 10) or 10
+    repacking_history_list = filtered_records(request, repack_history_filter, paginate_by)
+    context = {"repacking_history_list": repacking_history_list,
+               'repack_history_filter': repack_history_filter, 'paginate_by': paginate_by}
     return render(request, 'repacking/history.html', context)
+
+
+def sku_export(request):
+    response = HttpResponse(
+        content_type='text/csv',
+        headers={'Content-Disposition': 'attachment; filename="SKU-export.csv"'},
+    )
+
+    response.write(u'\ufeff'.encode('utf8'))
+    writer = csv.writer(response, dialect='excel', delimiter=';')
+    writer.writerow(['SKU', 'COFOR', 'Destinácia', 'ks IN', 'ks OUT', 'ks v obale IN', 'ks v obale OUT',
+                     'boxy IN', 'boxy OUT', 'kg/ks', 'vytvoril', 'Čas vytvorenia', 'Poznámka'])
+    for standard in RepackingStandard.objects.all():
+        writer.writerow([standard.SKU, standard.COFOR, standard.destination,
+                         standard.input_count_of_items_on_pallet, standard.output_count_of_items_on_pallet,
+                         standard.input_count_of_items_in_package, standard.output_count_of_items_in_package,
+                         standard.input_count_of_boxes_on_pallet, standard.output_count_of_boxes_on_pallet,
+                         standard.unit_weight, standard.creator, standard.created, standard.instructions])
+    return response
+
+
+def history_export(request):
+    response = HttpResponse(
+        content_type='text/csv',
+        headers={'Content-Disposition': 'attachment; filename="history-export.csv"'},
+    )
+
+    response.write(u'\ufeff'.encode('utf8'))
+    writer = csv.writer(response, dialect='excel', delimiter=';')
+    writer.writerow(['Čas začiatku prebalu', 'Čas konca prebalu', 'Čas prebalu', 'operátori',
+                     'SKU', 'COFOR', 'Destinácia', 'ks IN', 'ks OUT',
+                     'ks v obale IN', 'ks v obale OUT', 'boxy IN', 'boxy OUT',
+                     'Trvanie prebalu podľa štandardu', 'kg/ks', 'vytvoril', 'Čas vytvorenia', 'Poznámka'])
+
+    for repack in RepackHistory.objects.all():
+        writer.writerow([repack.repack_start, repack.repack_finish, repack.repack_duration,
+                         ', '.join(map(str, repack.users.all())),
+                         repack.repacking_standard.SKU, repack.repacking_standard.COFOR,
+                         repack.repacking_standard.destination,
+                         repack.repacking_standard.input_count_of_items_on_pallet,
+                         repack.repacking_standard.output_count_of_items_on_pallet,
+                         repack.repacking_standard.input_count_of_items_in_package,
+                         repack.repacking_standard.output_count_of_items_in_package,
+                         repack.repacking_standard.input_count_of_boxes_on_pallet,
+                         repack.repacking_standard.output_count_of_boxes_on_pallet,
+                         repack.repacking_standard.repacking_duration,
+                         repack.repacking_standard.unit_weight, repack.repacking_standard.creator,
+                         repack.repacking_standard.created, repack.repacking_standard.instructions])
+    return response
 
 
 def start(request):
@@ -63,7 +120,8 @@ def start(request):
                     operators.add(operator)
                 i += 1
 
-            return HttpResponseRedirect(f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["IDP"]}/{",".join(operators)}/')
+            return HttpResponseRedirect(
+                f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["IDP"]}/{",".join(operators)}/')
 
     else:
         form = RepackingForm()
@@ -74,23 +132,10 @@ def start(request):
 def show_standards(request):
     cancel_sessions(request)
     repacking_standards_list_all = RepackingStandard.filter_and_order_repacking_standard_by_get(request.GET)
-    # inspiracia: https://www.youtube.com/watch?v=G-Rct7Na0UQ
     standards_filter = RepackingStandardFilter(request.GET, queryset=repacking_standards_list_all)
-    repacking_standards_list_filtered = standards_filter.queryset
-
-    # paginacia  https://www.youtube.com/watch?v=N-PB-HMFmdo
-    # pocet udajov na stranke https://stackoverflow.com/questions/57487336/change-value-for-paginate-by-on-the-fly
     paginate_by = request.GET.get('paginate_by', 10) or 10
-    p = Paginator(repacking_standards_list_filtered, paginate_by)
-    page = request.GET.get('page')
 
-    try:
-        repacking_standards_list = p.get_page(page)
-    except PageNotAnInteger:
-        repacking_standards_list = p.get_page(1)
-    except EmptyPage:
-        repacking_standards_list = p.get_page(1)
-
+    repacking_standards_list = filtered_records(request, standards_filter, paginate_by)
     context = {"repacking_standards_list": repacking_standards_list,
                'standards_filter': standards_filter, 'paginate_by': paginate_by}
     return render(request, 'repacking/standards.html', context)
@@ -126,6 +171,16 @@ def finish(request, sku_code, idp_code, operators):
     return HttpResponseRedirect('/repacking/start/')
 
 
+def delete(request, sku_code):
+    standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
+    if standard is None:
+        deleted = False
+    else:
+        standard.delete()
+        deleted = True
+    return render(request, 'repacking/standard_deleted.html', {'deleted': deleted})
+
+
 def cancel_sessions(request):
     try:
         del request.session[repack_start_key]
@@ -158,7 +213,8 @@ def pause(request, sku_code, idp_code, operators):
     else:
         Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "RepackingForm without session saved.")
 
-    context = {'sku_code': sku_code, 'idp_code': idp_code, 'operators': operators}
+    context = {'sku_code': sku_code, 'idp_code': idp_code, 'operators': operators,
+               'duration': int(request.session[repack_duration_key])}
     return render(request, 'repacking/pause.html', context)
 
 

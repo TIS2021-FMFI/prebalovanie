@@ -26,14 +26,14 @@
     </div>
 
     <div class="btn-group">
-        <button type="button" class="inactive-btn">Export</button>
+        <button type="button" class="active-btn"><a href="/repacking/sku/export/">Export</a></button>
         <button type="button" class="active-btn"><a href="/repacking/standards/new/">Pridať nový</a></button>
     </div>
 
     <form method="GET">
         <select name="paginate_by" id="">
             <option value="10">10</option>
-            <option value="20">10</option>
+            <option value="20">20</option>
             <option value="30">30</option>
             <option value="50">50</option>
         </select>
@@ -70,7 +70,9 @@
                 <th>ks OUT</th>
                 <th>obal IN</th>
                 <th>obal OUT</th>
-                <th>kg ks</th>
+                <th>boxy IN</th>
+                <th>boxy OUT</th>
+                <th>kg/ks</th>
                 <th>Čas prebalu</th>
                 <th>Vytvoril</th>
                 <th>Čas vytvorenia</th>
@@ -83,7 +85,7 @@
                         {#                    zdroj: https://stackoverflow.com/questions/21916835/django-button-link/21917002  da sa to aj takto: https://stackoverflow.com/questions/48438575/call-django-on-html-button-click/48438962 #}
                         <button type="button" class="active-btn"><a href="/repacking/{{ standard.SKU }}/">Detail</a></button>
                         <button type="button" class="inactive-btn">Editovať</button>
-                        <button type="button" class="inactive-btn">Vymazať</button>
+                        <button type="button" class="active-btn"><a href="/repacking/delete/{{ standard.SKU }}/">Vymazať</a></button>
                     </td>
                     <td>{{ standard.SKU }}</td>
                     <td>{{ standard.COFOR }}</td>
@@ -92,6 +94,8 @@
                     <td>{{ standard.output_count_of_items_in_package }}</td>
                     <td>{{ standard.input_type_of_package }}</td>
                     <td>{{ standard.output_type_of_package }}</td>
+                    <td>{{ standard.input_count_of_boxes_on_pallet }}</td>
+                    <td>{{ standard.output_count_of_boxes_on_pallet }}</td>
                     <td>{{ standard.unit_weight }}</td>
                     <td>{{ standard.repacking_duration }}</td>
                     <td>{{ standard.creator }}</td>
