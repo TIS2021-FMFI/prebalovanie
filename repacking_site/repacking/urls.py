@@ -11,6 +11,7 @@ urlpatterns = [
     path('repacking/sku/export/', views.sku_export),
     path('repacking/history/export/', views.history_export),
     path('repacking/delete/<str:sku_code>/', views.delete),
+    path('repacking/update/<str:sku_code>/', views.update, name="update"),
     path('repacking/<str:sku_code>/', views.detail),
     path('repacking/<str:sku_code>/<str:idp_code>/<str:operators>/repack_finished', views.finish),
     path('repacking/<str:sku_code>/<str:idp_code>/<str:operators>/repack_paused', views.pause),

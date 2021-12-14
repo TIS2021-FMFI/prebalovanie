@@ -1,7 +1,7 @@
 import csv
 
 from django.http import Http404, HttpResponseRedirect, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from accounts.models import *
 from logs.models import Log
@@ -179,6 +179,19 @@ def delete(request, sku_code):
         standard.delete()
         deleted = True
     return render(request, 'repacking/standard_deleted.html', {'deleted': deleted})
+
+
+def update(request, sku_code):
+    # inspiracia: https://www.youtube.com/watch?v=EX6Tt-ZW0so
+    standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
+    form = StandardUpdateForm(instance=standard)
+    context = {'form': form}
+    if request.method == 'POST':
+        form = StandardUpdateForm(request.POST, instance=standard)
+        if form.is_valid():
+            form.save()
+            return redirect('/repacking/standards/')
+    return render(request, 'repacking/update_standard.html', context)
 
 
 def cancel_sessions(request):

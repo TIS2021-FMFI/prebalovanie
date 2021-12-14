@@ -9,7 +9,7 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Zmeň</button>
+            <button type="submit" class="active-btn">Zmeň</button>
         </form>
     {% else %}
         Please, <a href="/accounts/login/">log in</a> to see your profile.
