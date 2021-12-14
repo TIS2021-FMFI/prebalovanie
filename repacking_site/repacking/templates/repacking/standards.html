@@ -20,8 +20,8 @@
         <button class="dropbtn_filter" onclick="open_close_filter_menu()">Filter</button>
         <form method="get" id="filter">
             {{ standards_filter.form }}
-            <button type="submit">Vyhľadať</button>
-            <button type="button"><a href="/repacking/standards/">Vymazať</a></button>
+            <button type="submit" class="active-btn">Vyhľadať</button>
+            <button type="button" class="active-btn"><a href="/repacking/standards/">Vymazať</a></button>
         </form>
     </div>
 
@@ -84,7 +84,7 @@
                     <td>
                         {#                    zdroj: https://stackoverflow.com/questions/21916835/django-button-link/21917002  da sa to aj takto: https://stackoverflow.com/questions/48438575/call-django-on-html-button-click/48438962 #}
                         <button type="button" class="active-btn"><a href="/repacking/{{ standard.SKU }}/">Detail</a></button>
-                        <button type="button" class="inactive-btn">Editovať</button>
+                        <button type="button" class="active-btn"><a href="/repacking/update/{{ standard.SKU }}/">Editovať</a></button>
                         <button type="button" class="active-btn"><a href="/repacking/delete/{{ standard.SKU }}/">Vymazať</a></button>
                     </td>
                     <td>{{ standard.SKU }}</td>

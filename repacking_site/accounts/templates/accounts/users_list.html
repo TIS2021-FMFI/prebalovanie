@@ -3,16 +3,30 @@
 
 {% block content %}
 
+    <script>
+        function open_close_filter_menu() {
+            let filter = document.getElementById('filter')
+            if (filter.style.display == 'block') {
+                filter.style.display = 'none';
+            } else {
+                filter.style.display = 'block';
+            }
+        }
+    </script>
+
     <h1>Zoznam používateľov</h1>
 
-    <form method="get">
-        {{ users_filter.form }}
-        <button type="submit">Vyhľadať</button>
-        <button type="button"><a href="index/">Vymazať</a></button>
-    </form>
+    <div class="filter_div">
+        <button class="dropbtn_filter" onclick="open_close_filter_menu()">Filter</button>
+        <form method="get" id="filter">
+            {{ users_filter.form }}
+            <button type="submit" class="active-btn">Vyhľadať</button>
+            <button type="button" class="active-btn"><a href="index/">Vymazať</a></button>
+        </form>
+    </div>
 
     <div class="btn-group">
-        <button type="button">Export</button>
+        <button type="button" class="active-btn">Export</button>
     </div>
 
     <form method="GET">
@@ -45,32 +59,32 @@
     </div>
 
     <table>
-    <tr>
-        <th>Akcie</th>
-        <th>Username</th>
-        <th>First name</th>
-        <th>Last name</th>
-        <th>Barcode</th>
-        <th>Blokovaný</th>
-    </tr>
-    {% for user in users_list %}
         <tr>
-            <td>
-                <button type="button"><a href="/admin/accounts/user/{{ user.id }}/change/">Editovať</a></button>
-            </td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.first_name }}</td>
-            <td>{{ user.last_name }}</td>
-            <td>{{ user.barcode }}</td>
-            <td>
-                {% if user.is_active %}
-                    Nie
-                {% else %}
-                    Áno
-                {% endif %}
-            </td>
+            <th>Akcie</th>
+            <th>Username</th>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Barcode</th>
+            <th>Blokovaný</th>
         </tr>
-    {% endfor %}
+        {% for user in users_list %}
+            <tr>
+                <td>
+                    <button type="button"><a href="/admin/accounts/user/{{ user.id }}/change/">Editovať</a></button>
+                </td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.first_name }}</td>
+                <td>{{ user.last_name }}</td>
+                <td>{{ user.barcode }}</td>
+                <td>
+                    {% if user.is_active %}
+                        Nie
+                    {% else %}
+                        Áno
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
     </table>
 
 {% endblock %}
