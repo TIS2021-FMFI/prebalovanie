@@ -47,6 +47,7 @@ nav #gefco{
     padding: 10px;
     border: none;
     cursor: pointer;
+    width: auto;
 }
 
 .dropdown-content{
@@ -93,6 +94,19 @@ nav .user{
     margin-right: 20px;
 }
 
+#nav-image{
+    height: 25px;
+    margin-right: 5px;
+    margin-top: 5px;
+    filter: invert(100%);
+}
+
+#btn-image{
+    height: 20px;
+    margin: 0px 5px 0px 0px;
+    filter: invert(100%);
+}
+
 /* navigation css */
 
 h1{
@@ -125,23 +139,21 @@ footer #gefco{
 /* tables css */
 
 table{
-    margin-left: auto;
-    margin-right: auto;
-}
-
-table{
     border-collapse: collapse;
     border: 1px solid rgba(0,0,0,0.25);
     text-align: center;
     padding: 8px;
     /*min-width: 600px;*/
     box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 td, tr, th{
     text-align: center;
-    padding: 12px;
+    padding: 12px 7px;
     margin: 0;
+    font-size: 14px;
 }
 
 td, th{
@@ -155,7 +167,7 @@ th{
     border-bottom: 3px solid rgba(0,0,0,0.55);
     background-color: #ffcd00;
     font-weight: bold;
-    font-size: 24px;
+    font-size: 16px;
 }
 
 td:last-child, th:last-child{
@@ -180,10 +192,35 @@ form{
     width: 50%;
     margin-left: auto;
     margin-right: auto;
-
 }
 
-button, .repack-btn{
+input{
+    font-family: UniviaPro-regular;
+    font-size: 16px;
+    width: 95%;
+    padding: 5px 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid grey;
+}
+
+input[type=submit]{
+    width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #00538b;
+    border: none;
+    color: #ffcd00;
+    padding: 10px 30px;
+    border-radius: 10px;
+}
+
+/* end of forms css */
+
+/* buttons */
+
+button{
     padding: 5px 10px;
     font-family: UniviaPro-regular;
     font-size: 17px;
@@ -192,14 +229,6 @@ button, .repack-btn{
     border: 1px solid #00538b;
     border-radius: 5px;
     background-color: #00538b;
-}
-
-input{
-    font-family: UniviaPro-regular;
-}
-
-.dropbtn{
-    width: auto;
 }
 
 button a{
@@ -224,7 +253,7 @@ button a{
     padding: 5px 10px;
     font-family: UniviaPro-regular;
     font-size: 17px;
-    width: 120px;
+    width: 140px;
     margin-bottom: 3px;
     border: 1px solid #00538b;
     border-radius: 5px;
@@ -233,41 +262,28 @@ button a{
     cursor: pointer;
 }
 
-.repack-btn{
-
+#start-repack-btn{
+    float: right;
+    width: 160px
 }
+
 .active-btn:hover, .active-btn:hover a{
     color: white;
 }
 
 .repack-btn-group{
+    margin-top: 70px;
     margin-bottom: 10px;
 }
 
-input{
-    font-size: 16px;
-    width: 95%;
-    padding: 5px 5px;
+.btn-group{
+    margin-top: 10px;
     margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid grey;
 }
 
-input[type=submit]{
-    width: 50%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #00538b;
-    border: none;
-    color: #ffcd00;
-    padding: 10px 30px;
-    border-radius: 10px;
-}
+/* end of buttons */
 
-nav #gefco{
-    width: 80px;
-}
+/* filters */
 
 .filter_div{
     border: 1px solid black;
@@ -295,26 +311,42 @@ nav #gefco{
 
 #filter{
     display: none;
-    width: auto;
     margin-right: auto;
     margin-left: auto;
-    column-count: 3;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-content: center;
 }
+
+#filter input{
+    width: 80%;
+}
+
+#filter select{
+    width: 90%;
+}
+
+/* custom filter css*/
+
+#filter p{
+    width: auto;
+    flex-basis: 12%;
+    margin-right: auto;
+}
+#filter div{
+    justify-self: flex-end;
+    margin: auto 10px auto auto;
+}
+
+/* end of custom filter css*/
 
 #filter button{
     margin-top: 20px;
     margin-right: 10px;
 }
 
-/* end of forms css */
-
-/* sku list */
-
-.btn-group{
-    margin-top: 10px;
-}
-
-/* end of sku list */
+/* end of filters */
 
 /* standard detail */
 
@@ -343,4 +375,26 @@ nav #gefco{
     font-size: 14px;
 }
 
+.instructions{
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* end of standard detail */
+
+/* login */
+
+#login{
+    position: absolute;
+    left: 25%;
+    top: 25%;
+}
+
+#login-btn{
+    width: 150px;
+    margin-top: 5px;
+}
+
+/* end of login */
