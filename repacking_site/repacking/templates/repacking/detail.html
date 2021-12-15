@@ -1,11 +1,14 @@
 {% extends "base.html" %}
+{% load static %}
 
 
 {% block content %}
 
     <h1>Detail štandardu {{ standard.SKU }}</h1>
 
-    <a class="active-btn" href="{% url 'start' %}">Začni prebal</a>
+    <div class="btn-group">
+        <a class="active-btn" href="{% url 'start' %}"><img id="btn-image" src="{% static 'icons/2931171_download_import_save_down_storage.png' %}">Začni prebal</a>
+    </div>
 
     <table class="standard-table">
         <tr>

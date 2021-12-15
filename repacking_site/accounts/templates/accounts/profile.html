@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
 
@@ -9,7 +10,7 @@
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="active-btn">Zmeň</button>
+            <button type="submit" class="active-btn"><img id="btn-image" src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">Zmeň</button>
         </form>
     {% else %}
         Please, <a href="/accounts/login/">log in</a> to see your profile.

@@ -14,7 +14,7 @@
     {% for group in groups %}
         <tr>
             <td>
-                <button type="button"><a href="/admin/auth/group/{{ group.id }}/change/">Editovať</a></button>
+                <a href="/admin/auth/group/{{ group.id }}/change/" class="active-btn"><img id="btn-image" src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">Editovať</a>
             </td>
             <td>{{ group.name }}</td>
             <td>{{ group.user_set.count }}</td>
