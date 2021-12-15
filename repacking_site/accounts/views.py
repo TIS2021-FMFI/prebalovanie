@@ -1,6 +1,13 @@
+import csv
+
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from django.contrib.auth.models import Group
+from django.http import Http404, HttpResponseRedirect, HttpResponse
+from django.shortcuts import render, redirect
+from logs.models import Log
+from repacking_site.methods import filtered_records
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from repacking_site.methods import filtered_records
 from .filters import *
@@ -24,6 +31,37 @@ def profile(request):
         else:
             form = ProfileForm()
         return render(request, 'accounts/profile.html', {'form': form})
+
+
+def export_users(request):
+    response = HttpResponse(
+        content_type='text/csv',
+        headers={'Content-Disposition': 'attachment; filename="users-export.csv"'},
+    )
+
+    response.write(u'\ufeff'.encode('utf8'))
+    writer = csv.writer(response, dialect='excel', delimiter=';')
+    writer.writerow(['Username', 'First name', 'Last name', 'Email', 'Is staff', 'Is active', 'Is superuser',
+                     'groups', 'barcode'])
+    for user in User.objects.all():
+        writer.writerow([user.username, user.first_name, user.last_name, user.email,
+                         user.is_staff, user.is_active, user.is_superuser,
+                         ', '.join(map(str, user.groups.all())), repr(user.barcode)])
+    return response
+
+
+def export_groups(request):
+    response = HttpResponse(
+        content_type='text/csv',
+        headers={'Content-Disposition': 'attachment; filename="users-export.csv"'},
+    )
+
+    response.write(u'\ufeff'.encode('utf8'))
+    writer = csv.writer(response, dialect='excel', delimiter=';')
+    writer.writerow(['Group name', 'Permissions'])
+    for group in Group.objects.all():
+        writer.writerow([group.name, ", ".join(map(str, group.permissions.all()))])
+    return response
 
 
 def users_list(request):
