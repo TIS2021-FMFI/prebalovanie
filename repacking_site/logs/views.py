@@ -3,6 +3,7 @@ from django.shortcuts import render
 from repacking_site.methods import filtered_records
 from .filters import *
 
+
 def index(request):
     log_list_all = Log.filter_and_order_logs_by_get(request.GET)
     log_filter = LogFilter(request.GET, queryset=log_list_all)

@@ -5,7 +5,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 def filtered_records(request, records_filter, paginate_by):
     # inspiracia: https://www.youtube.com/watch?v=G-Rct7Na0UQ
-    list_filtered = records_filter.queryset
+    list_filtered = records_filter.qs
     # paginacia  https://www.youtube.com/watch?v=N-PB-HMFmdo
     # pocet udajov na stranke https://stackoverflow.com/questions/57487336/change-value-for-paginate-by-on-the-fly
     p = Paginator(list_filtered, paginate_by)

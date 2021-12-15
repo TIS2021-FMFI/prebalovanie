@@ -21,27 +21,35 @@
         <form method="get" id="filter" style="display: none">
             {{ repack_history_filter.form.as_p }}
             <div>
-                <button type="submit" class="active-btn"><img id="btn-image" src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">Vyhľadať</button>
-                <button type="button" class="active-btn"><a href="/repacking/history/"><img id="btn-image" src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">Vymazať</a></button>
+                <button type="submit" class="active-btn"><img id="btn-image"
+                                                              src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">Vyhľadať
+                </button>
+                <button type="button" class="active-btn"><a href="/repacking/history/"><img id="btn-image"
+                                                                                            src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">Vymazať</a>
+                </button>
             </div>
         </form>
     </div>
 
     <div class="btn-group">
-        <button type="button" class="active-btn"><a href="/repacking/history/export/"><img id="btn-image" src="{% static 'icons/2931143_up_upload_export_share.png' %}">Export</a></button>
+        <button type="button" class="active-btn"><a href="/repacking/history/export/"><img id="btn-image"
+                                                                                           src="{% static 'icons/2931143_up_upload_export_share.png' %}">Export</a>
+        </button>
     </div>
 
-    <form method="GET">
-        <select name="paginate_by" id="">
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-            <option value="50">50</option>
-        </select>
-        <input type="submit" value="Paginate" class="active-btn">
-    </form>
+    {% if repacking_history_list %}
 
-    <div class="pagination">
+        <form method="GET">
+            <select name="paginate_by" id="">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+            <input type="submit" value="Paginate" class="active-btn">
+        </form>
+
+        <div class="pagination">
     <span class="step-links">
         {% if repacking_history_list.has_previous %}
             <a href="?page=1">&laquo; first</a>
@@ -58,11 +66,8 @@
             <a href="?page={{ repacking_history_list.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
-    </div>
-
-    {% if repacking_history_list %}
+        </div>
         <table>
-
             <th>SKU</th>
             <th>COFOR</th>
 
