@@ -21,27 +21,34 @@
         <form method="get" id="filter" style="display: none">
             {{ users_filter.form.as_p }}
             <div>
-                <button type="submit" class="active-btn"><img id="btn-image" src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">Vyhľadať</button>
-                <button type="button" class="active-btn"><a href="index/"><img id="btn-image" src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">Vymazať</a></button>
+                <button type="submit" class="active-btn"><img id="btn-image"
+                                                              src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">Vyhľadať
+                </button>
+                <button type="button" class="active-btn"><a href="index/"><img id="btn-image"
+                                                                               src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">Vymazať</a>
+                </button>
             </div>
         </form>
     </div>
 
     <div class="btn-group">
-        <button type="button" class="active-btn"><img id="btn-image" src="{% static 'icons/2931143_up_upload_export_share.png' %}">Export</button>
+        <button type="button" class="active-btn"><img id="btn-image"
+                                                      src="{% static 'icons/2931143_up_upload_export_share.png' %}">Export
+        </button>
     </div>
 
-    <form method="GET">
-        <select name="paginate_by" id="">
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="30">30</option>
-            <option value="50">50</option>
-        </select>
-        <input type="submit" value="Paginate" class="active-btn">
-    </form>
+    {% if users_list %}
 
-    <div class="pagination">
+        <form method="GET">
+            <select name="paginate_by" id="">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+            </select>
+            <input type="submit" value="Paginate" class="active-btn">
+        </form>
+        <div class="pagination">
     <span class="step-links">
         {% if users_list.has_previous %}
             <a href="?page=1">&laquo; first</a>
@@ -58,35 +65,38 @@
             <a href="?page={{ users_list.paginator.num_pages }}">last &raquo;</a>
         {% endif %}
     </span>
-    </div>
-
-    <table>
-        <tr>
-            <th>Akcie</th>
-            <th>Username</th>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Barcode</th>
-            <th>Blokovaný</th>
-        </tr>
-        {% for user in users_list %}
+        </div>
+        <table>
             <tr>
-                <td>
-                    <a href="/admin/accounts/user/{{ user.id }}/change/" class="active-btn"><img id="btn-image" src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">Editovať</a>
-                </td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.first_name }}</td>
-                <td>{{ user.last_name }}</td>
-                <td>{{ user.barcode }}</td>
-                <td>
-                    {% if user.is_active %}
-                        Nie
-                    {% else %}
-                        Áno
-                    {% endif %}
-                </td>
+                <th>Akcie</th>
+                <th>Username</th>
+                <th>First name</th>
+                <th>Last name</th>
+                <th>Barcode</th>
+                <th>Blokovaný</th>
             </tr>
-        {% endfor %}
-    </table>
+            {% for user in users_list %}
+                <tr>
+                    <td>
+                        <a href="/admin/accounts/user/{{ user.id }}/change/" class="active-btn"><img id="btn-image"
+                                                                                                     src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">Editovať</a>
+                    </td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.last_name }}</td>
+                    <td>{{ user.barcode }}</td>
+                    <td>
+                        {% if user.is_active %}
+                            Nie
+                        {% else %}
+                            Áno
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Žiadny používatelia nie sú k dispozícií.</p>
+    {% endif %}
 
 {% endblock %}
