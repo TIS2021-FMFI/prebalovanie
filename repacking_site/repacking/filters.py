@@ -1,9 +1,14 @@
 import django_filters
+from django_filters import CharFilter
 
 from .models import *
 
 
 class RepackingStandardFilter(django_filters.FilterSet):
+    SKU = CharFilter(field_name='SKU', lookup_expr='icontains')
+    COFOR = CharFilter(field_name='COFOR', lookup_expr='icontains')
+    destination = CharFilter(field_name='destination', lookup_expr='icontains')
+
     class Meta:
         model = RepackingStandard
         fields = ['SKU',
