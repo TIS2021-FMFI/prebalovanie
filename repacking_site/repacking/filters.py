@@ -25,6 +25,10 @@ class RepackingStandardFilter(django_filters.FilterSet):
 
 
 class RepackHistoryFilter(django_filters.FilterSet):
+    repacking_standard__SKU = CharFilter(field_name='repacking_standard__SKU', lookup_expr='icontains')
+    repacking_standard__COFOR = CharFilter(field_name='repacking_standard__COFOR', lookup_expr='icontains')
+    repacking_standard__destination = CharFilter(field_name='repacking_standard__destination', lookup_expr='icontains')
+
     class Meta:
         model = RepackHistory
         fields = ['repacking_standard__SKU',
