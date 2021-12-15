@@ -7,7 +7,9 @@ from .models import *
 class RepackingStandardFilter(django_filters.FilterSet):
     SKU = CharFilter(field_name='SKU', lookup_expr='icontains')
     COFOR = CharFilter(field_name='COFOR', lookup_expr='icontains')
-    destination = CharFilter(field_name='destination', lookup_expr='icontains')
+    destination = CharFilter(field_name='destination', lookup_expr='icontains', label="Destinácia")
+    input_type_of_package = CharFilter(field_name='input_type_of_package', lookup_expr='icontains', label="Obal IN")
+    output_type_of_package = CharFilter(field_name='output_type_of_package', lookup_expr='icontains', label="Obal OUT")
 
     class Meta:
         model = RepackingStandard
@@ -17,17 +19,19 @@ class RepackingStandardFilter(django_filters.FilterSet):
                   'input_type_of_package',
                   'output_type_of_package']
 
-    def __init__(self, *args, **kwargs):
-        super(RepackingStandardFilter, self).__init__(*args, **kwargs)
-        self.filters['destination'].label = "Destinácia"
-        self.filters['input_type_of_package'].label = "Obal IN"
-        self.filters['output_type_of_package'].label = "Obal OUT"
-
 
 class RepackHistoryFilter(django_filters.FilterSet):
-    repacking_standard__SKU = CharFilter(field_name='repacking_standard__SKU', lookup_expr='icontains')
-    repacking_standard__COFOR = CharFilter(field_name='repacking_standard__COFOR', lookup_expr='icontains')
-    repacking_standard__destination = CharFilter(field_name='repacking_standard__destination', lookup_expr='icontains')
+    repacking_standard__SKU = CharFilter(field_name='repacking_standard__SKU', lookup_expr='icontains', label="SKU")
+    repacking_standard__COFOR = CharFilter(field_name='repacking_standard__COFOR',
+                                           lookup_expr='icontains', label="COFOR")
+    repacking_standard__destination = CharFilter(field_name='repacking_standard__destination',
+                                                 lookup_expr='icontains', label="Destinácia")
+    repacking_standard__output_type_of_package = CharFilter(field_name='repacking_standard__output_type_of_package',
+                                                            lookup_expr='icontains', label="Typ obalu OUT")
+    repacking_standard__input_type_of_package = CharFilter(field_name='repacking_standard__input_type_of_package',
+                                                           lookup_expr='icontains', label="Typ obalu IN")
+    repacking_standard__supplier = CharFilter(field_name='repacking_standard__supplier',
+                                              lookup_expr='icontains', label="Dodávateľ")
 
     class Meta:
         model = RepackHistory
@@ -35,6 +39,7 @@ class RepackHistoryFilter(django_filters.FilterSet):
                   'repacking_standard__COFOR',
                   'repacking_standard__destination',
                   'repacking_standard__output_type_of_package',
+                  'repacking_standard__input_type_of_package',
                   'repacking_standard__output_count_of_items_in_package',
                   'repacking_standard__output_count_of_boxes_on_pallet',
                   'repacking_standard__output_count_of_items_on_pallet',
@@ -48,15 +53,10 @@ class RepackHistoryFilter(django_filters.FilterSet):
 
     def __init__(self, *args, **kwargs):
         super(RepackHistoryFilter, self).__init__(*args, **kwargs)
-        self.filters['repacking_standard__SKU'].label = "SKU"
-        self.filters['repacking_standard__COFOR'].label = "COFOR"
-        self.filters['repacking_standard__destination'].label = "Destinácia"
-        self.filters['repacking_standard__output_type_of_package'].label = "Typ obalu OUT"
         self.filters['repacking_standard__output_count_of_items_in_package'].label = "Počet ks v balení OUT"
         self.filters['repacking_standard__output_count_of_boxes_on_pallet'].label = "Počet boxov na palete OUT"
         self.filters['repacking_standard__output_count_of_items_on_pallet'].label = "Počet kusov na palete OUT"
         self.filters['repacking_standard__unit_weight'].label = "Jednotková váha dielu"
-        self.filters['repacking_standard__supplier'].label = "Dodávateľ"
         self.filters['repacking_standard__repacking_duration'].label = "Čas prebalu"
         self.filters['repack_start'].label = "Začiatok prebalu"
         self.filters['repack_finish'].label = "Koniec prebalu"
