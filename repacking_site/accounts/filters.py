@@ -5,9 +5,9 @@ from .models import *
 
 
 class UserFilter(django_filters.FilterSet):
-    first_name = CharFilter(field_name='first_name', lookup_expr='icontains')
-    last_name = CharFilter(field_name='last_name', lookup_expr='icontains')
-    barcode = CharFilter(field_name='barcode', lookup_expr='icontains')
+    first_name = CharFilter(field_name='first_name', lookup_expr='icontains', label="Krstné meno")
+    last_name = CharFilter(field_name='last_name', lookup_expr='icontains', label="Priezvisko")
+    barcode = CharFilter(field_name='barcode', lookup_expr='icontains', label="Barcode")
 
     class Meta:
         model = User
@@ -15,5 +15,3 @@ class UserFilter(django_filters.FilterSet):
 
     # navod na premenovanie labelov: https://stackoverflow.com/questions/31686157/django-set-filter-field-label-or-verbose-name
     # alebo treba pozriet napr. logs/filters na inspiraciu...
-    def __init__(self, *args, **kwargs):
-        super(UserFilter, self).__init__(*args, **kwargs)
