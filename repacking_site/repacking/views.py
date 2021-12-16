@@ -124,8 +124,7 @@ def start(request):
                 f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["IDP"]}/{",".join(operators)}/')
 
     else:
-        form = RepackingForm()
-
+        form = RepackingForm(initial={'SKU': request.GET.get('SKU', "")})
     return render(request, 'repacking/start.html', {'form': form})
 
 
