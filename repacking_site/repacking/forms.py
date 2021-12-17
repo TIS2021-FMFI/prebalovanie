@@ -56,7 +56,7 @@ class RepackingStandardForm(forms.Form):
     supplier = forms.CharField(max_length=50, required=True, label='Dodávateľ')
     destination = forms.CharField(max_length=50, required=True, label='Miesto určenia')
     items_per_move = forms.IntegerField(required=True, label='Počet kusov na jeden pohyb')
-    unit_weight = forms.DecimalField(max_digits=6, decimal_places=4, required=True, label='Jednotková váha kusu')
+    unit_weight = forms.DecimalField(max_digits=6, decimal_places=4, required=True, label='Jednotková váha dielu')
     repacking_duration = forms.IntegerField(required=True, label='Doba prebaľovania')
     instructions = forms.CharField(max_length=1200, required=True, label='Inštrukcie / pokyny')
 
@@ -72,9 +72,9 @@ class RepackingStandardForm(forms.Form):
     input_type_of_package = forms.CharField(max_length=50, required=True, label='Vstupný typ obalu')
     output_type_of_package = forms.CharField(max_length=50, required=True, label='Výstupný typ obalu')
 
-    input_photos = forms.ImageField(label='Vstupná fotografia', required=False,
+    input_photos = forms.ImageField(label='Vstupné fotografie', required=False,
                                     widget=forms.ClearableFileInput(attrs={'multiple': True}))
-    output_photos = forms.ImageField(label='Výstupná fotografia', required=False,
+    output_photos = forms.ImageField(label='Výstupné fotografie', required=False,
                                      widget=forms.ClearableFileInput(attrs={'multiple': True}))
 
     tools = forms.ImageField(label='Ochranné pomôcky', required=False, widget=forms.ClearableFileInput(attrs={'multiple': True}))
