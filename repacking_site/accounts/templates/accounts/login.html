@@ -3,15 +3,15 @@
 {% block content %}
 
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
+<p>Vaše používateľské meno alebo heslo sa nezhodujú. Prosím zadajte to znova.</p>
 {% endif %}
 
 {% if next %}
     {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
+    <p>Váš účet nemá prístup k tejto stránke. Ak chcete pokračovať,
+     prihláste sa pomocou účtu, ktorý má prístup.</p>
     {% else %}
-    <p>Please login to see this page.</p>
+    <p>Ak chcete zobraziť túto stránku, prihláste sa.</p>
     {% endif %}
 {% endif %}
 
@@ -30,7 +30,7 @@
 
 <input type="submit" value="login" class="active-btn" id="login-btn">
 <input type="hidden" name="next" value="{{ next }}">
-<p style="margin: 0 auto 0 auto; text-align: center"><a href="{% url 'password_reset' %}">Lost password?</a></p>
+<p style="margin: 0 auto 0 auto; text-align: center"><a href="{% url 'password_reset' %}">Zabudli ste heslo?</a></p>
 </form>
 
 {# Assumes you set up the password_reset view in your URLconf #}
