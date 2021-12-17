@@ -11,6 +11,7 @@ from .forms import *
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 repack_start_key = 'repack_start'
+paused_repack_last_start_key = 'paused_repack_last_start'
 repack_last_start_key = 'repack_last_start'
 repack_duration_key = 'repack_duration'
 repack_time_format = '%Y-%m-%dT%H:%M:%S'
@@ -29,10 +30,12 @@ def repacking(request, sku_code, idp_code, operators):
     if request.session.get(repack_start_key, None) is None:
         request.session[repack_start_key] = datetime.now().strftime(repack_time_format)
         request.session[repack_duration_key] = 0
-    request.session[repack_last_start_key] = datetime.now().strftime(repack_time_format)
+    if request.session.get(repack_last_start_key, None) is None:
+        request.session[repack_last_start_key] = datetime.now().strftime(repack_time_format)
 
     return render(request, 'repacking/repack.html', {'standard': standard, 'idp': idp_code, 'operators': operators,
-                                                     'duration': int(request.session[repack_duration_key])})
+                                                     'duration': int(request.session[repack_duration_key]),
+                                                     repack_last_start_key: request.session[repack_last_start_key]})
 
 
 def detail(request, sku_code):
@@ -218,9 +221,12 @@ def cancel(request, sku_code, idp_code, operators):
 def pause(request, sku_code, idp_code, operators):
     repack_paused = datetime.now()
     if request.session.get(repack_duration_key, None) is not None:
-        last_repack_start = request.session.get(repack_last_start_key)
-        request.session[repack_duration_key] = request.session.get(repack_duration_key) + (
-                repack_paused - datetime.strptime(last_repack_start, repack_time_format)).total_seconds()
+
+        if request.session.get(repack_last_start_key, None) is not None:
+            last_repack_start = request.session.get(repack_last_start_key)
+            request.session[repack_last_start_key] = None
+            request.session[repack_duration_key] = request.session.get(repack_duration_key) + (
+                    repack_paused - datetime.strptime(last_repack_start, repack_time_format)).total_seconds()
 
     else:
         Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "RepackingForm without session saved.")
