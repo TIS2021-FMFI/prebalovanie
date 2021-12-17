@@ -46,8 +46,8 @@ class RepackingStandardsModelTests(TestCase):
         standard2.created = time2
 
         repacking_standards = RepackingStandard.filter_and_order_repacking_standard_by_get({})
-        self.assertEquals(repacking_standards[0], standard2)
-        self.assertEquals(repacking_standards[1], standard1)
+        self.assertEquals(repacking_standards[0], standard1)
+        self.assertEquals(repacking_standards[1], standard2)
         self.assertEquals(len(repacking_standards), 2)
 
         repacking_standards = RepackingStandard.filter_and_order_repacking_standard_by_get({'order_by': 'SKU'})
@@ -63,8 +63,8 @@ class RepackingStandardsModelTests(TestCase):
         repacking_standards = RepackingStandard.filter_and_order_repacking_standard_by_get(
             {'order_by': 'takyto_field_neexistuje'})
 
-        self.assertEquals(repacking_standards[0], standard2)
-        self.assertEquals(repacking_standards[1], standard1)
+        self.assertEquals(repacking_standards[0], standard1)
+        self.assertEquals(repacking_standards[1], standard2)
         self.assertEquals(len(repacking_standards), 2)
 
     def test_order_reverse_repacking_standard(self):
@@ -133,8 +133,8 @@ class RepackingStandardsModelTests(TestCase):
         repack2.save()
 
         repacking_history = RepackHistory.filter_and_order_repacking_history_by_get({})
-        self.assertEquals(repacking_history[0], repack2)
-        self.assertEquals(repacking_history[1], repack1)
+        self.assertEquals(repacking_history[0], repack1)
+        self.assertEquals(repacking_history[1], repack2)
         self.assertEquals(len(repacking_history), 2)
 
         repacking_history = RepackHistory.filter_and_order_repacking_history_by_get({'order_by': 'repack_start'})
@@ -150,8 +150,8 @@ class RepackingStandardsModelTests(TestCase):
         repacking_history = RepackHistory.filter_and_order_repacking_history_by_get(
             {'order_by': 'takyto_field_neexistuje'})
 
-        self.assertEquals(repacking_history[0], repack2)
-        self.assertEquals(repacking_history[1], repack1)
+        self.assertEquals(repacking_history[0], repack1)
+        self.assertEquals(repacking_history[1], repack2)
         self.assertEquals(len(repacking_history), 2)
 
     def test_filter_repacking_history(self):

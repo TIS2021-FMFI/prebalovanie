@@ -10,9 +10,12 @@
         <a href="repack_cancelled" class="repack-btn"><img id="btn-image" src="{% static 'icons/2931168_garbage_trash_bin_delete_remove.png' %}">Zruš prebal</a>
     </div>
 
-    <script>make_timer()</script>
+    <div id="repack-duration">Trvanie prebalu: <span id="time"></span>s</div>
 
-    <div id="repack-duration">Trvanie prebalu: <span id="time">{{ duration }}</span>s</div>
+    <script>
+        init_time({{ duration }}, '{{ repack_last_start }}')
+        make_timer()
+    </script>
 
     <table class="standard-table">
         <tr>

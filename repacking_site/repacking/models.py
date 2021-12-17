@@ -55,14 +55,14 @@ class RepackingStandard(models.Model):
 
     @staticmethod
     def filter_and_order_repacking_standard_by_get(get):
-        order_by = get.get('order_by', "created")
+        order_by = get.get('order_by', "-created")
         try:
             if order_by[0] == '-':
                 RepackingStandard._meta.get_field(order_by[1:])
             else:
                 RepackingStandard._meta.get_field(order_by)
         except:
-            order_by = "created"
+            order_by = "-created"
         repacking_standards = RepackingStandard.objects.filter(
             SKU__contains=get.get('SKU', ""),
             COFOR__contains=get.get('COFOR', ""),
@@ -90,14 +90,14 @@ class RepackHistory(models.Model):
 
     @staticmethod
     def filter_and_order_repacking_history_by_get(get):
-        order_by = get.get('order_by', "repack_start")
+        order_by = get.get('order_by', "-repack_start")
         try:
             if order_by[0] == '-':
                 RepackHistory._meta.get_field(order_by[1:])
             else:
                 RepackHistory._meta.get_field(order_by)
         except:
-            order_by = "repack_start"
+            order_by = "-repack_start"
         repacking_history = RepackHistory.objects.filter(
             idp__contains=get.get('idp', ""),
             repacking_standard__SKU__contains=get.get('repacking_standard__SKU', ""),

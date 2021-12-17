@@ -51,3 +51,8 @@ function make_timer(){
 
 setInterval(time,1000);
 }
+
+function init_time(duration, start){
+	let timeElement = document.getElementById('time');
+	timeElement.innerHTML = duration +  Math.floor((Date.now()- Date.parse(start))/1000);
+}
