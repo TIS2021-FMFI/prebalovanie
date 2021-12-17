@@ -93,14 +93,16 @@
                     <td>
                         {#                    zdroj: https://stackoverflow.com/questions/21916835/django-button-link/21917002  da sa to aj takto: https://stackoverflow.com/questions/48438575/call-django-on-html-button-click/48438962 #}
                         <button type="button" class="active-btn"><img id="btn-image"
-                                                                      src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}"><a
-                                href="/repacking/{{ standard.SKU }}/">Detail</a></button>
+                                                                      src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">
+                            <a href="/repacking/{{ standard.SKU }}/">Detail</a></button>
                         <button type="button" class="active-btn"><img id="btn-image"
-                                                                      src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}"><a
-                                href="/repacking/update/{{ standard.SKU }}/">Editovať</a></button>
-                        <button type="button" class="active-btn"><img id="btn-image"
-                                                                      src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}"><a
-                                href="/repacking/delete/{{ standard.SKU }}/">Vymazať</a></button>
+                                                                      src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">
+                            <a href="/repacking/update/{{ standard.SKU }}/">Editovať</a></button>
+                        <button type="button" class="active-btn"
+                                onclick="if(confirm('Chcete naozaj vymazať štandard?')){window.location.href='/repacking/delete/{{ standard.SKU }}/'}">
+                            <img id="btn-image" src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">
+                            Vymazať
+                        </button>
                     </td>
                     <td>{{ standard.SKU }}</td>
                     <td>{{ standard.COFOR }}</td>
