@@ -8,21 +8,6 @@
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit">
-
-        <p>
-            <select multiple="multiple" class="image-picker show-html" name="photos">
-                {% for photo in photos %}
-                    <option data-img-src="{{ photo.photo.url }}" value="{{ photo.id }}">{{ photo.id }}</option>
-                {% endfor %}
-            </select>
-        </p>
-        <p>
-            <select multiple="multiple" class="image-picker show-html" name="tools">
-                {% for tool in tools %}
-                    <option data-img-src="{{ tool.photo.url }}" value="{{ tool.id }}">{{ tool.id }}</option>
-                {% endfor %}
-            </select>
-        </p>
         </form>
     {% endif %}
 
@@ -49,9 +34,29 @@
             tool_button.className = "active-btn";
         }
 
+        input_photos.parentElement.innerHTML += `<p>
+            <select multiple="multiple" class="image-picker show-html" name="existing_output_photos">
+                {% for photo in photos %}
+                    <option data-img-src="{{ photo.photo.url }}" value="{{ photo.id }}">{{ photo.id }}</option>
+                {% endfor %}
+            </select>
+        </p>`;
+        output_photos.parentElement.innerHTML += `<p>
+            <select multiple="multiple" class="image-picker show-html" name="existing_input_photos">
+                {% for photo in photos %}
+                    <option data-img-src="{{ photo.photo.url }}" value="{{ photo.id }}">{{ photo.id }}</option>
+                {% endfor %}
+            </select>
+        </p>`;
+        tools.parentElement.innerHTML += `<p>
+            <select multiple="multiple" class="image-picker show-html" name="existing_tools">
+                {% for tool in tools %}
+                    <option data-img-src="{{ tool.photo.url }}" value="{{ tool.id }}">{{ tool.id }}</option>
+                {% endfor %}
+            </select>
+        </p>`;
     </script>
     <script>
-        $("select").imagepicker();
         $("select").imagepicker();
     </script>
 {% endblock %}

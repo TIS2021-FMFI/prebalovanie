@@ -265,6 +265,16 @@ def make_new_standard(request):
             )
             standard.save()
 
+            print(request.POST.getlist('existing_input_photos'))
+            print(request.POST.getlist('existing_output_photos'))
+            print(request.POST.getlist('existing_tools'))
+            for photo_id in request.POST.getlist('existing_input_photos'):
+                standard.input_photos.add(Photos.objects.get(id=photo_id))
+            for photo_id in request.POST.getlist('existing_output_photos'):
+                standard.output_photos.add(Photos.objects.get(id=photo_id))
+            for photo_id in request.POST.getlist('existing_tools'):
+                standard.tools.add(Tools.objects.get(id=photo_id))
+
             if 'input_photos' in form.files:
                 for photo in form.files.getlist('input_photos'):
                     input_photo = Photos(photo=photo)
