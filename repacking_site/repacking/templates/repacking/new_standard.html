@@ -11,4 +11,25 @@
         </form>
     {% endif %}
 
+    <script>
+        let input_photos = document.getElementById('id_input_photos');
+        let input_button = $e("button", [["type", "button"], ["class", "inactive-btn"], ["onclick", "document.getElementById('id_input_photos').value = ''; input_button.className = 'inactive-btn'"]], input_photos.parentElement);
+        input_button.innerHTML = "X";
+        input_photos.onchange = function () {
+            input_button.className = "active-btn";
+        }
+        let output_photos = document.getElementById('id_output_photos');
+        let output_button = $e("button", [["type", "button"], ["class", "inactive-btn"], ["onclick", "document.getElementById('id_output_photos').value = ''; output_button.className = 'inactive-btn'"]], output_photos.parentElement);
+        output_button.innerHTML = "X";
+        output_photos.onchange = function (e) {
+            output_button.className = "active-btn";
+        }
+        let tools = document.getElementById('id_tools');
+        let tool_button = $e("button", [["type", "button"], ["class", "inactive-btn"], ["onclick", "document.getElementById('id_tools').value = ''; tool_button.className = 'inactive-btn'"]], tools.parentElement);
+        tool_button.innerHTML = "X";
+        tools.onchange = function (e) {
+            tool_button.className = "active-btn";
+        }
+
+    </script>
 {% endblock %}
