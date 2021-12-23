@@ -8,6 +8,7 @@ from logs.models import Log
 from repacking_site.methods import filtered_records
 from .filters import *
 from .forms import *
+from .models import *
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 repack_start_key = 'repack_start'
@@ -287,4 +288,4 @@ def make_new_standard(request):
     else:
         form = RepackingStandardForm()
 
-    return render(request, 'repacking/new_standard.html', {'form': form})
+    return render(request, 'repacking/new_standard.html', {'form': form, 'photos': Photos.objects.all(), 'tools': Tools.objects.all()})
