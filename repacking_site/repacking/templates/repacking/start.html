@@ -13,4 +13,16 @@
         <button type="submit" class="active-btn" id="start-repack-btn"><img id="btn-image" src="{% static 'icons/211876_play_icon.png' %}">Začni prebal</button>
     </form>
 
+    <script>
+        let sku_field = document.getElementById('id_SKU');
+        document.addEventListener('keydown', ev => {
+            if (ev.target.tagName !== "INPUT") {
+                if (ev.key.match(/^[a-z0-9]$/i))
+                    sku_field.value += ev.key;
+            }
+        });
+
+
+    </script>
+
 {% endblock %}
