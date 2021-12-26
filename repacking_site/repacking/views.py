@@ -188,11 +188,35 @@ def update(request, sku_code):
     # inspiracia: https://www.youtube.com/watch?v=EX6Tt-ZW0so
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
     form = StandardUpdateForm(instance=standard)
-    context = {'form': form}
+    input_photos = list(Photos.objects.all())
+    for photo in input_photos:
+        if photo in standard.input_photos.all():
+            photo.selected = True
+        else:
+            photo.selected = False
+    output_photos = list(Photos.objects.all())
+    for photo in output_photos:
+        if photo in standard.output_photos.all():
+            photo.selected = True
+        else:
+            photo.selected = False
+    tools = list(Tools.objects.all())
+    for tool in tools:
+        if tool in standard.tools.all():
+            tool.selected = True
+        else:
+            tool.selected = False
+    context = {'form': form, 'input_photos': input_photos, 'output_photos': output_photos, 'tools': tools}
     if request.method == 'POST':
         form = StandardUpdateForm(request.POST, instance=standard)
         if form.is_valid():
             form.save()
+            for photo_id in request.POST.getlist('existing_input_photos'):
+                standard.input_photos.add(Photos.objects.get(id=photo_id))
+            for photo_id in request.POST.getlist('existing_output_photos'):
+                standard.output_photos.add(Photos.objects.get(id=photo_id))
+            for photo_id in request.POST.getlist('existing_tools'):
+                standard.tools.add(Tools.objects.get(id=photo_id))
             return redirect('/repacking/standards/')
     return render(request, 'repacking/update_standard.html', context)
 
