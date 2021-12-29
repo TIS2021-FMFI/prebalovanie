@@ -2,6 +2,7 @@ import csv
 from io import StringIO
 from django.shortcuts import render
 from django.core.mail import EmailMessage
+from .models import *
 import datetime
 
 from repacking.models import RepackHistory
@@ -15,7 +16,7 @@ def index(request):
         f'{datetime.datetime.now().strftime("%d.%m.%Y")} do '
         f'{(datetime.datetime.now() - datetime.timedelta(days=7)).strftime("%d.%m.%Y")}',
         'prebalovanie@gefcoslovakia.sk',
-        ['palaj.marcel@gmail.com'],
+        [mail.mail for mail in MailSendSetting.objects.all()],
     )
     csvfile = StringIO()
     writer = csv.writer(csvfile, dialect='excel', delimiter=',')
