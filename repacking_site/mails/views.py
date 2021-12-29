@@ -1,15 +1,19 @@
 import csv
 from io import StringIO
 from django.shortcuts import render
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import EmailMessage
+import datetime
 
 from repacking.models import RepackHistory
 
 
 def index(request):
     email = EmailMessage(
-        'Pokus',
-        'Text mailu',
+        f'[GEFCO prebaľovanie] Report {datetime.datetime.now().strftime("%d.%m.%Y")} - '
+        f'{(datetime.datetime.now() - datetime.timedelta(days=7)).strftime("%d.%m.%Y")}',
+        f'Dobrý deň,\nv prlohe tohoto mailu nájdete zoznam prebaľovaní za posledných 7 dní, teda od '
+        f'{datetime.datetime.now().strftime("%d.%m.%Y")} do '
+        f'{(datetime.datetime.now() - datetime.timedelta(days=7)).strftime("%d.%m.%Y")}',
         'prebalovanie@gefcoslovakia.sk',
         ['palaj.marcel@gmail.com'],
     )
