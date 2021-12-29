@@ -130,6 +130,6 @@ MEDIA_ROOT = 'media/'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'mail002.nameserver.sk'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = 'prebalovanie'
+EMAIL_HOST_USER = 'prebalovanie@gefcoslovakia.sk'
 EMAIL_HOST_PASSWORD = 'mkiwXr6tbLV2qYu'
 EMAIL_USE_SSL = True
