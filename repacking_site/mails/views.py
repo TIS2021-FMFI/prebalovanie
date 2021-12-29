@@ -39,6 +39,7 @@ def index(request):
                          repack.repacking_standard.repacking_duration,
                          repack.repacking_standard.unit_weight, repack.repacking_standard.creator,
                          repack.repacking_standard.created, repack.repacking_standard.instructions])
-    email.attach('text.csv', csvfile.getvalue(), 'text/csv')
+    email.attach(f'prebalovania-{datetime.datetime.now().strftime("%Y/%m/%d")}-'
+        f'{(datetime.datetime.now() - datetime.timedelta(days=7)).strftime("%Y/%m/%d")}'.csv', csvfile.getvalue(), 'text/csv')
     email.send(fail_silently=False)
     return render(request, 'mails/index.html')
