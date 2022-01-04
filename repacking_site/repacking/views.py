@@ -51,9 +51,19 @@ def history(request):
     repacking_history_list_all = RepackHistory.filter_and_order_repacking_history_by_get(request.GET)
     repack_history_filter = RepackHistoryFilter(request.GET, queryset=repacking_history_list_all)
     paginate_by = request.GET.get('paginate_by', 10) or 10
+    open_filter = False
+    if request.GET.get("paginate_by") is None and request.GET.get("page") is None and len(request.GET.keys()) != 0:
+        open_filter = True
+    elif request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(
+            request.GET.keys()) > 2:
+        open_filter = True
+    elif request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(
+            request.GET.keys()) > 1:
+        open_filter = True
+
     repacking_history_list = filtered_records(request, repack_history_filter, paginate_by)
     context = {"repacking_history_list": repacking_history_list,
-               'repack_history_filter': repack_history_filter, 'paginate_by': paginate_by}
+               'repack_history_filter': repack_history_filter, 'paginate_by': paginate_by, "open_filter": open_filter}
     return render(request, 'repacking/history.html', context)
 
 
@@ -136,10 +146,17 @@ def show_standards(request):
     repacking_standards_list_all = RepackingStandard.filter_and_order_repacking_standard_by_get(request.GET)
     standards_filter = RepackingStandardFilter(request.GET, queryset=repacking_standards_list_all)
     paginate_by = request.GET.get('paginate_by', 10) or 10
+    open_filter = False
+    if request.GET.get("paginate_by") is None and request.GET.get("page") is None and len(request.GET.keys()) != 0:
+        open_filter = True
+    elif request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(request.GET.keys()) > 2:
+        open_filter = True
+    elif request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(request.GET.keys()) > 1:
+        open_filter = True
 
     repacking_standards_list = filtered_records(request, standards_filter, paginate_by)
     context = {"repacking_standards_list": repacking_standards_list,
-               'standards_filter': standards_filter, 'paginate_by': paginate_by}
+               'standards_filter': standards_filter, 'paginate_by': paginate_by, 'open_filter': open_filter}
     return render(request, 'repacking/standards.html', context)
 
 
