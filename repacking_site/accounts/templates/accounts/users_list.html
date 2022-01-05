@@ -23,20 +23,23 @@
         {% endif %}>
             {{ users_filter.form.as_p }}
             <div>
-                <button type="submit" class="active-btn"><img id="btn-image"
-                                                              src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">Vyhľadať
+                <button type="submit" class="active-btn">
+                    <img id="btn-image" src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">Vyhľadať
                 </button>
-                <button type="button" class="active-btn"><a href="index/"><img id="btn-image"
-                                                                               src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">Vymazať</a>
+                <button type="button" class="active-btn" onclick="location.href='/accounts/user_list/'">
+                    <img id="btn-image" src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">Vymazať
                 </button>
             </div>
         </form>
     </div>
 
     <div class="btn-group">
-        <button type="button" class="active-btn"><a href="/accounts/user_list/export/">
-              <img id="btn-image" src="{% static 'icons/2931143_up_upload_export_share.png' %}">Export
-         </a></button>
+        <button type="button" class="active-btn">
+            <a href="/accounts/user_list/export/">
+                <img id="btn-image" src="{% static 'icons/2931143_up_upload_export_share.png' %}">
+                Export
+            </a>
+        </button>
     </div>
 
     {% if users_list %}
