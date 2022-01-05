@@ -8,6 +8,7 @@ from logs.models import Log
 from repacking_site.methods import filtered_records
 from .filters import *
 from .forms import *
+from .models import *
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 repack_start_key = 'repack_start'
@@ -94,25 +95,7 @@ def history_export(request):
 
     response.write(u'\ufeff'.encode('utf8'))
     writer = csv.writer(response, dialect='excel', delimiter=';')
-    writer.writerow(['Čas začiatku prebalu', 'Čas konca prebalu', 'Čas prebalu', 'operátori',
-                     'SKU', 'COFOR', 'Destinácia', 'ks IN', 'ks OUT',
-                     'ks v obale IN', 'ks v obale OUT', 'boxy IN', 'boxy OUT',
-                     'Trvanie prebalu podľa štandardu', 'kg/ks', 'vytvoril', 'Čas vytvorenia', 'Poznámka'])
-
-    for repack in RepackHistory.objects.all():
-        writer.writerow([repack.repack_start, repack.repack_finish, repack.repack_duration,
-                         ', '.join(map(str, repack.users.all())),
-                         repack.repacking_standard.SKU, repack.repacking_standard.COFOR,
-                         repack.repacking_standard.destination,
-                         repack.repacking_standard.input_count_of_items_on_pallet,
-                         repack.repacking_standard.output_count_of_items_on_pallet,
-                         repack.repacking_standard.input_count_of_items_in_package,
-                         repack.repacking_standard.output_count_of_items_in_package,
-                         repack.repacking_standard.input_count_of_boxes_on_pallet,
-                         repack.repacking_standard.output_count_of_boxes_on_pallet,
-                         repack.repacking_standard.repacking_duration,
-                         repack.repacking_standard.unit_weight, repack.repacking_standard.creator,
-                         repack.repacking_standard.created, repack.repacking_standard.instructions])
+    RepackHistory.write_repacking_history_to_csv(RepackHistory.objects.all(), writer)
     return response
 
 
@@ -204,11 +187,35 @@ def update(request, sku_code):
     # inspiracia: https://www.youtube.com/watch?v=EX6Tt-ZW0so
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
     form = StandardUpdateForm(instance=standard)
-    context = {'form': form}
+    input_photos = list(Photos.objects.all())
+    for photo in input_photos:
+        if photo in standard.input_photos.all():
+            photo.selected = True
+        else:
+            photo.selected = False
+    output_photos = list(Photos.objects.all())
+    for photo in output_photos:
+        if photo in standard.output_photos.all():
+            photo.selected = True
+        else:
+            photo.selected = False
+    tools = list(Tools.objects.all())
+    for tool in tools:
+        if tool in standard.tools.all():
+            tool.selected = True
+        else:
+            tool.selected = False
+    context = {'form': form, 'input_photos': input_photos, 'output_photos': output_photos, 'tools': tools}
     if request.method == 'POST':
         form = StandardUpdateForm(request.POST, instance=standard)
         if form.is_valid():
             form.save()
+            for photo_id in request.POST.getlist('existing_input_photos'):
+                standard.input_photos.add(Photos.objects.get(id=photo_id))
+            for photo_id in request.POST.getlist('existing_output_photos'):
+                standard.output_photos.add(Photos.objects.get(id=photo_id))
+            for photo_id in request.POST.getlist('existing_tools'):
+                standard.tools.add(Tools.objects.get(id=photo_id))
             return redirect('/repacking/standards/')
     return render(request, 'repacking/update_standard.html', context)
 
@@ -281,6 +288,16 @@ def make_new_standard(request):
             )
             standard.save()
 
+            print(request.POST.getlist('existing_input_photos'))
+            print(request.POST.getlist('existing_output_photos'))
+            print(request.POST.getlist('existing_tools'))
+            for photo_id in request.POST.getlist('existing_input_photos'):
+                standard.input_photos.add(Photos.objects.get(id=photo_id))
+            for photo_id in request.POST.getlist('existing_output_photos'):
+                standard.output_photos.add(Photos.objects.get(id=photo_id))
+            for photo_id in request.POST.getlist('existing_tools'):
+                standard.tools.add(Tools.objects.get(id=photo_id))
+
             if 'input_photos' in form.files:
                 for photo in form.files.getlist('input_photos'):
                     input_photo = Photos(photo=photo)
@@ -304,4 +321,4 @@ def make_new_standard(request):
     else:
         form = RepackingStandardForm()
 
-    return render(request, 'repacking/new_standard.html', {'form': form})
+    return render(request, 'repacking/new_standard.html', {'form': form, 'photos': Photos.objects.all(), 'tools': Tools.objects.all()})
