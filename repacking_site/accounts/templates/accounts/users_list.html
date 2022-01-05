@@ -100,8 +100,10 @@
             {% for user in users_list %}
                 <tr>
                     <td>
-                        <a href="/admin/accounts/user/{{ user.id }}/change/" class="active-btn"><img id="btn-image"
-                                                                                                     src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">Editovať</a>
+                        <button type="button" class="active-btn" onclick="location.href='/admin/accounts/user/{{ user.id }}/change/';" >
+                            <img id="btn-image" src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">
+                            Editovať
+                        </button>
                     </td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.first_name }}</td>
