@@ -3,17 +3,17 @@
 {% block content %}
 
 {% if form.errors %}
-<p>Vaše používateľské meno alebo heslo sa nezhodujú. Prosím zadajte to znova.</p>
+<p>Vaše používateľské meno alebo heslo sa nezhodujú. Prosím zadajte skúste to znovu.</p>
 {% endif %}
 
-{% if next %}
+{% comment %}{% if next %}
     {% if user.is_authenticated %}
     <p>Váš účet nemá prístup k tejto stránke. Ak chcete pokračovať,
      prihláste sa pomocou účtu, ktorý má prístup.</p>
     {% else %}
     <p>Ak chcete zobraziť túto stránku, prihláste sa.</p>
     {% endif %}
-{% endif %}
+{% endif %}{% endcomment %}
 
 <form method="post" action="{% url 'login' %}" id="login">
 {% csrf_token %}
