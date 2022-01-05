@@ -163,7 +163,7 @@ td, th{
 th{
     position: sticky;
     z-index: 0;
-    top: 43px;
+    top: 50px;
     border-bottom: 3px solid rgba(0,0,0,0.55);
     background-color: #ffcd00;
     font-weight: bold;
@@ -218,6 +218,29 @@ input[type=submit]{
 
 /* end of forms css */
 
+/* pagination css */
+
+.paginate{
+    border: none;
+    padding: 0px;
+    display: inline;
+    width: 40px;
+    float: left;
+    margin: 0px 5px 0px 0px;
+}
+
+.div-page{
+    display: flex;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 3px;
+    width: fit-content;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+/* end of pagination css */
+
 /* buttons */
 
 button{
@@ -238,26 +261,10 @@ button a{
 }
 
 .inactive-btn{
-    padding: 5px 10px;
-    font-family: UniviaPro-regular;
-    font-size: 17px;
-    width: 120px;
-    margin-bottom: 3px;
-    border: 1px solid #00538b;
-    border-radius: 5px;
-    background-color: #00538b;
     color: red;
 }
 
-.active-btn, .repack-btn{
-    padding: 5px 10px;
-    font-family: UniviaPro-regular;
-    font-size: 17px;
-    width: 140px;
-    margin-bottom: 3px;
-    border: 1px solid #00538b;
-    border-radius: 5px;
-    background-color: #00538b;
+.active-btn{
     color: #ffcd00;
     cursor: pointer;
 }
@@ -267,7 +274,7 @@ button a{
     width: 160px
 }
 
-.active-btn:hover, .active-btn:hover a{
+.active-btn:hover{
     color: white;
 }
 

@@ -18,41 +18,65 @@
 
     <div class="filter_div">
         <button class="dropbtn_filter" onclick="open_close_filter_menu()">Filter</button>
-        <form method="get" id="filter" style="display: none">
+        <form method="get" id="filter" {% if open_filter %}
+             style="display: flex"
+        {% endif %}>
             {{ users_filter.form.as_p }}
             <div>
-                <button type="submit" class="active-btn"><img id="btn-image"
-                                                              src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">Vyhľadať
+                <button type="submit" class="active-btn">
+                    <img id="btn-image" src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">Vyhľadať
                 </button>
-                <button type="button" class="active-btn"><a href="index/"><img id="btn-image"
-                                                                               src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">Vymazať</a>
+                <button type="button" class="active-btn" onclick="location.href='/accounts/user_list/'">
+                    <img id="btn-image" src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">Vymazať
                 </button>
             </div>
         </form>
     </div>
 
     <div class="btn-group">
-        <button type="button" class="active-btn"><a href="/accounts/user_list/export/">
-              <img id="btn-image" src="{% static 'icons/2931143_up_upload_export_share.png' %}">Export
-         </a></button>
+        <button type="button" class="active-btn">
+            <a href="/accounts/user_list/export/">
+                <img id="btn-image" src="{% static 'icons/2931143_up_upload_export_share.png' %}">
+                Export
+            </a>
+        </button>
     </div>
 
     {% if users_list %}
-
-        <form method="GET">
-            <select name="paginate_by" id="">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option value="50">50</option>
+        <div class="div-page">
+        <form method="GET" class="paginate">
+            <select name="paginate_by" id="" onchange="this.form.submit();">
+                <option value="10" id="pag10">10</option>
+                <option value="20" id="pag20">20</option>
+                <option value="30" id="pag30">30</option>
+                <option value="50" id="pag50">50</option>
             </select>
-            <input type="submit" value="Paginate" class="active-btn">
         </form>
+
+        <script>
+        let option = null;
+        switch ({{ paginate_by }}){
+            case 10:
+                option = document.getElementById("pag10");
+                break;
+            case 20:
+                option = document.getElementById("pag20");
+                break;
+            case 30:
+                option = document.getElementById("pag30");
+                break;
+            case 50:
+                option = document.getElementById("pag50");
+                break;
+        }
+        option.selected = true;
+        </script>
+
         <div class="pagination">
     <span class="step-links">
         {% if users_list.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ users_list.previous_page_number }}">previous</a>
+            <a href="?page=1&paginate_by={{ paginate_by }}">&laquo; first</a>
+            <a href="?page={{ users_list.previous_page_number }}&paginate_by={{ paginate_by }}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -61,10 +85,11 @@
         </span>
 
         {% if users_list.has_next %}
-            <a href="?page={{ users_list.next_page_number }}">next</a>
-            <a href="?page={{ users_list.paginator.num_pages }}">last &raquo;</a>
+            <a href="?page={{ users_list.next_page_number }}&paginate_by={{ paginate_by }}">next</a>
+            <a href="?page={{ users_list.paginator.num_pages }}&paginate_by={{ paginate_by }}">last &raquo;</a>
         {% endif %}
     </span>
+        </div>
         </div>
         <table>
             <tr>
@@ -78,8 +103,10 @@
             {% for user in users_list %}
                 <tr>
                     <td>
-                        <a href="/admin/accounts/user/{{ user.id }}/change/" class="active-btn"><img id="btn-image"
-                                                                                                     src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">Editovať</a>
+                        <button type="button" class="active-btn" onclick="location.href='/admin/accounts/user/{{ user.id }}/change/';" >
+                            <img id="btn-image" src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">
+                            Editovať
+                        </button>
                     </td>
                     <td>{{ user.username }}</td>
                     <td>{{ user.first_name }}</td>

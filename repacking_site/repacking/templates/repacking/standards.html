@@ -18,44 +18,64 @@
 
     <div class="filter_div">
         <button class="dropbtn_filter" onclick="open_close_filter_menu()">Filter</button>
-        <form method="get" id="filter" style="display: none">
+        <form method="get" id="filter" {% if open_filter %}
+             style="display: flex"
+        {% endif %}>
             {{ standards_filter.form.as_p }}
             <div>
-                <button type="submit" class="active-btn"><img id="btn-image"
-                                                              src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">Vyhľadať
+                <button type="submit" class="active-btn">
+                    <img id="btn-image" src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">Vyhľadať
                 </button>
-                <button type="button" class="active-btn"><a href="/repacking/standards/"><img id="btn-image"
-                                                                                              src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">Vymazať</a>
+                <button type="button" class="active-btn" onclick="location.href='/repacking/standards/'">
+                    <img id="btn-image" src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">Vymazať
                 </button>
             </div>
         </form>
     </div>
 
     <div class="btn-group">
-        <button type="button" class="active-btn"><img id="btn-image"
-                                                      src="{% static 'icons/2931143_up_upload_export_share.png' %}"><a
-                href="/repacking/sku/export/">Export</a></button>
-        <button type="button" class="active-btn"><img id="btn-image"
-                                                      src="{% static 'icons/2931155_attach_new_maximize_add_create_plus.png' %}"><a
-                href="/repacking/standards/new/">Pridať nový</a></button>
+        <button type="button" class="active-btn" onclick="location.href='/repacking/sku/export/';">
+            <img id="btn-image" src="{% static 'icons/2931143_up_upload_export_share.png' %}">
+            Export</button>
+        <button type="button" class="active-btn" style="width: 140px" onclick="location.href='/repacking/standards/new/';">
+            <img id="btn-image" src="{% static 'icons/2931155_attach_new_maximize_add_create_plus.png' %}">
+            Pridať nový</button>
     </div>
 
     {% if repacking_standards_list %}
-        <form method="GET">
-            <select name="paginate_by" id="">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="30">30</option>
-                <option value="50">50</option>
+        <div class="div-page">
+        <form method="GET" class="paginate">
+            <select name="paginate_by" id="" onchange="this.form.submit();">
+                <option value="10" id="pag10">10</option>
+                <option value="20" id="pag20">20</option>
+                <option value="30" id="pag30">30</option>
+                <option value="50" id="pag50">50</option>
             </select>
-            <input type="submit" class="active-btn" value="Paginate">
         </form>
 
+        <script>
+        let option = null;
+        switch ({{ paginate_by }}){
+            case 10:
+                option = document.getElementById("pag10");
+                break;
+            case 20:
+                option = document.getElementById("pag20");
+                break;
+            case 30:
+                option = document.getElementById("pag30");
+                break;
+            case 50:
+                option = document.getElementById("pag50");
+                break;
+        }
+        option.selected = true;
+        </script>
         <div class="pagination">
     <span class="step-links">
         {% if repacking_standards_list.has_previous %}
-            <a href="?page=1">&laquo; first</a>
-            <a href="?page={{ repacking_standards_list.previous_page_number }}">previous</a>
+            <a href="?page=1&paginate_by={{ paginate_by }}">&laquo; first</a>
+            <a href="?page={{ repacking_standards_list.previous_page_number }}&paginate_by={{ paginate_by }}">previous</a>
         {% endif %}
 
         <span class="current">
@@ -64,10 +84,11 @@
         </span>
 
         {% if repacking_standards_list.has_next %}
-            <a href="?page={{ repacking_standards_list.next_page_number }}">next</a>
-            <a href="?page={{ repacking_standards_list.paginator.num_pages }}">last &raquo;</a>
+            <a href="?page={{ repacking_standards_list.next_page_number }}&paginate_by={{ paginate_by }}">next</a>
+            <a href="?page={{ repacking_standards_list.paginator.num_pages }}&paginate_by={{ paginate_by }}">last &raquo;</a>
         {% endif %}
     </span>
+        </div>
         </div>
         <table>
             <tr>
@@ -92,12 +113,12 @@
                 <tr>
                     <td>
                         {#                    zdroj: https://stackoverflow.com/questions/21916835/django-button-link/21917002  da sa to aj takto: https://stackoverflow.com/questions/48438575/call-django-on-html-button-click/48438962 #}
-                        <button type="button" class="active-btn"><img id="btn-image"
-                                                                      src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">
-                            <a href="/repacking/{{ standard.SKU }}/">Detail</a></button>
-                        <button type="button" class="active-btn"><img id="btn-image"
-                                                                      src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">
-                            <a href="/repacking/update/{{ standard.SKU }}/">Editovať</a></button>
+                        <button type="button" class="active-btn" onclick="location.href='/repacking/{{ standard.SKU }}/';" >
+                            <img id="btn-image" src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">
+                            Detail</button>
+                        <button type="button" class="active-btn" onclick="location.href='/repacking/update/{{ standard.SKU }}/';" >
+                            <img id="btn-image" src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">
+                            Editovať</button>
                         <button type="button" class="active-btn"
                                 onclick="if(confirm('Chcete naozaj vymazať štandard?')){window.location.href='/repacking/delete/{{ standard.SKU }}/'}">
                             <img id="btn-image" src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">
@@ -124,8 +145,6 @@
     {% else %}
         <p>Žiadne štandardy nie sú k dispozícií.</p>
     {% endif %}
-
-
 
 
 {% endblock %}

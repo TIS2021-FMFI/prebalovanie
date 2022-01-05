@@ -5,9 +5,9 @@
     {% block content %}
 
     <div class="repack-btn-group">
-        <a href="repack_finished" class="repack-btn"><img id="btn-image" src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">Ukonči prebal</a>
-        <a href="repack_paused" class="repack-btn"><img id="btn-image" src="{% static 'icons/8680207_pause_line_icon.png' %}">Pozastav prebal</a>
-        <a href="repack_cancelled" class="repack-btn"><img id="btn-image" src="{% static 'icons/2931168_garbage_trash_bin_delete_remove.png' %}">Zruš prebal</a>
+        <a href="repack_finished" class="active-btn"><img id="btn-image" src="{% static 'icons/tick_done_check.png' %}">Ukonči prebal</a>
+        <a href="repack_paused" class="active-btn"><img id="btn-image" src="{% static 'icons/8680207_pause_line_icon.png' %}">Pozastav prebal</a>
+        <a href="repack_cancelled" class="active-btn"><img id="btn-image" src="{% static 'icons/2931168_garbage_trash_bin_delete_remove.png' %}">Zruš prebal</a>
     </div>
 
     <div id="repack-duration">Trvanie prebalu: <span id="time"></span>s</div>
