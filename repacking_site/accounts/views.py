@@ -1,6 +1,7 @@
 import csv
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.contrib.auth.models import Group
 from django.http import Http404, HttpResponseRedirect, HttpResponse
@@ -14,6 +15,7 @@ from .filters import *
 from .forms import *
 
 
+@login_required
 def profile(request):
     if request.method == 'POST':
         form = ProfileForm(request.POST)
@@ -33,6 +35,7 @@ def profile(request):
         return render(request, 'accounts/profile.html', {'form': form})
 
 
+@login_required
 def export_users(request):
     response = HttpResponse(
         content_type='text/csv',
@@ -50,6 +53,7 @@ def export_users(request):
     return response
 
 
+@login_required
 def export_groups(request):
     response = HttpResponse(
         content_type='text/csv',
@@ -64,6 +68,7 @@ def export_groups(request):
     return response
 
 
+@login_required
 def users_list(request):
     users_list_all = get_user_model().objects.all()
     users_filter = UserFilter(request.GET, queryset=users_list_all)
@@ -83,5 +88,6 @@ def users_list(request):
     return render(request, 'accounts/users_list.html', context)
 
 
+@login_required
 def groups_list(request):
     return render(request, 'accounts/groups_list.html', {'groups': Group.objects.all()})

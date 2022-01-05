@@ -1,5 +1,6 @@
 import csv
 
+from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 
@@ -18,11 +19,13 @@ repack_duration_key = 'repack_duration'
 repack_time_format = '%Y-%m-%dT%H:%M:%S'
 
 
+@login_required
 def index(request):
     cancel_sessions(request)
     return render(request, 'index.html')
 
 
+@login_required
 def repacking(request, sku_code, idp_code, operators):
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
     if standard is None:
@@ -39,6 +42,7 @@ def repacking(request, sku_code, idp_code, operators):
                                                      repack_last_start_key: request.session[repack_last_start_key]})
 
 
+@login_required
 def detail(request, sku_code):
     cancel_sessions(request)
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
@@ -47,6 +51,7 @@ def detail(request, sku_code):
     return render(request, 'repacking/detail.html', {'standard': standard})
 
 
+@login_required
 def history(request):
     cancel_sessions(request)
     repacking_history_list_all = RepackHistory.filter_and_order_repacking_history_by_get(request.GET)
@@ -68,6 +73,7 @@ def history(request):
     return render(request, 'repacking/history.html', context)
 
 
+@login_required
 def sku_export(request):
     response = HttpResponse(
         content_type='text/csv',
@@ -87,6 +93,7 @@ def sku_export(request):
     return response
 
 
+@login_required
 def history_export(request):
     response = HttpResponse(
         content_type='text/csv',
@@ -99,6 +106,7 @@ def history_export(request):
     return response
 
 
+@login_required
 def start(request):
     cancel_sessions(request)
     if request.method == 'POST':
@@ -124,6 +132,7 @@ def start(request):
     return render(request, 'repacking/start.html', {'form': form})
 
 
+@login_required
 def show_standards(request):
     cancel_sessions(request)
     repacking_standards_list_all = RepackingStandard.filter_and_order_repacking_standard_by_get(request.GET)
@@ -132,9 +141,11 @@ def show_standards(request):
     open_filter = False
     if request.GET.get("paginate_by") is None and request.GET.get("page") is None and len(request.GET.keys()) != 0:
         open_filter = True
-    elif request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(request.GET.keys()) > 2:
+    elif request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(
+            request.GET.keys()) > 2:
         open_filter = True
-    elif request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(request.GET.keys()) > 1:
+    elif request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(
+            request.GET.keys()) > 1:
         open_filter = True
 
     repacking_standards_list = filtered_records(request, standards_filter, paginate_by)
@@ -143,6 +154,7 @@ def show_standards(request):
     return render(request, 'repacking/standards.html', context)
 
 
+@login_required
 def finish(request, sku_code, idp_code, operators):
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
     if standard is None:
@@ -173,6 +185,7 @@ def finish(request, sku_code, idp_code, operators):
     return HttpResponseRedirect('/repacking/start/')
 
 
+@login_required
 def delete(request, sku_code):
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
     if standard is None:
@@ -183,6 +196,7 @@ def delete(request, sku_code):
     return render(request, 'repacking/standard_deleted.html', {'deleted': deleted})
 
 
+@login_required
 def update(request, sku_code):
     # inspiracia: https://www.youtube.com/watch?v=EX6Tt-ZW0so
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
@@ -220,6 +234,7 @@ def update(request, sku_code):
     return render(request, 'repacking/update_standard.html', context)
 
 
+@login_required
 def cancel_sessions(request):
     try:
         del request.session[repack_start_key]
@@ -237,11 +252,13 @@ def cancel_sessions(request):
         pass
 
 
+@login_required
 def cancel(request, sku_code, idp_code, operators):
     cancel_sessions(request)
     return HttpResponseRedirect('/repacking/')
 
 
+@login_required
 def pause(request, sku_code, idp_code, operators):
     repack_paused = datetime.now()
     if request.session.get(repack_duration_key, None) is not None:
@@ -260,6 +277,7 @@ def pause(request, sku_code, idp_code, operators):
     return render(request, 'repacking/pause.html', context)
 
 
+@login_required
 def make_new_standard(request):
     cancel_sessions(request)
     if request.method == 'POST':
@@ -321,4 +339,5 @@ def make_new_standard(request):
     else:
         form = RepackingStandardForm()
 
-    return render(request, 'repacking/new_standard.html', {'form': form, 'photos': Photos.objects.all(), 'tools': Tools.objects.all()})
+    return render(request, 'repacking/new_standard.html',
+                  {'form': form, 'photos': Photos.objects.all(), 'tools': Tools.objects.all()})
