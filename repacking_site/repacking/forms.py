@@ -55,19 +55,19 @@ class RepackingStandardForm(forms.Form):
     COFOR = forms.CharField(max_length=50, required=True, label='COFOR')
     supplier = forms.CharField(max_length=50, required=True, label='Dodávateľ')
     destination = forms.CharField(max_length=50, required=True, label='Miesto určenia')
-    items_per_move = forms.IntegerField(required=True, label='Počet kusov na jeden pohyb')
-    unit_weight = forms.DecimalField(max_digits=6, decimal_places=4, required=True, label='Jednotková váha dielu')
-    repacking_duration = forms.IntegerField(required=True, label='Doba prebaľovania')
+    items_per_move = forms.IntegerField(required=True, label='Počet kusov na jeden pohyb', min_value=0)
+    unit_weight = forms.DecimalField(max_digits=6, decimal_places=4, required=True, label='Jednotková váha dielu', min_value=0)
+    repacking_duration = forms.IntegerField(required=True, label='Doba prebaľovania', min_value=0)
     instructions = forms.CharField(max_length=1200, required=True, label='Inštrukcie / pokyny')
 
-    input_count_of_items_in_package = forms.IntegerField(required=True, label='Vstupný počet kusov v balení')
-    output_count_of_items_in_package = forms.IntegerField(required=True, label='Výstupný počet kusov v balení')
+    input_count_of_items_in_package = forms.IntegerField(required=True, label='Vstupný počet kusov v balení', min_value=0)
+    output_count_of_items_in_package = forms.IntegerField(required=True, label='Výstupný počet kusov v balení', min_value=0)
 
-    input_count_of_boxes_on_pallet = forms.IntegerField(required=True, label='Vstupný počet boxov na palete')
-    output_count_of_boxes_on_pallet = forms.IntegerField(required=True, label='Výstupný počet boxov na palete')
+    input_count_of_boxes_on_pallet = forms.IntegerField(required=True, label='Vstupný počet boxov na palete', min_value=0)
+    output_count_of_boxes_on_pallet = forms.IntegerField(required=True, label='Výstupný počet boxov na palete', min_value=0)
 
-    input_count_of_items_on_pallet = forms.IntegerField(required=True, label='Vstupný počet kusov na palete')
-    output_count_of_items_on_pallet = forms.IntegerField(required=True, label='Výstupný počet kusov na palete')
+    input_count_of_items_on_pallet = forms.IntegerField(required=True, label='Vstupný počet kusov na palete', min_value=0)
+    output_count_of_items_on_pallet = forms.IntegerField(required=True, label='Výstupný počet kusov na palete', min_value=0)
 
     input_type_of_package = forms.CharField(max_length=50, required=True, label='Vstupný typ obalu')
     output_type_of_package = forms.CharField(max_length=50, required=True, label='Výstupný typ obalu')
