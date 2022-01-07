@@ -148,9 +148,14 @@ def show_standards(request):
             request.GET.keys()) > 1:
         open_filter = True
 
+    querystring = request.GET.copy()
+    if request.GET.get('page'):
+        del querystring['page']
+    if request.GET.get('paginate_by'):
+        del querystring['paginate_by']
     repacking_standards_list = filtered_records(request, standards_filter, paginate_by)
     context = {"repacking_standards_list": repacking_standards_list,
-               'standards_filter': standards_filter, 'paginate_by': paginate_by, 'open_filter': open_filter}
+               'standards_filter': standards_filter, 'paginate_by': paginate_by, 'open_filter': open_filter, 'querystring': querystring.urlencode()}
     return render(request, 'repacking/standards.html', context)
 
 
