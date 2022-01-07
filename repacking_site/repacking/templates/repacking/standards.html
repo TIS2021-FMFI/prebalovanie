@@ -30,6 +30,30 @@
                     <img id="btn-image" src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">Vymazať
                 </button>
             </div>
+            <select name="paginate_by" id="" onchange="this.form.submit();">
+                <option value="10" id="pag10">10</option>
+                <option value="20" id="pag20">20</option>
+                <option value="30" id="pag30">30</option>
+                <option value="50" id="pag50">50</option>
+            </select>
+            <script>
+                let option = null;
+                switch ({{ paginate_by }}){
+                    case 10:
+                        option = document.getElementById("pag10");
+                        break;
+                    case 20:
+                        option = document.getElementById("pag20");
+                        break;
+                    case 30:
+                        option = document.getElementById("pag30");
+                        break;
+                    case 50:
+                        option = document.getElementById("pag50");
+                        break;
+                }
+                option.selected = true;
+            </script>
         </form>
     </div>
 
@@ -44,33 +68,8 @@
 
     {% if repacking_standards_list %}
         <div class="div-page">
-        <form method="GET" class="paginate">
-            <select name="paginate_by" id="" onchange="this.form.submit();">
-                <option value="10" id="pag10">10</option>
-                <option value="20" id="pag20">20</option>
-                <option value="30" id="pag30">30</option>
-                <option value="50" id="pag50">50</option>
-            </select>
-        </form>
 
-        <script>
-        let option = null;
-        switch ({{ paginate_by }}){
-            case 10:
-                option = document.getElementById("pag10");
-                break;
-            case 20:
-                option = document.getElementById("pag20");
-                break;
-            case 30:
-                option = document.getElementById("pag30");
-                break;
-            case 50:
-                option = document.getElementById("pag50");
-                break;
-        }
-        option.selected = true;
-        </script>
+
         <div class="pagination">
     <span class="step-links">
         {% if repacking_standards_list.has_previous %}
