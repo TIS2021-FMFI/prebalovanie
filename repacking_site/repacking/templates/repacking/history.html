@@ -72,8 +72,8 @@
         <div class="pagination">
     <span class="step-links">
         {% if repacking_history_list.has_previous %}
-            <a href="?page=1&paginate_by={{ paginate_by }}">&laquo; first</a>
-            <a href="?page={{ repacking_history_list.previous_page_number }}&paginate_by={{ paginate_by }}">previous</a>
+            <a href="?page=1&paginate_by={{ paginate_by }}">&laquo; prvá</a>
+            <a href="?page={{ repacking_history_list.previous_page_number }}&paginate_by={{ paginate_by }}">predchádzajúca</a>
         {% endif %}
 
         <span class="current">
@@ -82,8 +82,8 @@
         </span>
 
         {% if repacking_history_list.has_next %}
-            <a href="?page={{ repacking_history_list.next_page_number }}&paginate_by={{ paginate_by }}">next</a>
-            <a href="?page={{ repacking_history_list.paginator.num_pages }}&paginate_by={{ paginate_by }}">last &raquo;</a>
+            <a href="?page={{ repacking_history_list.next_page_number }}&paginate_by={{ paginate_by }}">ďalšia</a>
+            <a href="?page={{ repacking_history_list.paginator.num_pages }}&paginate_by={{ paginate_by }}">posledná &raquo;</a>
         {% endif %}
     </span>
         </div>
