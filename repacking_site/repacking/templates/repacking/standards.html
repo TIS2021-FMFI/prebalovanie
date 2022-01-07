@@ -74,8 +74,8 @@
         <div class="pagination">
     <span class="step-links">
         {% if repacking_standards_list.has_previous %}
-            <a href="?page=1&paginate_by={{ paginate_by }}">&laquo; first</a>
-            <a href="?page={{ repacking_standards_list.previous_page_number }}&paginate_by={{ paginate_by }}">previous</a>
+            <a href="?page=1&paginate_by={{ paginate_by }}">&laquo; prvá</a>
+            <a href="?page={{ repacking_standards_list.previous_page_number }}&paginate_by={{ paginate_by }}">predchádzajúca</a>
         {% endif %}
 
         <span class="current">
@@ -84,8 +84,8 @@
         </span>
 
         {% if repacking_standards_list.has_next %}
-            <a href="?page={{ repacking_standards_list.next_page_number }}&paginate_by={{ paginate_by }}">next</a>
-            <a href="?page={{ repacking_standards_list.paginator.num_pages }}&paginate_by={{ paginate_by }}">last &raquo;</a>
+            <a href="?page={{ repacking_standards_list.next_page_number }}&paginate_by={{ paginate_by }}">ďalšia</a>
+            <a href="?page={{ repacking_standards_list.paginator.num_pages }}&paginate_by={{ paginate_by }}">posledná &raquo;</a>
         {% endif %}
     </span>
         </div>
@@ -112,7 +112,6 @@
 
                 <tr>
                     <td>
-                        {#                    zdroj: https://stackoverflow.com/questions/21916835/django-button-link/21917002  da sa to aj takto: https://stackoverflow.com/questions/48438575/call-django-on-html-button-click/48438962 #}
                         <button type="button" class="active-btn" onclick="location.href='/repacking/{{ standard.SKU }}/';" >
                             <img id="btn-image" src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">
                             Detail</button>

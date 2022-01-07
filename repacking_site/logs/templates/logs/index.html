@@ -73,8 +73,8 @@
         <div class="pagination">
     <span class="step-links">
         {% if log_list.has_previous %}
-            <a href="?page=1&paginate_by={{ paginate_by }}">&laquo; prvý </a>
-            <a href="?page={{ log_list.previous_page_number }}&paginate_by={{ paginate_by }}">predchádzajúci</a>
+            <a href="?page=1&paginate_by={{ paginate_by }}">&laquo; prvá </a>
+            <a href="?page={{ log_list.previous_page_number }}&paginate_by={{ paginate_by }}">predchádzajúca</a>
         {% endif %}
 
         <span class="current">
@@ -83,8 +83,8 @@
         </span>
 
         {% if log_list.has_next %}
-            <a href="?page={{ log_list.next_page_number }}&paginate_by={{ paginate_by }}">ďalší</a>
-            <a href="?page={{ log_list.paginator.num_pages }}&paginate_by={{ paginate_by }}">posledný &raquo;</a>
+            <a href="?page={{ log_list.next_page_number }}&paginate_by={{ paginate_by }}">ďalšia</a>
+            <a href="?page={{ log_list.paginator.num_pages }}&paginate_by={{ paginate_by }}">posledná &raquo;</a>
         {% endif %}
     </span>
         </div>

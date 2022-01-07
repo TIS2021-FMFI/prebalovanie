@@ -5,8 +5,8 @@ from .models import *
 
 
 class RepackingStandardFilter(django_filters.FilterSet):
-    SKU = CharFilter(field_name='SKU', lookup_expr='icontains')
-    COFOR = CharFilter(field_name='COFOR', lookup_expr='icontains')
+    SKU = CharFilter(field_name='SKU', lookup_expr='icontains', label="SKU")
+    COFOR = CharFilter(field_name='COFOR', lookup_expr='icontains', label="COFOR")
     destination = CharFilter(field_name='destination', lookup_expr='icontains', label="Destinácia")
     input_type_of_package = CharFilter(field_name='input_type_of_package', lookup_expr='icontains', label="Obal IN")
     output_type_of_package = CharFilter(field_name='output_type_of_package', lookup_expr='icontains', label="Obal OUT")
