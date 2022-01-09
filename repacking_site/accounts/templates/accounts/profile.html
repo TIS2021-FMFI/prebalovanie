@@ -4,13 +4,19 @@
 {% block content %}
 
     {% if user.is_authenticated %}
-        User: {{ user }} <br>
-        <a href="/accounts/password_change/">Zmeň heslo</a>
 
         <form method="post">
+            <p>
+                Používateľ: {{ user }}
+            </p>
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="active-btn"><img id="btn-image" src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">Zmeň</button>
+            <p>
+                <button type="submit" class="active-btn"><img id="btn-image" src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">Zmeň</button>
+            </p>
+            <p>
+                <a href="/accounts/password_change/">Zmeň heslo</a>
+            </p>
         </form>
     {% else %}
         Ak chcete vidieť svoj profil, <a href="/accounts/login/">prihláste sa</a> prosím.
