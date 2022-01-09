@@ -130,5 +130,5 @@ MEDIA_ROOT = 'media/'
 EMAIL_HOST = 'mail002.nameserver.sk'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'prebalovanie@gefcoslovakia.sk'
-EMAIL_HOST_PASSWORD = 'mkiwXr6tbLV2qYu'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_SSL = True
