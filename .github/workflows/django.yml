@@ -37,7 +37,6 @@ jobs:
         cd repacking_site
         touch secrets.json
         echo "{ \"mail_password\": \"$mail_password\" }" > secrets.json
-        cat secrets.json
     - name: Run Tests
       env: 
         SECRET_KEY: rvaqw%y7jlmqytnovg50%r5x38rtieklmd7k&w&0$%0z4i63s4
