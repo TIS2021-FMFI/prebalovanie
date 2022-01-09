@@ -11,10 +11,23 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+import json
+from django.core.exceptions import ImproperlyConfigured
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+with open(os.path.join(BASE_DIR, 'repacking_site/secrets.json')) as secrets_file:
+    secrets = json.load(secrets_file)
+
+
+def get_secret(setting, secrets=secrets):
+    """Get secret setting or fail with ImproperlyConfigured"""
+    try:
+        return secrets[setting]
+    except KeyError:
+        raise ImproperlyConfigured("Set the {} setting".format(setting))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -130,5 +143,5 @@ MEDIA_ROOT = 'media/'
 EMAIL_HOST = 'mail002.nameserver.sk'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'prebalovanie@gefcoslovakia.sk'
-EMAIL_HOST_PASSWORD = 'mkiwXr6tbLV2qYu'
+EMAIL_HOST_PASSWORD = get_secret('mail_password')
 EMAIL_USE_SSL = True
