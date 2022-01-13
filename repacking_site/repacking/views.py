@@ -116,7 +116,6 @@ def history_export(request):
     RepackHistory.write_repacking_history_to_csv(RepackHistory.objects.all(), writer)
     return response
 
-
 @login_required
 def start(request):
     cancel_sessions(request)

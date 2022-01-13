@@ -216,6 +216,15 @@ input[type=submit]{
     border-radius: 10px;
 }
 
+.two_forms{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 20px;
+    width: 80%;
+    margin: 10px auto;
+}
+
 /* end of forms css */
 
 /* pagination css */
