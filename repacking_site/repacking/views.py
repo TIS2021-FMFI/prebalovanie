@@ -56,20 +56,31 @@ def history(request):
     cancel_sessions(request)
     repacking_history_list_all = RepackHistory.filter_and_order_repacking_history_by_get(request.GET)
     repack_history_filter = RepackHistoryFilter(request.GET, queryset=repacking_history_list_all)
+    filter_GET = request.GET.copy()
+    if "paginate_by" in filter_GET:
+        filter_GET.pop("paginate_by")
+    if "page" in filter_GET:
+        filter_GET.pop("page")
+    if len(filter_GET) != 0:
+        filter_GET_code = "&" + filter_GET.urlencode()
+    else:
+        filter_GET_code = ""
     paginate_by = request.GET.get('paginate_by', 10) or 10
     open_filter = False
     if request.GET.get("paginate_by") is None and request.GET.get("page") is None and len(request.GET.keys()) != 0:
         open_filter = True
-    elif request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(
+    if request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(
             request.GET.keys()) > 2:
         open_filter = True
-    elif request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(
-            request.GET.keys()) > 1:
-        open_filter = True
+    if len(request.GET.keys()) > 1:
+        if request.GET.get("paginate_by") is not None and request.GET.get("page") is None:
+            open_filter = True
+        if request.GET.get("paginate_by") is None and request.GET.get("page") is not None:
+            open_filter = True
 
     repacking_history_list = filtered_records(request, repack_history_filter, paginate_by)
     context = {"repacking_history_list": repacking_history_list,
-               'repack_history_filter': repack_history_filter, 'paginate_by': paginate_by, "open_filter": open_filter}
+               'repack_history_filter': repack_history_filter, 'paginate_by': paginate_by, "open_filter": open_filter, "filter_GET": filter_GET_code}
     return render(request, 'repacking/history.html', context)
 
 
@@ -137,20 +148,30 @@ def show_standards(request):
     cancel_sessions(request)
     repacking_standards_list_all = RepackingStandard.filter_and_order_repacking_standard_by_get(request.GET)
     standards_filter = RepackingStandardFilter(request.GET, queryset=repacking_standards_list_all)
+    filter_GET = request.GET.copy()
+    if "paginate_by" in filter_GET:
+        filter_GET.pop("paginate_by")
+    if "page" in filter_GET:
+        filter_GET.pop("page")
+    if len(filter_GET) != 0:
+        filter_GET_code = "&"+filter_GET.urlencode()
+    else:
+        filter_GET_code = ""
     paginate_by = request.GET.get('paginate_by', 10) or 10
     open_filter = False
     if request.GET.get("paginate_by") is None and request.GET.get("page") is None and len(request.GET.keys()) != 0:
         open_filter = True
-    elif request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(
-            request.GET.keys()) > 2:
+    if request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(request.GET.keys()) > 2:
         open_filter = True
-    elif request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(
-            request.GET.keys()) > 1:
-        open_filter = True
+    if len(request.GET.keys()) > 1:
+        if request.GET.get("paginate_by") is not None and request.GET.get("page") is None:
+            open_filter = True
+        if request.GET.get("paginate_by") is None and request.GET.get("page") is not None:
+            open_filter = True
 
     repacking_standards_list = filtered_records(request, standards_filter, paginate_by)
     context = {"repacking_standards_list": repacking_standards_list,
-               'standards_filter': standards_filter, 'paginate_by': paginate_by, 'open_filter': open_filter}
+               'standards_filter': standards_filter, 'paginate_by': paginate_by, 'open_filter': open_filter, 'filter_GET':filter_GET_code}
     return render(request, 'repacking/standards.html', context)
 
 

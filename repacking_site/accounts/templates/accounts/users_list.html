@@ -19,7 +19,7 @@
     <div class="filter_div">
         <button class="dropbtn_filter" onclick="open_close_filter_menu()">Filter</button>
         <form method="get" id="filter" {% if open_filter %}
-             style="display: flex"
+             style="display: flex" {% else %} style="display: none"
         {% endif %}>
             {{ users_filter.form.as_p }}
             <div>
@@ -45,7 +45,7 @@
     {% if users_list %}
         <div class="div-page">
         <form method="GET" class="paginate">
-            <select name="paginate_by" id="" onchange="this.form.submit();">
+            <select name="paginate_by" id="paginate" onchange="location.href='?paginate_by='+document.getElementById('paginate').value+'{{ filter_GET }}';">
                 <option value="10" id="pag10">10</option>
                 <option value="20" id="pag20">20</option>
                 <option value="30" id="pag30">30</option>
@@ -75,8 +75,8 @@
         <div class="pagination">
     <span class="step-links">
         {% if users_list.has_previous %}
-            <a href="?page=1&paginate_by={{ paginate_by }}">&laquo; prvá</a>
-            <a href="?page={{ users_list.previous_page_number }}&paginate_by={{ paginate_by }}">predchádzajúca</a>
+            <a href="?page=1&paginate_by={{ paginate_by }}{{ filter_GET }}">&laquo; prvá</a>
+            <a href="?page={{ users_list.previous_page_number }}&paginate_by={{ paginate_by }}{{ filter_GET }}">predchádzajúca</a>
         {% endif %}
 
         <span class="current">
@@ -85,8 +85,8 @@
         </span>
 
         {% if users_list.has_next %}
-            <a href="?page={{ users_list.next_page_number }}&paginate_by={{ paginate_by }}">ďalšia</a>
-            <a href="?page={{ users_list.paginator.num_pages }}&paginate_by={{ paginate_by }}">posledná &raquo;</a>
+            <a href="?page={{ users_list.next_page_number }}&paginate_by={{ paginate_by }}{{ filter_GET }}">ďalšia</a>
+            <a href="?page={{ users_list.paginator.num_pages }}&paginate_by={{ paginate_by }}{{ filter_GET }}">posledná &raquo;</a>
         {% endif %}
     </span>
         </div>
