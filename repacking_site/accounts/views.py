@@ -72,19 +72,30 @@ def export_groups(request):
 def users_list(request):
     users_list_all = get_user_model().objects.all()
     users_filter = UserFilter(request.GET, queryset=users_list_all)
+    filter_GET = request.GET.copy()
+    if "paginate_by" in filter_GET:
+        filter_GET.pop("paginate_by")
+    if "page" in filter_GET:
+        filter_GET.pop("page")
+    if len(filter_GET) != 0:
+        filter_GET_code = "&" + filter_GET.urlencode()
+    else:
+        filter_GET_code = ""
     paginate_by = request.GET.get('paginate_by', 10) or 10
     open_filter = False
     if request.GET.get("paginate_by") is None and request.GET.get("page") is None and len(request.GET.keys()) != 0:
         open_filter = True
-    elif request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(
+    if request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(
             request.GET.keys()) > 2:
         open_filter = True
-    elif request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(
-            request.GET.keys()) > 1:
-        open_filter = True
+    if len(request.GET.keys()) > 1:
+        if request.GET.get("paginate_by") is not None and request.GET.get("page") is None:
+            open_filter = True
+        if request.GET.get("paginate_by") is None and request.GET.get("page") is not None:
+            open_filter = True
     users_list = filtered_records(request, users_filter, paginate_by)
     context = {"users_list": users_list,
-               'users_filter': users_filter, 'paginate_by': paginate_by, 'open_filter': open_filter}
+               'users_filter': users_filter, 'paginate_by': paginate_by, 'open_filter': open_filter, "filter_GET": filter_GET_code}
     return render(request, 'accounts/users_list.html', context)
 
 

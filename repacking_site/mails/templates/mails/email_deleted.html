@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    {% if deleted %}
+        <h1>Email vymazaný.</h1>
+    {% else %}
+        <h1>Nastala chyba! Email neexistuje.</h1>
+    {% endif %}
+    <a href="/mails/index/">Späť na nastavenia exportov</a>
+{% endblock %}
