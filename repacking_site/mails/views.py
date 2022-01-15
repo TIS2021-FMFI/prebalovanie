@@ -103,7 +103,7 @@ def index(request):
     email_list = filtered_records(request, email_list_filter, paginate_by)
     context = {"email_list": email_list,
                'email_list_filter': email_list_filter, 'paginate_by': paginate_by, "open_filter": open_filter,
-               "filter_GET": filter_GET_code, "add_email_form": mail_form, "update_date_form": date_form}
+               "filter_GET": filter_GET_code, "add_email_form": mail_form, "update_date_form": None}
     return render(request, 'mails/index.html', context)
 
 @login_required
