@@ -4,7 +4,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{% block title %}Prebaľovanie{% endblock title %}</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'GEFCO_logo.ico' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}?version=53">
     <link rel="stylesheet" href="{% static 'image-picker.css' %}">
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
