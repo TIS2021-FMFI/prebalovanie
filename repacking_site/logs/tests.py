@@ -52,8 +52,8 @@ class LogModelTests(TestCase):
         log1.created = time2
 
         logs = Log.filter_and_order_logs_by_get({})
-        self.assertEquals(logs[0], log2)
-        self.assertEquals(logs[1], log1)
+        self.assertEquals(logs[0], log1)
+        self.assertEquals(logs[1], log2)
         self.assertEquals(len(logs), 2)
 
         logs = Log.filter_and_order_logs_by_get({'order_by': 'text'})
