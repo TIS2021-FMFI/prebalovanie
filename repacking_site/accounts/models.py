@@ -35,6 +35,10 @@ class CustomUserManager(UserManager):
 
 
 class User(AbstractUser):
+    class Meta:
+        verbose_name = 'Účet'
+        verbose_name_plural = 'Účty'
+
     barcode = models.CharField(max_length=100)
 
     def __str__(self):

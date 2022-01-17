@@ -80,7 +80,8 @@ def history(request):
 
     repacking_history_list = filtered_records(request, repack_history_filter, paginate_by)
     context = {"repacking_history_list": repacking_history_list,
-               'repack_history_filter': repack_history_filter, 'paginate_by': paginate_by, "open_filter": open_filter, "filter_GET": filter_GET_code}
+               'repack_history_filter': repack_history_filter, 'paginate_by': paginate_by, "open_filter": open_filter,
+               "filter_GET": filter_GET_code}
     return render(request, 'repacking/history.html', context)
 
 
@@ -115,6 +116,7 @@ def history_export(request):
     writer = csv.writer(response, dialect='excel', delimiter=';')
     RepackHistory.write_repacking_history_to_csv(RepackHistory.objects.all(), writer)
     return response
+
 
 @login_required
 def start(request):
@@ -153,14 +155,15 @@ def show_standards(request):
     if "page" in filter_GET:
         filter_GET.pop("page")
     if len(filter_GET) != 0:
-        filter_GET_code = "&"+filter_GET.urlencode()
+        filter_GET_code = "&" + filter_GET.urlencode()
     else:
         filter_GET_code = ""
     paginate_by = request.GET.get('paginate_by', 10) or 10
     open_filter = False
     if request.GET.get("paginate_by") is None and request.GET.get("page") is None and len(request.GET.keys()) != 0:
         open_filter = True
-    if request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(request.GET.keys()) > 2:
+    if request.GET.get("paginate_by") is not None and request.GET.get("page") is not None and len(
+            request.GET.keys()) > 2:
         open_filter = True
     if len(request.GET.keys()) > 1:
         if request.GET.get("paginate_by") is not None and request.GET.get("page") is None:
@@ -170,7 +173,8 @@ def show_standards(request):
 
     repacking_standards_list = filtered_records(request, standards_filter, paginate_by)
     context = {"repacking_standards_list": repacking_standards_list,
-               'standards_filter': standards_filter, 'paginate_by': paginate_by, 'open_filter': open_filter, 'filter_GET':filter_GET_code}
+               'standards_filter': standards_filter, 'paginate_by': paginate_by, 'open_filter': open_filter,
+               'filter_GET': filter_GET_code}
     return render(request, 'repacking/standards.html', context)
 
 
@@ -180,7 +184,7 @@ def finish(request, sku_code, idp_code, operators):
     if standard is None:
         raise Http404("Standard does not exist")
 
-    Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, None, "Repack finished")
+    Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, request.user, "Prebal ukončený")
 
     repack_finish = datetime.now()
     repack = RepackHistory(repacking_standard=standard, idp=idp_code, repack_finish=repack_finish)
@@ -193,7 +197,7 @@ def finish(request, sku_code, idp_code, operators):
         repack.repack_duration = timedelta(seconds=repack_duration)
 
     else:
-        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "RepackingForm without session finished.")
+        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, request.user, "Prebal ukončený bez údajov oo začiatku.")
 
     cancel_sessions(request)
 
@@ -290,7 +294,7 @@ def pause(request, sku_code, idp_code, operators):
                     repack_paused - datetime.strptime(last_repack_start, repack_time_format)).total_seconds()
 
     else:
-        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, None, "RepackingForm without session saved.")
+        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, request.user, "Prebal bez začiatku pozastavený.")
 
     context = {'sku_code': sku_code, 'idp_code': idp_code, 'operators': operators,
                'duration': int(request.session[repack_duration_key])}
@@ -352,7 +356,7 @@ def make_new_standard(request):
                     tool.save()
                     standard.tools.add(tool)
 
-            Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, None, "RepackingForm standard made")
+            Log.make_log(Log.App.REPACKING, Log.Priority.DEBUG, request.user, "Vytvorený nový štandard")
 
             return HttpResponseRedirect("/")
 

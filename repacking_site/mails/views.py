@@ -54,7 +54,7 @@ def index(request):
             )
             mail_form.save()
 
-            Log.make_log(Log.App.MAIL_REPORTS, Log.Priority.DEBUG, None, "Added Email address")
+            Log.make_log(Log.App.MAIL_REPORTS, Log.Priority.DEBUG, request.user, "Pridaná mailová adresa")
 
             return HttpResponseRedirect("/mails/index/")
     else:

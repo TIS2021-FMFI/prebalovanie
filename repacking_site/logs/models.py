@@ -3,6 +3,9 @@ from django.conf import settings
 
 
 class Log(models.Model):
+    class Meta:
+        verbose_name = 'Log'
+        verbose_name_plural = 'Logy'
 
     class Priority(models.TextChoices):
         TRACE = 'TRACE'
@@ -30,7 +33,7 @@ class Log(models.Model):
 
     @staticmethod
     def filter_and_order_logs_by_get(get):
-        order_by = get.get('order_by', "action_time")
+        order_by = get.get('order_by', "-action_time")
         try:
             if order_by in ('user__username', '-user__username'):
                 pass
@@ -49,4 +52,4 @@ class Log(models.Model):
         return logs
 
     def __str__(self):
-        return str(self.app) + ", " + str(self.priority) + ", " + str(self.text) + ", " + str(self.action_time)
+        return f"Log {str(self.id)}"

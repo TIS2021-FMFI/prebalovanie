@@ -2,6 +2,10 @@ from django.db import models
 
 
 class MailSendSetting(models.Model):
+    class Meta:
+        verbose_name = 'Mailová adresa'
+        verbose_name_plural = 'Mailové adresy'
+
     mail = models.EmailField(max_length=50, default="")
 
     def __str__(self):

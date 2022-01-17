@@ -32,5 +32,6 @@ def index(request):
             open_filter = True
     log_list = filtered_records(request, log_filter, paginate_by)
     context = {"log_list": log_list,
-               'log_filter': log_filter, 'paginate_by': paginate_by, 'open_filter': open_filter, "filter_GET": filter_GET_code}
+               'log_filter': log_filter, 'paginate_by': paginate_by, 'open_filter': open_filter,
+               "filter_GET": filter_GET_code}
     return render(request, 'logs/index.html', context)
