@@ -1,7 +1,124 @@
 {% extends "base.html" %}
-
+{% load static %}
 
 {% block content %}
-    <div>
+
+    <script>
+        function open_close_filter_menu() {
+            let filter = document.getElementById('filter')
+            if (filter.style.display == 'flex') {
+                filter.style.display = 'none';
+            } else {
+                filter.style.display = 'flex';
+            }
+        }
+    </script>
+
+    <h1>Nastavenie exportov</h1>
+
+    <div class="filter_div">
+        <button class="dropbtn_filter" onclick="open_close_filter_menu()">Filter</button>
+        <form method="get" id="filter" {% if open_filter %}
+             style="display: flex" {% else %} style="display: none"
+        {% endif %}>
+            {{ email_list_filter.form.as_p }}
+            <div>
+                <button type="submit" class="active-btn">
+                <img id="btn-image" src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">
+                Vyhľadať</button>
+                <button type="button" class="active-btn" onclick="location.href='/repacking/history/exports/'">
+                <img id="btn-image" src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">
+                Vymazať</button>
+            </div>
+        </form>
     </div>
+
+    <div class="two_forms">
+    {% if add_email_form %}
+        <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ add_email_form.as_p }}
+        <input type="submit" name="add_mail" value="Add email">
+        </form>
+    {% endif %}
+    {% if update_date_form %}
+        <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ update_date_form.as_p }}
+        <input type="submit" name="update_time" value="Change time of updates">
+        </form>
+    {% endif %}
+    </div>
+
+    {% if email_list %}
+        <div class="div-page">
+        <form method="GET" class="paginate">
+            <select name="paginate_by" id="paginate" onchange="location.href='?paginate_by='+document.getElementById('paginate').value+'{{ filter_GET }}';">
+                <option value="10" id="pag10">10</option>
+                <option value="20" id="pag20">20</option>
+                <option value="30" id="pag30">30</option>
+                <option value="50" id="pag50">50</option>
+            </select>
+        </form>
+
+        <script>
+        let option = null;
+        switch ({{ paginate_by }}){
+            case 10:
+                option = document.getElementById("pag10");
+                break;
+            case 20:
+                option = document.getElementById("pag20");
+                break;
+            case 30:
+                option = document.getElementById("pag30");
+                break;
+            case 50:
+                option = document.getElementById("pag50");
+                break;
+        }
+        option.selected = true;
+        </script>
+
+        <div class="pagination">
+    <span class="step-links">
+        {% if email_list.has_previous %}
+            <a href="?page=1&paginate_by={{ paginate_by }}{{ filter_GET }}">&laquo; prvá</a>
+            <a href="?page={{ email_list.previous_page_number }}&paginate_by={{ paginate_by }}{{ filter_GET }}">predchádzajúca</a>
+        {% endif %}
+
+        <span class="current">
+            {{ email_list.number }}/
+            {{ email_list.paginator.num_pages }}
+        </span>
+
+        {% if email_list.has_next %}
+            <a href="?page={{ email_list.next_page_number }}&paginate_by={{ paginate_by }}{{ filter_GET }}">ďalšia</a>
+            <a href="?page={{ email_list.paginator.num_pages }}&paginate_by={{ paginate_by }}{{ filter_GET }}">posledná &raquo;</a>
+        {% endif %}
+    </span>
+        </div>
+        </div>
+        <table>
+            <tr>
+                <th>Akcia</th>
+                <th>email</th>
+            </tr>
+        {% for email in email_list %}
+            <tr>
+                <td>
+                    <button type="button" class="active-btn"
+                                onclick="if(confirm('Chcete naozaj vymazať túto adresu?')){window.location.href='/mails/delete/{{ email }}/'}">
+                            <img id="btn-image" src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">
+                            Vymazať
+                    </button>
+                </td>
+                <td>{{ email }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        <p>Žiadne údaje nie sú k dispozícií.</p>
+    {% endif %}
+
 {% endblock %}
