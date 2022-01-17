@@ -125,8 +125,9 @@ def start(request):
         form = RepackingForm(request.POST)
         if form.is_valid():
             if RepackingStandard.get_repacking_standard_by_sku(form.cleaned_data['SKU']) is None:
-                raise FileExistsError("RepackingForm standard w/ this SKU does not exists")
-
+                sku = form.cleaned_data['SKU']
+                context = {"SKU": sku}
+                return render(request, 'repacking/non_existing_standard.html', context)
             operators = set()
             i = 1
             while f'operator_{i}' in request.POST.keys():
