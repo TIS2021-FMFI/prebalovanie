@@ -38,7 +38,9 @@ class User(AbstractUser):
     class Meta:
         verbose_name = 'Účet'
         verbose_name_plural = 'Účty'
-        permissions = ()
+        permissions = (('history', 'Prístup k histórii'),
+                       ('user_managment', 'Správa používateľov'),
+                       ('sku_managment', 'Správa štandardov'), )
         default_permissions = ()
 
     barcode = models.CharField(max_length=100)
