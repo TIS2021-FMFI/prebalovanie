@@ -23,4 +23,7 @@ class NewGroupForm(ModelForm):
         model = Group
         fields = ['name', 'permissions', ]
 
-
+    def __init__(self, *args, **kwargs):
+        super(NewGroupForm, self).__init__(*args, **kwargs)
+        self.fields['name'].label = "Názov"
+        self.fields['permissions'].label = "Práva"
