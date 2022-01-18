@@ -27,3 +27,12 @@ class NewGroupForm(ModelForm):
         super(NewGroupForm, self).__init__(*args, **kwargs)
         self.fields['name'].label = "Názov"
         self.fields['permissions'].label = "Práva"
+
+        user_choices = []
+        selected = []
+        for user in get_user_model().objects.all():
+            user_choices.append((user.id, user.username))
+            if user in self.instance.user_set.all():
+                selected.append(user.id)
+
+        self.fields['users'] = forms.MultipleChoiceField(choices=user_choices, label="Používatelia", initial=selected)

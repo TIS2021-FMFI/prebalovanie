@@ -116,6 +116,12 @@ def edit_group(request, id):
 
         if form.is_valid():
             form.save()
+            group.user_set.clear()
+            selected = []
+            for user_id in form.cleaned_data['users']:
+                selected.append(get_user_model().objects.get(id=user_id))
+            for user in selected:
+                group.user_set.add(user)
             return HttpResponseRedirect('/accounts/groups_list/')
 
     return render(request, 'accounts/edit_group.html', {'form': form})
