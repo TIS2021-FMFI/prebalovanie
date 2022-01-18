@@ -3,7 +3,7 @@ import csv
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from repacking_site.methods import filtered_records
@@ -66,6 +66,27 @@ def export_groups(request):
     for group in Group.objects.all():
         writer.writerow([group.name, ", ".join(map(str, group.permissions.all()))])
     return response
+
+
+@permission_required('accounts.user_managment')
+@login_required
+def add_user(request):
+    if request.method == 'POST':
+        form = NewUserForm(request.POST)
+
+        if form.is_valid():
+            request.user.barcode = form.cleaned_data['barcode']
+            user = User.objects.create_user(username=form.cleaned_data['user_name'],
+                                            first_name=form.cleaned_data['first_name'],
+                                            last_name=form.cleaned_data['last_name'],
+                                            password=form.cleaned_data['last_name'],
+                                            barcode=form.cleaned_data['barcode'])
+            return HttpResponseRedirect('/accounts/user_list/')
+
+    else:
+        form = NewUserForm()
+
+    return render(request, 'accounts/add_user.html', {'form': form})
 
 
 @permission_required('accounts.user_managment')
