@@ -6,7 +6,7 @@ class MailSendSetting(models.Model):
         verbose_name = 'Mailová adresa'
         verbose_name_plural = 'Mailové adresy'
 
-    mail = models.EmailField(max_length=50, default="")
+    mail = models.EmailField(max_length=50, default="", verbose_name="Email")
 
     def __str__(self):
         return str(self.mail)

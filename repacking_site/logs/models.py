@@ -16,16 +16,17 @@ class Log(models.Model):
         FATAL = 'FATAL'
 
     class App(models.TextChoices):
-        REPACKING = 'REPACKING'
-        USER_MANAGMENT = 'USER_MANAGMENT'
-        MAIL_REPORTS = 'MAIL_REPORTS'
-        LOGGING = 'LOGGING'
+        REPACKING = 'Prebaľovanie'
+        USER_MANAGMENT = 'Správa používateľov'
+        MAIL_REPORTS = 'Posielanie mailov'
+        LOGGING = 'logovanie'
 
-    text = models.CharField(max_length=500, default="")
-    action_time = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='user')
-    priority = models.CharField(max_length=10, choices=Priority.choices)
-    app = models.CharField(max_length=15, choices=App.choices)
+    text = models.CharField("Text", max_length=500, default="")
+    action_time = models.DateTimeField("Čas", auto_now=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,
+                             related_name='user', verbose_name="Používateľ")
+    priority = models.CharField(max_length=10, choices=Priority.choices, verbose_name="Priorita")
+    app = models.CharField(max_length=25, choices=App.choices, verbose_name="Modul")
 
     @staticmethod
     def make_log(app, priority, user, text):
