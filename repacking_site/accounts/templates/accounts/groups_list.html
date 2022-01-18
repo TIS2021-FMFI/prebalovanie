@@ -7,10 +7,13 @@
 
     <h1>Zoznam skupín</h1>
 
-    <div class="btn-group">
-        <button type="button" class="active-btn" onclick="location.href='/accounts/groups_list/export/'">
+     <div class="btn-group">
+        <button type="button" class="active-btn" onclick="location.href='/accounts/groups_list/export/';">
             <img id="btn-image" src="{% static 'icons/2931143_up_upload_export_share.png' %}">
             Export</button>
+        <button type="button" class="active-btn" style="width: fit-content" onclick="location.href='/admin/auth/group/add/';">
+            <img id="btn-image" src="{% static 'icons/2931155_attach_new_maximize_add_create_plus.png' %}">
+            Pridať skupinu</button>
     </div>
 
     <table>
