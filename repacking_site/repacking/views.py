@@ -1,6 +1,6 @@
 import csv
 
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 
@@ -51,6 +51,7 @@ def detail(request, sku_code):
     return render(request, 'repacking/detail.html', {'standard': standard})
 
 
+@permission_required('accounts.history')
 @login_required
 def history(request):
     cancel_sessions(request)
@@ -85,6 +86,7 @@ def history(request):
     return render(request, 'repacking/history.html', context)
 
 
+@permission_required('accounts.history')
 @login_required
 def sku_export(request):
     response = HttpResponse(
@@ -105,6 +107,7 @@ def sku_export(request):
     return response
 
 
+@permission_required('accounts.history')
 @login_required
 def history_export(request):
     response = HttpResponse(
@@ -210,6 +213,7 @@ def finish(request, sku_code, idp_code, operators):
     return HttpResponseRedirect('/repacking/start/')
 
 
+@permission_required('accounts.sku_managment')
 @login_required
 def delete(request, sku_code):
     standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
@@ -221,6 +225,7 @@ def delete(request, sku_code):
     return render(request, 'repacking/standard_deleted.html', {'deleted': deleted})
 
 
+@permission_required('accounts.sku_managment')
 @login_required
 def update(request, sku_code):
     # inspiracia: https://www.youtube.com/watch?v=EX6Tt-ZW0so
@@ -302,6 +307,7 @@ def pause(request, sku_code, idp_code, operators):
     return render(request, 'repacking/pause.html', context)
 
 
+@permission_required('accounts.sku_managment')
 @login_required
 def make_new_standard(request):
     cancel_sessions(request)

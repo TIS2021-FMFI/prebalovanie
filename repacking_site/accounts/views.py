@@ -1,7 +1,7 @@
 import csv
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render
 from django.contrib.auth.models import Group
 from django.http import Http404, HttpResponseRedirect, HttpResponse
@@ -35,6 +35,7 @@ def profile(request):
         return render(request, 'accounts/profile.html', {'form': form})
 
 
+@permission_required('accounts.user_managment')
 @login_required
 def export_users(request):
     response = HttpResponse(
@@ -53,6 +54,7 @@ def export_users(request):
     return response
 
 
+@permission_required('accounts.user_managment')
 @login_required
 def export_groups(request):
     response = HttpResponse(
@@ -68,6 +70,7 @@ def export_groups(request):
     return response
 
 
+@permission_required('accounts.user_managment')
 @login_required
 def users_list(request):
     users_list_all = get_user_model().objects.all()
@@ -99,6 +102,7 @@ def users_list(request):
     return render(request, 'accounts/users_list.html', context)
 
 
+@permission_required('accounts.user_managment')
 @login_required
 def groups_list(request):
     return render(request, 'accounts/groups_list.html', {'groups': Group.objects.all()})
