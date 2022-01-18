@@ -3,7 +3,7 @@ import csv
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import Group
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from repacking_site.methods import filtered_records
@@ -66,6 +66,75 @@ def export_groups(request):
     for group in Group.objects.all():
         writer.writerow([group.name, ", ".join(map(str, group.permissions.all()))])
     return response
+
+
+@permission_required('accounts.user_managment')
+@login_required
+def add_user(request):
+    if request.method == 'POST':
+        form = NewUserForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/accounts/user_list/')
+
+    else:
+        form = NewUserForm()
+
+    return render(request, 'accounts/add_user.html', {'form': form})
+
+
+@permission_required('accounts.user_managment')
+@login_required
+def edit_user(request, id):
+    user = get_user_model().objects.get(id=id)
+    form = NewUserForm(instance=user)
+    if request.method == 'POST':
+        form = NewUserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/accounts/user_list/')
+
+    return render(request, 'accounts/edit_user.html', {'form': form, 'id': id})
+
+
+@permission_required('accounts.user_managment')
+@login_required
+def add_group(request):
+    if request.method == 'POST':
+        form = NewGroupForm(request.POST)
+
+        if form.is_valid():
+            group = Group(name=form.cleaned_data['group_name'])
+            group.save()
+            return HttpResponseRedirect('/accounts/groups_list/')
+
+    else:
+        form = NewGroupForm()
+
+    return render(request, 'accounts/add_group.html', {'form': form})
+
+
+@permission_required('accounts.user_managment')
+@login_required
+def edit_group(request, id):
+    group = Group.objects.get(id=id)
+    form = NewGroupForm(instance=group)
+
+    if request.method == 'POST':
+        form = NewGroupForm(request.POST, instance=group)
+
+        if form.is_valid():
+            form.save()
+            group.user_set.clear()
+            selected = []
+            for user_id in form.cleaned_data['users']:
+                selected.append(get_user_model().objects.get(id=user_id))
+            for user in selected:
+                group.user_set.add(user)
+            return HttpResponseRedirect('/accounts/groups_list/')
+
+    return render(request, 'accounts/edit_group.html', {'form': form})
 
 
 @permission_required('accounts.user_managment')

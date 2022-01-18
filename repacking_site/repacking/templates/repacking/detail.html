@@ -8,7 +8,10 @@
     <h1>Detail štandardu {{ standard.SKU }}</h1>
 
     <div class="btn-group">
-        <a class="active-btn" href="{% url 'start' %}?SKU={{ standard.SKU }}"><img id="btn-image" src="{% static 'icons/2931171_download_import_save_down_storage.png' %}">Začni prebal</a>
+        <button type="button" class="active-btn" style="width: fit-content"
+                onclick="location.href='/repacking/repacking/start/?SKU={{ standard.SKU }}';">
+            <img id="btn-image" src="{% static 'icons/211876_play_icon.png' %}">
+            Začni prebal</button>
     </div>
 
     <table class="standard-table">
