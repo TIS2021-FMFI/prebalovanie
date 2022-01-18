@@ -26,6 +26,9 @@ class NewUserForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(NewUserForm, self).__init__(*args, **kwargs)
         self.fields['password'].label = "Heslo"
+        if self.instance.pk is not None:
+            self.fields['password'].widget = forms.HiddenInput()
+
         self.fields['is_superuser'].label = "Superadmin:"
         self.fields['username'].label = "Používateľské meno"
         self.fields['username'].widget = forms.TextInput(attrs={'autofocus': True})
