@@ -123,9 +123,9 @@
                     <td>{{ repack.repacking_standard.unit_weight }}</td>
                     <td>{{ repack.repacking_standard.repacking_duration }}</td>
 
-                    <td>{{ repack.repack_start }}</td>
-                    <td>{{ repack.repack_finish }}</td>
-                    <td>{{ repack.repack_duration }}</td>
+                    <td>{{ repack.repack_start|date:"d.m.Y, H:i"  }}</td>
+                    <td>{{ repack.repack_finish|date:"d.m.Y, H:i"  }}</td>
+                    <td>{{ repack.repack_duration_str  }}</td>
                     <td>{{ repack.users.all|join:", " }}</td>
                 </tr>
             {% endfor %}
