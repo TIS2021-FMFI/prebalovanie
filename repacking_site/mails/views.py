@@ -1,22 +1,11 @@
-import csv
-from io import StringIO
-from django.shortcuts import render, redirect
-from django.core.mail import EmailMessage
-from .models import *
-from repacking.models import *
-import datetime
-
-from repacking.models import RepackHistory
-
 from django.contrib.auth.decorators import login_required, permission_required
-from django.http import Http404, HttpResponseRedirect, HttpResponse
-
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 
 from logs.models import Log
 from repacking_site.methods import filtered_records
 from .filters import *
 from .forms import *
-
 
 
 @permission_required('accounts.history')
@@ -38,21 +27,6 @@ def index(request):
             return HttpResponseRedirect("/mails/index/")
     else:
         mail_form = AddEmailForm()
-    if request.method == 'POST' and 'add_mail' in request.POST:
-        form = ExportUpdateForm(request.POST)
-        if form.is_valid():
-
-            # To be finished...
-
-            #time_form = ...
-            #time_form.save()
-
-            #Log.make_log(Log.App.MAIL_REPORTS, Log.Priority.DEBUG, None, "Changed time of Updates")
-
-            return HttpResponseRedirect("/mails/index/")
-    else:
-        date_form = ExportUpdateForm()
-
 
     email_list_all = MailSendSetting.filter_and_order_emails_by_get(request.GET)
     email_list_filter = EmailListFilter(request.GET, queryset=email_list_all)

@@ -2,13 +2,9 @@ import csv
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
-from django.shortcuts import render
 from django.contrib.auth.models import Group
-from django.http import Http404, HttpResponseRedirect, HttpResponse
-from django.shortcuts import render, redirect
-from logs.models import Log
-from repacking_site.methods import filtered_records
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.http import HttpResponse
+from django.shortcuts import render
 
 from repacking_site.methods import filtered_records
 from .filters import *
@@ -98,7 +94,8 @@ def users_list(request):
             open_filter = True
     users_list = filtered_records(request, users_filter, paginate_by)
     context = {"users_list": users_list,
-               'users_filter': users_filter, 'paginate_by': paginate_by, 'open_filter': open_filter, "filter_GET": filter_GET_code}
+               'users_filter': users_filter, 'paginate_by': paginate_by,
+               'open_filter': open_filter, "filter_GET": filter_GET_code}
     return render(request, 'accounts/users_list.html', context)
 
 
