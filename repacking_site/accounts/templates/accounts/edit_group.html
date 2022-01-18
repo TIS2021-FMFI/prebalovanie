@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Používatelia {% endblock %}
+
+
+{% block content %}
+
+    <h1>Uprav skupinu</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        (Na vybratie viacerých možností podržte klávesu Ctrl)
+        <input type="submit" value="Ulož">
+    </form>
+
+{% endblock %}

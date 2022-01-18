@@ -39,7 +39,7 @@
         <button type="button" class="active-btn" onclick="location.href='/accounts/user_list/export/';">
             <img id="btn-image" src="{% static 'icons/2931143_up_upload_export_share.png' %}">
             Export</button>
-        <button type="button" class="active-btn" style="width: fit-content" onclick="location.href='/admin/accounts/user/add/';">
+        <button type="button" class="active-btn" style="width: fit-content" onclick="location.href='/accounts/add_user/';">
             <img id="btn-image" src="{% static 'icons/2931155_attach_new_maximize_add_create_plus.png' %}">
             Pridať používateľa</button>
     </div>
@@ -125,7 +125,7 @@
             {% endfor %}
         </table>
     {% else %}
-        <p>Žiadny používatelia nie sú k dispozícií.</p>
+        <p>Žiadni používatelia nie sú k dispozícií.</p>
     {% endif %}
 
 {% endblock %}

@@ -11,7 +11,7 @@
         <button type="button" class="active-btn" onclick="location.href='/accounts/groups_list/export/';">
             <img id="btn-image" src="{% static 'icons/2931143_up_upload_export_share.png' %}">
             Export</button>
-        <button type="button" class="active-btn" style="width: fit-content" onclick="location.href='/admin/auth/group/add/';">
+        <button type="button" class="active-btn" style="width: fit-content" onclick="location.href='/accounts/add_group/';">
             <img id="btn-image" src="{% static 'icons/2931155_attach_new_maximize_add_create_plus.png' %}">
             Pridať skupinu</button>
     </div>
@@ -25,7 +25,7 @@
     {% for group in groups %}
         <tr>
             <td>
-                <button type="button" class="active-btn" onclick="location.href='/admin/auth/group/{{ group.id }}/change/';" >
+                <button type="button" class="active-btn" onclick="location.href='/accounts/edit_group/{{ group.id }}/';" >
                     <img id="btn-image" src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">
                     Editovať
                 </button>
