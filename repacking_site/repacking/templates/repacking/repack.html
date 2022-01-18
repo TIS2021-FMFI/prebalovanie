@@ -6,10 +6,16 @@
 
     {% block content %}
 
-    <div class="repack-btn-group">
-        <a href="repack_finished" class="active-btn"><img id="btn-image" src="{% static 'icons/tick_done_check.png' %}">Ukonči prebal</a>
-        <a href="repack_paused" class="active-btn"><img id="btn-image" src="{% static 'icons/8680207_pause_line_icon.png' %}">Pozastav prebal</a>
-        <a href="repack_cancelled" class="active-btn"><img id="btn-image" src="{% static 'icons/2931168_garbage_trash_bin_delete_remove.png' %}">Zruš prebal</a>
+        <div class="btn-group">
+        <button type="button" class="active-btn" style="width: fit-content" onclick="location.href='repack_finished';">
+            <img id="btn-image" src="{% static 'icons/tick_done_check.png' %}">
+            Ukonči prebal</button>
+        <button type="button" class="active-btn" style="width: fit-content" onclick="location.href='repack_paused';">
+            <img id="btn-image" src="{% static 'icons/8680207_pause_line_icon.png' %}">
+            Pozastav prebal</button>
+        <button type="button" class="active-btn" style="width: fit-content" onclick="location.href='repack_cancelled';">
+            <img id="btn-image" src="{% static 'icons/2931168_garbage_trash_bin_delete_remove.png' %}">
+            Zruš prebal</button>
     </div>
 
     <div id="repack-duration">Trvanie prebalu: <span id="time"></span>s</div>
