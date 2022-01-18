@@ -124,22 +124,31 @@ def history_export(request):
 @login_required
 def start(request):
     cancel_sessions(request)
+    context = None
+
     if request.method == 'POST':
         form = RepackingForm(request.POST)
         if form.is_valid():
             if RepackingStandard.get_repacking_standard_by_sku(form.cleaned_data['SKU']) is None:
                 sku = form.cleaned_data['SKU']
                 context = {"SKU": sku}
-                return render(request, 'repacking/non_existing_standard.html', context)
             operators = set()
             i = 1
             while f'operator_{i}' in request.POST.keys():
                 operator = request.POST[f'operator_{i}']
                 if operator != '':
-                    User.objects.get(barcode=operator)
-                    operators.add(operator)
+                    try:
+                        User.objects.get(barcode=operator)
+                        operators.add(operator)
+                    except User.DoesNotExist:
+                        if context is None:
+                            context = {"operator": operator}
+                        else:
+                            context.update({"operator": operator})
                 i += 1
 
+            if context is not None:
+                return render(request, 'repacking/non_existing.html', context)
             return HttpResponseRedirect(
                 f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["IDP"]}/{",".join(operators)}/')
 

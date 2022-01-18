@@ -11,40 +11,17 @@ from repacking.models import RepackHistory
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 
-from accounts.models import *
+
 from logs.models import Log
 from repacking_site.methods import filtered_records
 from .filters import *
 from .forms import *
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
 
 
 @permission_required('accounts.history')
 @login_required
 def index(request):
-    email = EmailMessage(
-        f'[GEFCO prebaľovanie] Report '
-        f'{(datetime.datetime.now() - datetime.timedelta(days=7)).strftime("%d.%m.%Y")} - '
-        f'{datetime.datetime.now().strftime("%d.%m.%Y")}',
-        f'Dobrý deň,\nv prílohe tohoto mailu nájdete zoznam prebaľovaní za posledných 7 dní, teda od '
-        f'{(datetime.datetime.now() - datetime.timedelta(days=7)).strftime("%d.%m.%Y")} do '
-        f'{datetime.datetime.now().strftime("%d.%m.%Y")}',
-        'prebalovanie@gefcoslovakia.sk',
-        [mail.mail for mail in MailSendSetting.objects.all()],
-    )
-    csvfile = StringIO()
-    writer = csv.writer(csvfile, dialect='excel', delimiter=',')
-
-    RepackHistory.write_repacking_history_to_csv(RepackHistory.objects.filter(
-        repack_finish__gte=(datetime.datetime.now() - datetime.timedelta(days=7))), writer)
-
-    email.attach(f'prebalovania-{(datetime.datetime.now() - datetime.timedelta(days=7)).strftime("%Y/%m/%d")}-'
-                 f'{datetime.datetime.now().strftime("%Y/%m/%d")}', csvfile.getvalue(),
-                 'text/csv')
-    #email.send(fail_silently=False)
-
-    ##---------------------------##
-
     if request.method == 'POST' and 'add_mail' in request.POST:
         form = AddEmailForm(request.POST)
         if form.is_valid():
@@ -76,7 +53,6 @@ def index(request):
     else:
         date_form = ExportUpdateForm()
 
-    ##----------------------------------##
 
     email_list_all = MailSendSetting.filter_and_order_emails_by_get(request.GET)
     email_list_filter = EmailListFilter(request.GET, queryset=email_list_all)
