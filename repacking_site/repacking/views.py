@@ -295,7 +295,7 @@ def pause(request, sku_code, idp_code, operators):
                     repack_paused - datetime.strptime(last_repack_start, repack_time_format)).total_seconds()
 
     else:
-        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, request.user, "Prebal bez začiatku pozastavený.")
+        Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, request.user, "Prebal bez začiatku bol pozastavený.")
 
     context = {'sku_code': sku_code, 'idp_code': idp_code, 'operators': operators,
                'duration': int(request.session[repack_duration_key])}
@@ -327,7 +327,8 @@ def make_new_standard(request):
                 input_count_of_items_on_pallet=form.cleaned_data['input_count_of_items_on_pallet'],
                 output_count_of_items_on_pallet=form.cleaned_data['output_count_of_items_on_pallet'],
                 input_type_of_package=form.cleaned_data['input_type_of_package'],
-                output_type_of_package=form.cleaned_data['output_type_of_package']
+                output_type_of_package=form.cleaned_data['output_type_of_package'],
+                creator=request.user
             )
             standard.save()
 
