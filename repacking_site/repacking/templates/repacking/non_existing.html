@@ -3,6 +3,12 @@
 
 {% block content %}
 
+    {% if SKU %}
     <h1>Zadali ste neexistujúce číslo štandardu ({{ SKU }})</h1>
+    {% endif %}
+
+    {% if operator %}
+    <h1>Zadali ste neexistujúce číslo operátora ({{ operator }})</h1>
+    {% endif %}
 
 {% endblock %}
