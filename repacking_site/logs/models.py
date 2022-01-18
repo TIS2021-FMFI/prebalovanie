@@ -6,6 +6,8 @@ class Log(models.Model):
     class Meta:
         verbose_name = 'Log'
         verbose_name_plural = 'Logy'
+        permissions = ()
+        default_permissions = ()
 
     class Priority(models.TextChoices):
         TRACE = 'TRACE'

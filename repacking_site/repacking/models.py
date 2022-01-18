@@ -9,6 +9,8 @@ class Tools(models.Model):
     class Meta:
         verbose_name = 'OPP'
         verbose_name_plural = 'OPP'
+        permissions = ()
+        default_permissions = ()
 
     def __str__(self):
         return f'OPP {str(self.id)}'
@@ -20,6 +22,8 @@ class Photos(models.Model):
     class Meta:
         verbose_name = 'Fotka'
         verbose_name_plural = 'Fotky'
+        permissions = ()
+        default_permissions = ()
 
     def __str__(self):
         return f'Fotka {str(self.id)}'
@@ -32,6 +36,8 @@ class RepackingStandard(models.Model):
     class Meta:
         verbose_name = 'Štandard'
         verbose_name_plural = 'Štandardy'
+        permissions = ()
+        default_permissions = ()
 
     SKU = models.CharField(max_length=50, default="", unique=True, verbose_name="SKU")
     COFOR = models.CharField(max_length=50, default="", verbose_name="COFOR")
@@ -100,6 +106,8 @@ class RepackHistory(models.Model):
     class Meta:
         verbose_name = 'Prebaľovanie'
         verbose_name_plural = 'Prebaľovania'
+        permissions = ()
+        default_permissions = ()
 
     repacking_standard = models.ForeignKey(RepackingStandard, on_delete=models.SET_NULL, null=True,
                                            related_name='repacking_standard', verbose_name="Štandard")
