@@ -50,7 +50,7 @@
                 <option value="10" id="pag10">10</option>
                 <option value="20" id="pag20">20</option>
                 <option value="30" id="pag30">30</option>
-                <option value="50" id="pag50">50</option>
+                <option value="40" id="pag40">40</option>
             </select>
         </form>
 
@@ -66,8 +66,8 @@
             case 30:
                 option = document.getElementById("pag30");
                 break;
-            case 50:
-                option = document.getElementById("pag50");
+            case 40:
+                option = document.getElementById("pag40");
                 break;
         }
         option.selected = true;
@@ -137,7 +137,7 @@
                     <td>{{ standard.unit_weight }}</td>
                     <td>{{ standard.repacking_duration }}</td>
                     <td>{{ standard.creator }}</td>
-                    <td>{{ standard.created. }}</td>
+                    <td>{{ standard.created }}</td>
                     <td class="instructions">{{ standard.instructions }}</td>
                 </tr>
             {% endfor %}
