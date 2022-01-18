@@ -1,4 +1,7 @@
 from django import forms
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission, Group
+from django.forms import ModelForm
 
 
 class ProfileForm(forms.Form):
@@ -15,5 +18,9 @@ class NewUserForm(forms.Form):
     barcode = forms.CharField(max_length=50, required=True, label="Čiarový kód")
 
 
-class NewGroupForm(forms.Form):
-    group_name = forms.CharField(max_length=50, required=True, label="Názov skupiny")
+class NewGroupForm(ModelForm):
+    class Meta:
+        model = Group
+        fields = ['name', 'permissions', ]
+
+

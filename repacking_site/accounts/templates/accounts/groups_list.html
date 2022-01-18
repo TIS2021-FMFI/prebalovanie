@@ -25,7 +25,7 @@
     {% for group in groups %}
         <tr>
             <td>
-                <button type="button" class="active-btn" onclick="location.href='/admin/auth/group/{{ group.id }}/change/';" >
+                <button type="button" class="active-btn" onclick="location.href='/accounts/edit_group/{{ group.id }}/';" >
                     <img id="btn-image" src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">
                     Editovať
                 </button>

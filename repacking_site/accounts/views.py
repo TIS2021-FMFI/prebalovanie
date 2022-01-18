@@ -107,6 +107,22 @@ def add_group(request):
 
 @permission_required('accounts.user_managment')
 @login_required
+def edit_group(request, id):
+    group = Group.objects.get(id=id)
+    form = NewGroupForm(instance=group)
+
+    if request.method == 'POST':
+        form = NewGroupForm(request.POST, instance=group)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/accounts/groups_list/')
+
+    return render(request, 'accounts/edit_group.html', {'form': form})
+
+
+@permission_required('accounts.user_managment')
+@login_required
 def users_list(request):
     users_list_all = get_user_model().objects.all()
     users_filter = UserFilter(request.GET, queryset=users_list_all)
