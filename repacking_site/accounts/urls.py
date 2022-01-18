@@ -11,5 +11,6 @@ urlpatterns = [
     path('add_user/', views.add_user),
     path('groups_list/', views.groups_list),
     path('groups_list/export/', views.export_groups),
+    path('add_group/', views.add_group),
     path('', include('django.contrib.auth.urls')),
 ]

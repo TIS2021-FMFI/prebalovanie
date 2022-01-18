@@ -75,7 +75,6 @@ def add_user(request):
         form = NewUserForm(request.POST)
 
         if form.is_valid():
-            request.user.barcode = form.cleaned_data['barcode']
             user = User.objects.create_user(username=form.cleaned_data['user_name'],
                                             first_name=form.cleaned_data['first_name'],
                                             last_name=form.cleaned_data['last_name'],
@@ -87,6 +86,23 @@ def add_user(request):
         form = NewUserForm()
 
     return render(request, 'accounts/add_user.html', {'form': form})
+
+
+@permission_required('accounts.user_managment')
+@login_required
+def add_group(request):
+    if request.method == 'POST':
+        form = NewGroupForm(request.POST)
+
+        if form.is_valid():
+            group = Group(name=form.cleaned_data['group_name'])
+            group.save()
+            return HttpResponseRedirect('/accounts/groups_list/')
+
+    else:
+        form = NewGroupForm()
+
+    return render(request, 'accounts/add_group.html', {'form': form})
 
 
 @permission_required('accounts.user_managment')
