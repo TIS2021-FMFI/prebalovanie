@@ -20,12 +20,14 @@ def profile(request):
             if request.user.is_authenticated:
                 request.user.first_name = form.cleaned_data['first_name']
                 request.user.last_name = form.cleaned_data['last_name']
+                request.user.barcode = form.cleaned_data['barcode']
                 request.user.save()
             return render(request, 'accounts/profile.html', {'form': form})
 
     else:
         if request.user.is_authenticated:
-            form = ProfileForm({'first_name': request.user.first_name, 'last_name': request.user.last_name})
+            form = ProfileForm({'first_name': request.user.first_name, 'last_name': request.user.last_name,
+                                'barcode': request.user.barcode})
         else:
             form = ProfileForm()
         return render(request, 'accounts/profile.html', {'form': form})
