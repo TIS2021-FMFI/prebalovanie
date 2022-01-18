@@ -21,49 +21,51 @@
 
 <nav>
     <a href="/"><img id="gefco" src="{% static 'GEFCO_Logo.svg' %}" alt="GEFCO logo"></a>
-    <div class="dropdown">
-        <button class="dropbtn"><img id="nav-image" src="{% static 'icons/2931150_home_furniture_office_architecture_house_homepage_building.png' %}">Hlavné údaje</button>
-        <div class="dropdown-content">
-            <a href="/repacking/sku/">Nastavenie SKU</a>
-        </div>
-    </div>
-    <div class="dropdown">
-        <button class="dropbtn"><img id="nav-image" src="{% static 'icons/2931141_archive_folder_storage_data_files.png' %}">Prebal</button>
-        <div class="dropdown-content">
-            <a href="/repacking/start/">Spustenie prebaľovania</a>
-        </div>
-    </div>
-    <div class="dropdown">
-        <button class="dropbtn"><img id="nav-image" src="{% static 'icons/2931180_info_service_about_support_chat_information.png' %}">Operatíva</button>
-        <div class="dropdown-content">
-            <a href="/repacking/history/">História prebaľovania</a>
-            <a href="/mails/index/">Nastavenie exportov</a>
-        </div>
-    </div>
-    <div class="dropdown">
-        <button class="dropbtn"><img id="nav-image" src="{% static 'icons/2931147_user_user_face_avatar_account_head_profile_head_account_profile_face_avatar_human.png' %}">Prístup</button>
-        <div class="dropdown-content">
-            <a href="/accounts/user_list/">Používatelia</a>
-            <a href="/accounts/groups_list/">Skupiny</a>
-            <a href="/accounts/profile/">Profil</a>
-        </div>
-    </div>
-    <div class="dropdown">
-        <button class="dropbtn"><img id="nav-image" src="{% static 'icons/2931152_control_tools_repair_settings_gear_adjust_setup.png' %}">Nastavenie</button>
-        <div class="dropdown-content">
-            <a href="/logs/">Udalosti</a>
-        </div>
-    </div>
-    {#	<a href="/repacking/sku">Nastavenie SKU</a>#}
-    {#    <a href="/repacking/history">História prebalov</a>#}
-    {#    <a href="/repacking/standards/new/">Nový štandard</a>#}
-    {#    <a href="/logs/">Systémové logy</a>#}
-
-
     {% if user.is_authenticated %}
-        <a class="user" href="/accounts/logout/"> Ahoj {{ user.username }}, ODHLÁSIŤ SA</a>
-    {% else %}
-        <a class="user" href="/accounts/login/">PRIHLÁSIŤ SA</a>
+        <div class="dropdown">
+            <button class="dropbtn"><img id="nav-image" src="{% static 'icons/2931150_home_furniture_office_architecture_house_homepage_building.png' %}">Hlavné údaje</button>
+            <div class="dropdown-content">
+                <a href="/repacking/sku/">Nastavenie SKU</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn"><img id="nav-image" src="{% static 'icons/2931141_archive_folder_storage_data_files.png' %}">Prebal</button>
+            <div class="dropdown-content">
+                <a href="/repacking/start/">Spustenie prebaľovania</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn"><img id="nav-image" src="{% static 'icons/2931180_info_service_about_support_chat_information.png' %}">Operatíva</button>
+            <div class="dropdown-content">
+                <a href="/repacking/history/">História prebaľovania</a>
+                <a href="/mails/index/">Nastavenie exportov</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn"><img id="nav-image" src="{% static 'icons/2931147_user_user_face_avatar_account_head_profile_head_account_profile_face_avatar_human.png' %}">Prístup</button>
+            <div class="dropdown-content">
+                <a href="/accounts/user_list/">Používatelia</a>
+                <a href="/accounts/groups_list/">Skupiny</a>
+                <a href="/accounts/profile/">Profil</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn"><img id="nav-image" src="{% static 'icons/2931152_control_tools_repair_settings_gear_adjust_setup.png' %}">Nastavenie</button>
+            <div class="dropdown-content">
+                <a href="/logs/">Udalosti</a>
+            </div>
+        </div>
+        {#	<a href="/repacking/sku">Nastavenie SKU</a>#}
+        {#    <a href="/repacking/history">História prebalov</a>#}
+        {#    <a href="/repacking/standards/new/">Nový štandard</a>#}
+        {#    <a href="/logs/">Systémové logy</a>#}
+
+
+        {% if user.is_authenticated %}
+            <a class="user" href="/accounts/logout/"> Ahoj {{ user.username }}, ODHLÁSIŤ SA</a>
+        {% else %}
+            <a class="user" href="/accounts/login/">PRIHLÁSIŤ SA</a>
+        {% endif %}
     {% endif %}
 
 </nav>
