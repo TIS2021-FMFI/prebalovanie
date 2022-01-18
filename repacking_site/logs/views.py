@@ -1,10 +1,11 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import render
 
 from repacking_site.methods import filtered_records
 from .filters import *
 
 
+@permission_required('accounts.user_managment')
 @login_required
 def index(request):
     log_list_all = Log.filter_and_order_logs_by_get(request.GET)

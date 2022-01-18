@@ -1,6 +1,16 @@
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+import csv
+from io import StringIO
+from django.shortcuts import render, redirect
+from django.core.mail import EmailMessage
+from .models import *
+from repacking.models import *
+import datetime
+
+from repacking.models import RepackHistory
+
+from django.contrib.auth.decorators import login_required, permission_required
+from django.http import Http404, HttpResponseRedirect, HttpResponse
+
 
 from logs.models import Log
 from repacking_site.methods import filtered_records
@@ -8,6 +18,8 @@ from .filters import *
 from .forms import *
 
 
+
+@permission_required('accounts.history')
 @login_required
 def index(request):
     if request.method == 'POST' and 'add_mail' in request.POST:
@@ -72,6 +84,8 @@ def index(request):
                "filter_GET": filter_GET_code, "add_email_form": mail_form, "update_date_form": None}
     return render(request, 'mails/index.html', context)
 
+
+@permission_required('accounts.sku_managment')
 @login_required
 def delete(request, mail):
     email = MailSendSetting.get_mail(mail)

@@ -9,6 +9,8 @@ class Tools(models.Model):
     class Meta:
         verbose_name = 'OPP'
         verbose_name_plural = 'OPP'
+        permissions = ()
+        default_permissions = ()
 
     def __str__(self):
         return f'OPP {str(self.id)}'
@@ -20,6 +22,8 @@ class Photos(models.Model):
     class Meta:
         verbose_name = 'Fotka'
         verbose_name_plural = 'Fotky'
+        permissions = ()
+        default_permissions = ()
 
     def __str__(self):
         return f'Fotka {str(self.id)}'
@@ -32,34 +36,39 @@ class RepackingStandard(models.Model):
     class Meta:
         verbose_name = 'Štandard'
         verbose_name_plural = 'Štandardy'
+        permissions = ()
+        default_permissions = ()
 
-    SKU = models.CharField(max_length=50, default="", unique=True)
-    COFOR = models.CharField(max_length=50, default="")
-    supplier = models.CharField(max_length=50, default="")
-    destination = models.CharField(max_length=50, default="")
-    items_per_move = models.PositiveIntegerField(default=0)
-    unit_weight = models.DecimalField(max_digits=10, decimal_places=4, default=0)
-    repacking_duration = models.DurationField(default=timedelta(minutes=0))
-    instructions = models.CharField(max_length=1200, default="")
-    tools = models.ManyToManyField(Tools, related_name='tools', blank=True)
+    SKU = models.CharField(max_length=50, default="", unique=True, verbose_name="SKU")
+    COFOR = models.CharField(max_length=50, default="", verbose_name="COFOR")
+    supplier = models.CharField(max_length=50, default="", verbose_name="Dodávateľ")
+    destination = models.CharField(max_length=50, default="", verbose_name="Destinácia")
+    items_per_move = models.PositiveIntegerField(default=0, verbose_name="kusov na pohyb")
+    unit_weight = models.DecimalField(max_digits=10, decimal_places=4, default=0, verbose_name="Jednotková váha")
+    repacking_duration = models.DurationField(default=timedelta(minutes=0), verbose_name="Doba prebalu")
+    instructions = models.CharField(max_length=1200, default="", verbose_name="Inštrukcie")
+    tools = models.ManyToManyField(Tools, related_name='tools', blank=True, verbose_name="OPP")
 
-    input_count_of_items_in_package = models.PositiveIntegerField(default=0)
-    output_count_of_items_in_package = models.PositiveIntegerField(default=0)
+    input_count_of_items_in_package = models.PositiveIntegerField(default=0, verbose_name="KS vo vstupnom balení")
+    output_count_of_items_in_package = models.PositiveIntegerField(default=0, verbose_name="KS vo výstupnom balení")
 
-    input_count_of_boxes_on_pallet = models.PositiveIntegerField(default=0)
-    output_count_of_boxes_on_pallet = models.PositiveIntegerField(default=0)
+    input_count_of_boxes_on_pallet = models.PositiveIntegerField(default=0, verbose_name="Boxov na vstupnej palete")
+    output_count_of_boxes_on_pallet = models.PositiveIntegerField(default=0, verbose_name="Boxov na výstupnej palete")
 
-    input_count_of_items_on_pallet = models.PositiveIntegerField(default=0)
-    output_count_of_items_on_pallet = models.PositiveIntegerField(default=0)
+    input_count_of_items_on_pallet = models.PositiveIntegerField(default=0, verbose_name="KS na vstupnej palete")
+    output_count_of_items_on_pallet = models.PositiveIntegerField(default=0, verbose_name="KS na výstupnej palete")
 
-    input_type_of_package = models.CharField(max_length=50, default="")
-    output_type_of_package = models.CharField(max_length=50, default="")
+    input_type_of_package = models.CharField(max_length=50, default="", verbose_name="Druh vstupného obalu")
+    output_type_of_package = models.CharField(max_length=50, default="", verbose_name="Druh výstupného obalu")
 
-    input_photos = models.ManyToManyField(Photos, related_name='input_photos', blank=True)
-    output_photos = models.ManyToManyField(Photos, related_name='output_photos', blank=True)
+    input_photos = models.ManyToManyField(Photos, related_name='input_photos',
+                                          blank=True, verbose_name="Fotky vstupného obalu")
+    output_photos = models.ManyToManyField(Photos, related_name='output_photos',
+                                           blank=True, verbose_name="Fotky výstupného obalu")
 
-    created = models.DateTimeField(auto_now=True)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='creator')
+    created = models.DateTimeField(auto_now=True, verbose_name="Čas vytvorenia")
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+                                null=True, related_name='creator', verbose_name="Vytvoril používateľ")
 
     def __str__(self):
         return f'Štandard {str(self.id)}'
@@ -97,16 +106,16 @@ class RepackHistory(models.Model):
     class Meta:
         verbose_name = 'Prebaľovanie'
         verbose_name_plural = 'Prebaľovania'
+        permissions = ()
+        default_permissions = ()
 
-    repacking_standard = models.ForeignKey(RepackingStandard,
-                                           on_delete=models.SET_NULL,
-                                           null=True,
-                                           related_name='repacking_standard')
-    repack_start = models.DateTimeField(default=datetime.now, blank=True)
-    repack_finish = models.DateTimeField(auto_now=False)
-    repack_duration = models.DurationField(default=timedelta(minutes=0))
-    idp = models.CharField(max_length=50)
-    users = models.ManyToManyField(User, related_name='users')
+    repacking_standard = models.ForeignKey(RepackingStandard, on_delete=models.SET_NULL, null=True,
+                                           related_name='repacking_standard', verbose_name="Štandard")
+    repack_start = models.DateTimeField(default=datetime.now, blank=True, verbose_name="Začiatok prebalu")
+    repack_finish = models.DateTimeField(auto_now=False, verbose_name="Konies prebalu")
+    repack_duration = models.DurationField(default=timedelta(minutes=0), verbose_name="Trvanie prebalu")
+    idp = models.CharField(max_length=50, verbose_name="IDP")
+    users = models.ManyToManyField(User, related_name='users', verbose_name="Prebaľovali používatelia")
 
     def __str__(self):
         return f'Prebaľovanie {str(self.id)}'

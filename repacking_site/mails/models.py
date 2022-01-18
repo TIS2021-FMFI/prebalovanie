@@ -13,8 +13,10 @@ class MailSendSetting(models.Model):
     class Meta:
         verbose_name = 'Mailová adresa'
         verbose_name_plural = 'Mailové adresy'
+        permissions = ()
+        default_permissions = ()
 
-    mail = models.EmailField(max_length=50, default="")
+    mail = models.EmailField(max_length=50, default="", verbose_name="Email")
 
     def __str__(self):
         return str(self.mail)
