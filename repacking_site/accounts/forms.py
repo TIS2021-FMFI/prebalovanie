@@ -32,7 +32,7 @@ class NewGroupForm(ModelForm):
         selected = []
         for user in get_user_model().objects.all():
             user_choices.append((user.id, user.username))
-            if user in self.instance.user_set.all():
+            if self.instance.pk is not None and user in self.instance.user_set.all():
                 selected.append(user.id)
 
         self.fields['users'] = forms.MultipleChoiceField(choices=user_choices, label="Používatelia", initial=selected)
