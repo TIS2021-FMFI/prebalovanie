@@ -14,5 +14,6 @@ urlpatterns = [
     path('groups_list/export/', views.export_groups),
     path('add_group/', views.add_group),
     path('edit_group/<int:id>/', views.edit_group),
+    path('delete_group/<group_name>/', views.delete_group),
     path('', include('django.contrib.auth.urls')),
 ]

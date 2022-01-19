@@ -174,3 +174,15 @@ def users_list(request):
 @login_required
 def groups_list(request):
     return render(request, 'accounts/groups_list.html', {'groups': Group.objects.all()})
+
+
+@permission_required('accounts.user_managment')
+@login_required
+def delete_group(request, group_name):
+    groups = Group.objects.filter(name=group_name)
+    if not groups.exists():
+        deleted = False
+    else:
+        groups.delete()
+        deleted = True
+    return render(request, 'accounts/group_deleted.html', {'deleted': deleted})

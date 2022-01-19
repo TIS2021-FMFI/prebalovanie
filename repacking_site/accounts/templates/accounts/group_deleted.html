@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %} Vymazanie skupiny {% endblock %}
+
+{% block content %}
+
+    {% if deleted %}
+        <h1>Skupina vymazaná</h1>
+    {% else %}
+        <h1>Skupina neexistuje!</h1>
+    {% endif %}
+    <a href="/accounts/groups_list/">Späť na skupiny</a>
+{% endblock %}
