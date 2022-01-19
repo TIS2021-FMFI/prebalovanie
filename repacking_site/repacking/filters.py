@@ -1,9 +1,7 @@
 import django_filters
 from django import forms
-from django.forms import DateTimeInput, DateInput, TimeInput
-from django_filters import CharFilter, DateTimeFilter, DurationFilter
-from django_filters.widgets import RangeWidget
-from durationwidget.widgets import TimeDurationWidget
+from django.forms import DateTimeInput
+from django_filters import CharFilter, DateTimeFilter
 
 from .models import *
 
