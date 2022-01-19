@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Používatelia {% endblock %}
+
+
+{% block content %}
+
+    <h1>Uprav používateľa</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <p>
+            <a href="/admin/accounts/user/{{ id }}/password/">Zmeň heslo</a>
+        </p>
+        {{ form.as_p }}
+        <input type="submit" value="Ulož">
+    </form>
+
+{% endblock %}

@@ -117,6 +117,10 @@ class RepackHistory(models.Model):
     idp = models.CharField(max_length=50, verbose_name="IDP")
     users = models.ManyToManyField(User, related_name='users', verbose_name="Prebaľovali používatelia")
 
+    def repack_duration_str(self):
+        sec = self.repack_duration.total_seconds()
+        return '%02d:%02d:%02d' % (int((sec / 3600) % 3600), int((sec / 60) % 60), int(sec % 60))
+
     def __str__(self):
         return f'Prebaľovanie {str(self.id)}'
 

@@ -75,17 +75,27 @@ def add_user(request):
         form = NewUserForm(request.POST)
 
         if form.is_valid():
-            user = User.objects.create_user(username=form.cleaned_data['user_name'],
-                                            first_name=form.cleaned_data['first_name'],
-                                            last_name=form.cleaned_data['last_name'],
-                                            password=form.cleaned_data['last_name'],
-                                            barcode=form.cleaned_data['barcode'])
+            form.save()
             return HttpResponseRedirect('/accounts/user_list/')
 
     else:
         form = NewUserForm()
 
     return render(request, 'accounts/add_user.html', {'form': form})
+
+
+@permission_required('accounts.user_managment')
+@login_required
+def edit_user(request, id):
+    user = get_user_model().objects.get(id=id)
+    form = NewUserForm(instance=user)
+    if request.method == 'POST':
+        form = NewUserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/accounts/user_list/')
+
+    return render(request, 'accounts/edit_user.html', {'form': form, 'id': id})
 
 
 @permission_required('accounts.user_managment')
