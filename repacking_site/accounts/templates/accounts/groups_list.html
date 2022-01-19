@@ -24,10 +24,15 @@
     </tr>
     {% for group in groups %}
         <tr>
-            <td>
+            <td class="actions">
                 <button type="button" class="active-btn" onclick="location.href='/accounts/edit_group/{{ group.id }}/';" >
                     <img id="btn-image" src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">
                     Editovať
+                </button>
+                <button type="button" class="active-btn"
+                        onclick="if(confirm('Chcete naozaj vymazať skupinu?')){window.location.href='/accounts/delete_group/{{ group.name }}/'}">
+                    <img id="btn-image" src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">
+                    Vymazať
                 </button>
             </td>
             <td>{{ group.name }}</td>
