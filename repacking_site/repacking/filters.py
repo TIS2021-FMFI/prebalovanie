@@ -51,8 +51,6 @@ class RepackHistoryFilter(django_filters.FilterSet):
                   'repacking_standard__output_count_of_items_on_pallet',
                   'repacking_standard__unit_weight',
                   'repacking_standard__supplier',
-                  'repacking_standard__repacking_duration',
-                  'repack_duration',
                   'users']
 
     def __init__(self, *args, **kwargs):
@@ -61,7 +59,4 @@ class RepackHistoryFilter(django_filters.FilterSet):
         self.filters['repacking_standard__output_count_of_boxes_on_pallet'].label = "Počet boxov na palete OUT"
         self.filters['repacking_standard__output_count_of_items_on_pallet'].label = "Počet kusov na palete OUT"
         self.filters['repacking_standard__unit_weight'].label = "Jednotková váha dielu"
-        self.filters['repacking_standard__repacking_duration'].label = "Čas prebalu"
-
-        self.filters['repack_duration'].label = "Celkový čas prebalu"
         self.filters['users'].label = "Operátori"
