@@ -1,16 +1,16 @@
 import django_filters
-from django.forms import DateInput
-from django_filters import DateFilter
+from django.forms import DateInput, DateTimeInput
+from django_filters import DateFilter, DateTimeFilter
 from django_filters import CharFilter
 
 from .models import *
 
 
 class LogFilter(django_filters.FilterSet):
-    start_date = DateFilter(field_name='action_time', lookup_expr='gte', label="Vytvorené od",
-                            widget=DateInput(attrs={'type': 'date'}))
-    end_date = DateFilter(field_name='action_time', lookup_expr='lte', label="Vytvorené do",
-                          widget=DateInput(attrs={'type': 'date'}))
+    start_date = DateTimeFilter(field_name='action_time', lookup_expr='gte', label="Vytvorené od",
+                                widget=DateTimeInput(attrs={'type': 'datetime-local'}))
+    end_date = DateTimeFilter(field_name='action_time', lookup_expr='lte', label="Vytvorené do",
+                              widget=DateTimeInput(attrs={'type': 'datetime-local'}))
     text = CharFilter(field_name='text', lookup_expr='icontains', label="Informácie")
 
     class Meta:
