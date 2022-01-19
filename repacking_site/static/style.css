@@ -182,6 +182,11 @@ tr:hover{
     background-color: rgba(256,205,0,0.5);
 }
 
+.actions{
+    display: flex;
+    flex-direction: column;
+}
+
 /* end of tables css */
 
 /* forms css */
