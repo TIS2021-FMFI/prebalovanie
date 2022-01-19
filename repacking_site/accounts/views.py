@@ -105,7 +105,7 @@ def add_group(request):
         form = NewGroupForm(request.POST)
 
         if form.is_valid():
-            group = Group(name=form.cleaned_data['group_name'])
+            group = Group(name=form.cleaned_data['name'])
             group.save()
             return HttpResponseRedirect('/accounts/groups_list/')
 
