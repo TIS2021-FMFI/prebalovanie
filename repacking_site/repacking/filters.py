@@ -22,29 +22,6 @@ class RepackingStandardFilter(django_filters.FilterSet):
                   'output_type_of_package']
 
 
-class SplitDurationWidget(forms.MultiWidget):
-    """
-    A Widget that splits duration input into four number input boxes.
-    """
-
-    def __init__(self, attrs=None):
-        widgets = (forms.NumberInput(attrs=attrs),
-                   forms.NumberInput(attrs=attrs),
-                   forms.NumberInput(attrs=attrs),
-                   forms.NumberInput(attrs=attrs))
-        super(SplitDurationWidget, self).__init__(widgets, attrs)
-
-    def decompress(self, value):
-        if value:
-            d = value
-            if d:
-                hours = d.seconds // 3600
-                minutes = (d.seconds % 3600) // 60
-                seconds = d.seconds % 60
-                return [int(d.days), int(hours), int(minutes), int(seconds)]
-        return [0, 1, 0, 0]
-
-
 class RepackHistoryFilter(django_filters.FilterSet):
     repacking_standard__SKU = CharFilter(field_name='repacking_standard__SKU', lookup_expr='icontains', label="SKU")
     repacking_standard__COFOR = CharFilter(field_name='repacking_standard__COFOR',
