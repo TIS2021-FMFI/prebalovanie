@@ -1,6 +1,6 @@
 # Readme - inštalácia
 
-- aplikáca je urobená v Pythone, v Djangu
-- je treba nainštalovať veci v `requirements.txt`
-- spustenie development servra: `python manage.py runserver`
-- spustenie production servra napr.: [tento návod](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment) alebo [tento návod](https://docs.djangoproject.com/en/3.2/howto/deployment/)
+- aplikáca je implementovaná v Pythone, resp. v Djangu
+- na spustenie je potrebné nainštalovať veci, ktoré sú uvedené v `requirements.txt`
+- spustenie development servera sa vykonáva príkazom: `python manage.py runserver`
+- spustenie production servera sa dá spraviť napr. podľa: [tohto návodu](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Deployment) alebo [tohto návodu](https://docs.djangoproject.com/en/3.2/howto/deployment/)
