@@ -124,6 +124,10 @@
                             <img id="btn-image" src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">
                             Vymazať
                         </button>
+                        <button type="button" class="active-btn" onclick="location.href='/repacking/{{ standard.SKU }}/export';">
+                            <img id="btn-image" src="{% static 'icons/2931143_up_upload_export_share.png' %}">
+                            Export
+                        </button>
                     </td>
                     <td>{{ standard.SKU }}</td>
                     <td>{{ standard.COFOR }}</td>
