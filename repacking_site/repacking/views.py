@@ -7,6 +7,7 @@ from django.contrib.staticfiles import finders
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from django.template.loader import get_template
+from django.views import View
 from xhtml2pdf import pisa
 
 from accounts.models import *
@@ -56,6 +57,26 @@ def detail(request, sku_code):
     return render(request, 'repacking/detail.html', {'standard': standard})
 
 
+class GeneratePdf(View):
+    def get(self, request, *args, **kwargs):
+        standard = RepackingStandard.get_repacking_standard_by_sku("58.125.155.15")
+        # getting the template
+        pdf = html_to_pdf('repacking/detail.html', {'standard': standard})
+
+        # rendering the template
+        return HttpResponse(pdf, content_type='application/pdf')
+
+
+def html_to_pdf(template_src, context_dict={}):
+    template = get_template(template_src)
+    html = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+
 @login_required
 def export(request, sku_code):
     cancel_sessions(request)
@@ -66,7 +87,7 @@ def export(request, sku_code):
     template_path = 'repacking/detail.html'
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="{sku_code}.pdf"'
+    # response['Content-Disposition'] = f'attachment; filename="{sku_code}.pdf"'
     # find the template and render it.
     template = get_template(template_path)
     html = template.render({'standard': standard})
@@ -77,17 +98,6 @@ def export(request, sku_code):
     if pisa_status.err:
         return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
-
-
-# defining the function to convert an HTML file to a PDF file
-def html_to_pdf(template_src, context_dict=dict()):
-     template = get_template(template_src)
-     html  = template.render(context_dict)
-     result = BytesIO()
-     pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
-     if not pdf.err:
-         return HttpResponse(result.getvalue(), content_type='application/pdf')
-     return None
 
 
 def link_callback(uri, rel):
