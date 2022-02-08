@@ -1,4 +1,3 @@
-# prebalovanie
 # Prebaľovanie dielov do nevratných obalov (GEFCO) 
  
 Komponenty, ktoré sú dovážané prichádzajú vo vratných obaloch, ktoré sa umývajú 
