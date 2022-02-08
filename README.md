@@ -10,5 +10,7 @@ stanovený. Monitoruje sa postup pracovníkov. V prípade problémov sa dá doh�
 kódu výrobku, kde vznikli.
 
 
-Ďalšie dokumenty : https://github.com/TIS2021-FMFI/prebalovanie/blob/main/repacking_site/readme.md
+Ďalšie dokumenty : https://github.com/TIS2021-FMFI/prebalovanie/blob/main/repacking_site/readme.md,
                    https://github.com/TIS2021-FMFI/prebalovanie/blob/main/repacking_site/requirements.txt
+
+prístup k rozhraniu: http://127.0.0.1:8000/admin/
