@@ -43,8 +43,8 @@ class StandardUpdateForm(ModelForm):
         self.fields['output_count_of_items_in_package'].label = "Počet ks v balení OUT"
         self.fields['input_count_of_boxes_on_pallet'].label = "Počet boxov na palete IN"
         self.fields['output_count_of_boxes_on_pallet'].label = "Počet boxov na palete OUT"
-        self.fields['input_count_of_items_on_pallet'].label = "Počet kusov na palete IN"
-        self.fields['output_count_of_items_on_pallet'].label = "Počet kusov na palete OUT"
+        self.fields['input_count_of_items_on_pallet'].label = "Počet kusov v jednom boxe IN"
+        self.fields['output_count_of_items_on_pallet'].label = "Počet kusov v jednom boxe OUT"
         self.fields['unit_weight'].label = "Jednotková váha dielu"
         self.fields['repacking_duration'].label = "Čas prebalu"
         self.fields['instructions'].label = "Poznámka"
@@ -66,8 +66,8 @@ class RepackingStandardForm(forms.Form):
     input_count_of_boxes_on_pallet = forms.IntegerField(required=True, label='Vstupný počet boxov na palete', min_value=0)
     output_count_of_boxes_on_pallet = forms.IntegerField(required=True, label='Výstupný počet boxov na palete', min_value=0)
 
-    input_count_of_items_on_pallet = forms.IntegerField(required=True, label='Vstupný počet kusov na palete', min_value=0)
-    output_count_of_items_on_pallet = forms.IntegerField(required=True, label='Výstupný počet kusov na palete', min_value=0)
+    input_count_of_items_on_pallet = forms.IntegerField(required=True, label='Vstupný počet kusov v jednom boxe IN', min_value=0)
+    output_count_of_items_on_pallet = forms.IntegerField(required=True, label='Výstupný počet kusov v jednom boxe OUT', min_value=0)
 
     input_type_of_package = forms.CharField(max_length=50, required=True, label='Vstupný typ obalu')
     output_type_of_package = forms.CharField(max_length=50, required=True, label='Výstupný typ obalu')
