@@ -40,11 +40,19 @@ class User(AbstractUser):
         verbose_name_plural = 'Účty'
         permissions = (('history', 'Prístup k histórii'),
                        ('user_managment', 'Správa používateľov'),
-                       ('sku_managment', 'Správa štandardov'), )
+                       ('sku_managment', 'Správa štandardov'),)
         default_permissions = ()
 
     barcode = models.CharField(max_length=100)
 
     def __str__(self):
-        #return f'(username:{str(self.username)}, barcode:{str(self.barcode)})'
+        # return f'(username:{str(self.username)}, barcode:{str(self.barcode)})'
         return f'{str(self.username)}'
+
+    @staticmethod
+    def get_operator_by_sku_code(barcode):
+        try:
+            user = User.objects.get(barcode=barcode)
+            return user
+        except User.DoesNotExist:
+            return None
