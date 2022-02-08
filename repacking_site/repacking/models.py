@@ -31,7 +31,6 @@ class Photos(models.Model):
     photo = models.ImageField(upload_to='photos/%Y/%m/')
 
 
-
 class RepackingStandard(models.Model):
     class Meta:
         verbose_name = 'Štandard'
@@ -44,7 +43,7 @@ class RepackingStandard(models.Model):
     supplier = models.CharField(max_length=50, default="", verbose_name="Dodávateľ")
     destination = models.CharField(max_length=50, default="", verbose_name="Destinácia")
     items_per_move = models.PositiveIntegerField(default=0, verbose_name="kusov na pohyb")
-    unit_weight = models.DecimalField(max_digits=10, decimal_places=4, default=0, verbose_name="Jednotková váha")
+    unit_weight = models.DecimalField(max_digits=10, decimal_places=3, default=0, verbose_name="Jednotková váha")
     repacking_duration = models.DurationField(default=timedelta(minutes=0), verbose_name="Doba prebalu")
     instructions = models.CharField(max_length=1200, default="", verbose_name="Inštrukcie")
     tools = models.ManyToManyField(Tools, related_name='tools', blank=True, verbose_name="OPP")

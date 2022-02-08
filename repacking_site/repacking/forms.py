@@ -48,6 +48,7 @@ class StandardUpdateForm(ModelForm):
         self.fields['unit_weight'].label = "Jednotková váha dielu"
         self.fields['repacking_duration'].label = "Čas prebalu"
         self.fields['instructions'].label = "Poznámka"
+        # self.fields['unit_weight'].decimal_places = 2
 
 
 class RepackingStandardForm(forms.Form):
