@@ -4,21 +4,26 @@
 {% load static %}
 
 
-    {% block content %}
+{% block content %}
 
-        <div class="btn-group">
+    <div class="btn-group">
         <button type="button" class="active-btn" style="width: fit-content" onclick="location.href='repack_finished';">
             <img id="btn-image" src="{% static 'icons/tick_done_check.png' %}">
-            Ukonči prebal</button>
+            Ukonči prebal
+        </button>
         <button type="button" class="active-btn" style="width: fit-content" onclick="location.href='repack_paused';">
             <img id="btn-image" src="{% static 'icons/8680207_pause_line_icon.png' %}">
-            Pozastav prebal</button>
+            Pozastav prebal
+        </button>
         <button type="button" class="active-btn" style="width: fit-content" onclick="location.href='repack_cancelled';">
             <img id="btn-image" src="{% static 'icons/2931168_garbage_trash_bin_delete_remove.png' %}">
-            Zruš prebal</button>
+            Zruš prebal
+        </button>
     </div>
 
     <div id="repack-duration">Trvanie prebalu: <span id="time"></span>s</div>
+
+    <p> Operátor/i: {{ list_of_operator_names|join:", " }} </p>
 
     <script>
         init_time({{ duration }}, '{{ repack_last_start }}')
@@ -81,9 +86,9 @@
             <td>{{ standard.input_type_of_package }}</td>
             <td class="input-info">Počet boxov na palete:</td>
             <td>{{ standard.input_count_of_boxes_on_pallet }}</td>
-            <td  class="output-info">Typ balenia:</td>
+            <td class="output-info">Typ balenia:</td>
             <td>{{ standard.output_type_of_package }}</td>
-            <td  class="output-info">Počet boxov na palete:</td>
+            <td class="output-info">Počet boxov na palete:</td>
             <td>{{ standard.output_count_of_boxes_on_pallet }}</td>
         </tr>
         <tr>
@@ -91,9 +96,9 @@
             <td>{{ standard.input_count_of_items_in_package }}</td>
             <td class="input-info">Počet kusov na palete:</td>
             <td>{{ standard.input_count_of_items_on_pallet }}</td>
-            <td  class="output-info">Počet kusov v balení:</td>
+            <td class="output-info">Počet kusov v balení:</td>
             <td>{{ standard.output_count_of_items_in_package }}</td>
-            <td  class="output-info">Počet kusov na palete:</td>
+            <td class="output-info">Počet kusov na palete:</td>
             <td>{{ standard.output_count_of_items_on_pallet }}</td>
         </tr>
         <tr>
@@ -103,11 +108,11 @@
             <td>{{ standard.unit_weight }}</td>
             <td class="main-info">Čas prebalu:</td>
             <td>{{ standard.repacking_duration }}</td>
-            <td colspan="2"  class="main-info">Poznámka:</td>
+            <td colspan="2" class="main-info">Poznámka:</td>
         </tr>
         <tr>
             <td colspan="8">{{ standard.instructions }}</td>
         </tr>
     </table>
 
-    {% endblock %}
+{% endblock %}

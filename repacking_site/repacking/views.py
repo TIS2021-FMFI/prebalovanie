@@ -36,10 +36,14 @@ def repacking(request, sku_code, idp_code, operators):
         request.session[repack_duration_key] = 0
     if request.session.get(repack_last_start_key, None) is None:
         request.session[repack_last_start_key] = datetime.now().strftime(repack_time_format)
+    list_of_operator_names = []
+    for operator in operators.split(','):
+        list_of_operator_names.append(User.objects.get(barcode=operator).username)
 
     return render(request, 'repacking/repack.html', {'standard': standard, 'idp': idp_code, 'operators': operators,
                                                      'duration': int(request.session[repack_duration_key]),
-                                                     repack_last_start_key: request.session[repack_last_start_key]})
+                                                     repack_last_start_key: request.session[repack_last_start_key],
+                                                     'list_of_operator_names': list_of_operator_names})
 
 
 @login_required
@@ -310,9 +314,13 @@ def pause(request, sku_code, idp_code, operators):
 
     else:
         Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, request.user, "Prebal bez začiatku bol pozastavený.")
+    list_of_operator_names = []
+    for operator in operators.split(','):
+        list_of_operator_names.append(User.objects.get(barcode=operator).username)
 
     context = {'sku_code': sku_code, 'idp_code': idp_code, 'operators': operators,
-               'duration': int(request.session[repack_duration_key])}
+               'duration': int(request.session[repack_duration_key]),
+               'list_of_operator_names': list_of_operator_names}
     return render(request, 'repacking/pause.html', context)
 
 
