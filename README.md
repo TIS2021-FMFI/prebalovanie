@@ -8,3 +8,7 @@ výrobkov je určený postup. Pracovník na prebaľovacej linke čítačkou osca
 meria čas prebaľovania – 1. raz sa podľa toho vytvorí štandard, potom už majú tento čas 
 stanovený. Monitoruje sa postup pracovníkov. V prípade problémov sa dá dohľadať podľa 
 kódu výrobku, kde vznikli.
+
+
+Ďalšie dokumenty : https://github.com/TIS2021-FMFI/prebalovanie/blob/main/repacking_site/readme.md
+                   https://github.com/TIS2021-FMFI/prebalovanie/blob/main/repacking_site/requirements.txt
