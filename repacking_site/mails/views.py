@@ -69,3 +69,9 @@ def delete(request, mail):
         email.delete()
         deleted = True
     return render(request, 'mails/email_deleted.html', {'deleted': deleted})
+
+
+def send(request):
+    MailSendSetting.send_mails()
+
+    return render(request, 'mails/sent.html')
