@@ -57,7 +57,7 @@ class RepackingStandardForm(forms.Form):
     destination = forms.CharField(max_length=50, required=True, label='Miesto určenia')
     items_per_move = forms.IntegerField(required=True, label='Počet kusov na jeden pohyb', min_value=0)
     unit_weight = forms.DecimalField(max_digits=10, decimal_places=4, required=True, label='Jednotková váha dielu', min_value=0)
-    repacking_duration = forms.IntegerField(required=True, label='Doba prebaľovania', min_value=0)
+    repacking_duration = forms.DurationField(required=True, label='Doba prebaľovania')
     instructions = forms.CharField(max_length=1200, required=True, label='Inštrukcie / pokyny')
 
     input_count_of_items_in_package = forms.IntegerField(required=True, label='Vstupný počet kusov v balení', min_value=0)

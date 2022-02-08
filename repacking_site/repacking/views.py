@@ -333,7 +333,7 @@ def make_new_standard(request):
                 destination=form.cleaned_data['destination'],
                 items_per_move=form.cleaned_data['items_per_move'],
                 unit_weight=form.cleaned_data['unit_weight'],
-                repacking_duration=timedelta(seconds=form.cleaned_data['repacking_duration']),
+                repacking_duration=timedelta(seconds=form.cleaned_data['repacking_duration'].total_seconds()),
                 instructions=form.cleaned_data['instructions'],
                 input_count_of_items_in_package=form.cleaned_data['input_count_of_items_in_package'],
                 output_count_of_items_in_package=form.cleaned_data['output_count_of_items_in_package'],
