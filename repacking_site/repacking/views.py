@@ -344,6 +344,9 @@ def update(request, sku_code):
         form = StandardUpdateForm(request.POST, instance=standard)
         if form.is_valid():
             form.save()
+            standard.input_photos.clear()
+            standard.output_photos.clear()
+            standard.tools.clear()
             for photo_id in request.POST.getlist('existing_input_photos'):
                 standard.input_photos.add(Photos.objects.get(id=photo_id))
             for photo_id in request.POST.getlist('existing_output_photos'):
