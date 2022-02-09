@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from openpyxl import Workbook
 from openpyxl.drawing.image import Image
 from openpyxl.styles import Fill, PatternFill, Border, Side
+from openpyxl.utils import column_index_from_string, get_column_letter
 from openpyxl.worksheet import drawing
 
 from logs.models import Log
@@ -112,6 +113,8 @@ def export(request, sku_code):
     # worksheet.cell(row=1, column=7).border = border
     worksheet.merge_cells(start_row=1, start_column=7, end_row=1, end_column=8)
 
+    worksheet.row_dimensions[1].height = 35
+
     worksheet.merge_cells(start_row=2, start_column=1, end_row=2, end_column=2)
     worksheet.cell(row=2, column=1).value = f'{standard.SKU}'
     # worksheet.cell(row=2, column=1).border = border
@@ -125,7 +128,34 @@ def export(request, sku_code):
     worksheet.cell(row=2, column=7).value = f'{standard.destination}'
     # worksheet.cell(row=2, column=7).border = border
 
-    worksheet.add_image(Image(settings.MEDIA_ROOT + standard.tools.all()[0].photo.url), 'A3')
+    worksheet.merge_cells(start_row=3, start_column=1, end_row=3, end_column=4)
+    worksheet.cell(row=3, column=1).value = f'Balenie na príjme:'
+    worksheet.row_dimensions[4].height = 100
+    for i, image in enumerate(standard.input_photos.all()):
+        img = Image(settings.MEDIA_ROOT + image.photo.url)
+        ratio = img.height / 100
+        img.height = img.height / ratio
+        img.width = img.width / ratio
+        worksheet.add_image(img, f'{get_column_letter(i + 1)}4')
+
+    worksheet.merge_cells(start_row=3, start_column=5, end_row=3, end_column=8)
+    worksheet.cell(row=3, column=5).value = f'Balenie na expedícii:'
+    worksheet.row_dimensions[4].height = 100
+    for i, image in enumerate(standard.output_photos.all()):
+        img = Image(settings.MEDIA_ROOT + image.photo.url)
+        ratio = img.height / 100
+        img.height = img.height / ratio
+        img.width = img.width / ratio
+        worksheet.add_image(img, f'{get_column_letter(i + 5)}4')
+
+    worksheet.cell(row=5, column=1).value = f'OPP:'
+    worksheet.row_dimensions[5].height = 75
+    for i, image in enumerate(standard.tools.all()):
+        img = Image(settings.MEDIA_ROOT + image.photo.url)
+        ratio = img.height/75
+        img.height = img.height/ratio
+        img.width = img.width/ratio
+        worksheet.add_image(img, f'{get_column_letter(i+2)}5')
 
     worksheet.cell(row=6, column=1).value = f'Typ balenia:'
     worksheet.cell(row=6, column=1).fill = blue_fill
