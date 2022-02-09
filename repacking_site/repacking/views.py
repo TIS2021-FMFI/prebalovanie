@@ -1,10 +1,13 @@
 import csv
 
+import openpyxl
 from django.contrib.auth.decorators import login_required, permission_required
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
 from openpyxl import Workbook
+from openpyxl.drawing.image import Image
 from openpyxl.styles import Fill, PatternFill, Border, Side
+from openpyxl.worksheet import drawing
 
 from logs.models import Log
 from repacking_site.methods import filtered_records
@@ -88,57 +91,106 @@ def export(request, sku_code):
         fill_type='solid',
     )
 
-    worksheet.cell(row=1, column=1).fill = orange_fill
-    worksheet.cell(row=1, column=1).value = f'Referencia'
-    worksheet.cell(row=1, column=2).fill = orange_fill
-    worksheet.cell(row=1, column=2).value = f'Cofor'
-    worksheet.cell(row=1, column=3).fill = orange_fill
-    worksheet.cell(row=1, column=3).value = f'Dodvaateľ'
-    worksheet.cell(row=1, column=4).fill = orange_fill
-    worksheet.cell(row=1, column=4).value = f'Destinácia'
-    worksheet.cell(row=2, column=1).value = f'{standard.SKU}'
-    worksheet.cell(row=2, column=2).value = f'{standard.COFOR}'
-    worksheet.cell(row=2, column=3).value = f'{standard.supplier}'
-    worksheet.cell(row=2, column=4).value = f'{standard.destination}'
+    side = Side(border_style='thin')
 
-    worksheet.cell(row=6, column=1).value = f'Typ balenia'
+    border = Border(left=side, right=side, top=side, bottom=side)
+
+    worksheet.cell(row=1, column=1).fill = orange_fill
+    worksheet.cell(row=1, column=1).value = f'Referencia:'
+    # worksheet.cell(row=1, column=1).border = border
+    worksheet.merge_cells(start_row=1, start_column=1, end_row=1, end_column=2)
+    worksheet.cell(row=1, column=3).fill = orange_fill
+    worksheet.cell(row=1, column=3).value = f'Cofor:'
+    # worksheet.cell(row=1, column=3).border = border
+    worksheet.merge_cells(start_row=1, start_column=3, end_row=1, end_column=4)
+    worksheet.cell(row=1, column=5).fill = orange_fill
+    worksheet.cell(row=1, column=5).value = f'Dodávateľ:'
+    # worksheet.cell(row=1, column=5).border = border
+    worksheet.merge_cells(start_row=1, start_column=5, end_row=1, end_column=6)
+    worksheet.cell(row=1, column=7).fill = orange_fill
+    worksheet.cell(row=1, column=7).value = f'Destinácia:'
+    # worksheet.cell(row=1, column=7).border = border
+    worksheet.merge_cells(start_row=1, start_column=7, end_row=1, end_column=8)
+
+    worksheet.merge_cells(start_row=2, start_column=1, end_row=2, end_column=2)
+    worksheet.cell(row=2, column=1).value = f'{standard.SKU}'
+    # worksheet.cell(row=2, column=1).border = border
+    worksheet.merge_cells(start_row=2, start_column=3, end_row=2, end_column=4)
+    worksheet.cell(row=2, column=3).value = f'{standard.COFOR}'
+    # worksheet.cell(row=2, column=3).border = border
+    worksheet.merge_cells(start_row=2, start_column=5, end_row=2, end_column=6)
+    worksheet.cell(row=2, column=5).value = f'{standard.supplier}'
+    # worksheet.cell(row=2, column=5).border = border
+    worksheet.merge_cells(start_row=2, start_column=7, end_row=2, end_column=8)
+    worksheet.cell(row=2, column=7).value = f'{standard.destination}'
+    # worksheet.cell(row=2, column=7).border = border
+
+    worksheet.add_image(Image(settings.MEDIA_ROOT + standard.tools.all()[0].photo.url), 'A3')
+
+    worksheet.cell(row=6, column=1).value = f'Typ balenia:'
     worksheet.cell(row=6, column=1).fill = blue_fill
+    # worksheet.cell(row=6, column=1).border = border
     worksheet.cell(row=6, column=2).value = f'{standard.input_type_of_package}'
+    # worksheet.cell(row=6, column=2).border = border
     worksheet.cell(row=6, column=3).fill = blue_fill
-    worksheet.cell(row=6, column=3).value = f'Počet boxov na palete'
+    worksheet.cell(row=6, column=3).value = f'Počet boxov na palete:'
+    # worksheet.cell(row=6, column=3).border = border
     worksheet.cell(row=6, column=4).value = f'{standard.input_count_of_boxes_on_pallet}'
+    # worksheet.cell(row=6, column=4).border = border
     worksheet.cell(row=6, column=5).fill = green_fill
-    worksheet.cell(row=6, column=5).value = f'Typ balenia'
+    worksheet.cell(row=6, column=5).value = f'Typ balenia:'
+    # worksheet.cell(row=6, column=5).border = border
     worksheet.cell(row=6, column=6).value = f'{standard.output_type_of_package}'
+    # worksheet.cell(row=6, column=6).border = border
     worksheet.cell(row=6, column=7).fill = green_fill
-    worksheet.cell(row=6, column=7).value = f'Počet boxov na palete'
+    worksheet.cell(row=6, column=7).value = f'Počet boxov na palete:'
+    # worksheet.cell(row=6, column=7).border = border
     worksheet.cell(row=6, column=8).value = f'{standard.output_count_of_boxes_on_pallet}'
+    # worksheet.cell(row=6, column=8).border = border
 
     worksheet.cell(row=7, column=1).fill = blue_fill
-    worksheet.cell(row=7, column=1).value = f'Počet kusov v balení'
+    worksheet.cell(row=7, column=1).value = f'Počet kusov v balení:'
+    # worksheet.cell(row=7, column=1).border = border
     worksheet.cell(row=7, column=2).value = f'{standard.input_count_of_items_in_package}'
+    # worksheet.cell(row=7, column=2).border = border
     worksheet.cell(row=7, column=3).fill = blue_fill
-    worksheet.cell(row=7, column=3).value = f'Počet kusov na palete'
+    worksheet.cell(row=7, column=3).value = f'Počet kusov na palete:'
+    # worksheet.cell(row=7, column=3).border = border
     worksheet.cell(row=7, column=4).value = f'{standard.input_count_of_items_on_pallet}'
+    # worksheet.cell(row=7, column=4).border = border
     worksheet.cell(row=7, column=5).fill = green_fill
-    worksheet.cell(row=7, column=5).value = f'Počet kusov v balení'
+    worksheet.cell(row=7, column=5).value = f'Počet kusov v balení:'
+    # worksheet.cell(row=7, column=5).border = border
     worksheet.cell(row=7, column=6).value = f'{standard.output_count_of_items_in_package}'
+    # worksheet.cell(row=7, column=6).border = border
     worksheet.cell(row=7, column=7).fill = green_fill
-    worksheet.cell(row=7, column=7).value = f'Počet kusov na palete'
+    worksheet.cell(row=7, column=7).value = f'Počet kusov na palete:'
+    # worksheet.cell(row=7, column=7).border = border
     worksheet.cell(row=7, column=8).value = f'{standard.output_count_of_items_on_pallet}'
+    # worksheet.cell(row=7, column=8).border = border
 
     worksheet.cell(row=8, column=1).fill = orange_fill
-    worksheet.cell(row=8, column=1).value = f'Počet kusov na 1 pohyb'
+    worksheet.cell(row=8, column=1).value = f'Počet kusov na 1 pohyb:'
+    # worksheet.cell(row=8, column=1).border = border
     worksheet.cell(row=8, column=2).value = f'{standard.items_per_move}'
+    # worksheet.cell(row=8, column=2).border = border
     worksheet.cell(row=8, column=3).fill = orange_fill
-    worksheet.cell(row=8, column=3).value = f'Jednotková váha'
+    worksheet.cell(row=8, column=3).value = f'Jednotková váha:'
+    # worksheet.cell(row=8, column=3).border = border
     worksheet.cell(row=8, column=4).value = f'{standard.unit_weight}'
+    # worksheet.cell(row=8, column=4).border = border
     worksheet.cell(row=8, column=5).fill = orange_fill
-    worksheet.cell(row=8, column=5).value = f'Čas prebalu'
+    worksheet.cell(row=8, column=5).value = f'Čas prebalu:"'
+    # worksheet.cell(row=8, column=5).border = border
     worksheet.cell(row=8, column=6).value = f'{standard.repacking_duration}'
+    # worksheet.cell(row=8, column=6).border = border
     worksheet.cell(row=8, column=7).fill = orange_fill
-    worksheet.cell(row=8, column=7).value = f'Poznámka'
+    worksheet.cell(row=8, column=7).value = f'Poznámka:'
+    # worksheet.cell(row=8, column=7).border = border
+
+    worksheet.merge_cells(start_row=9, start_column=1, end_row=10, end_column=8)
     worksheet.cell(row=9, column=1).value = f'{standard.instructions}'
+    # worksheet.cell(row=9, column=1).border = border
 
     workbook.save(response)
 
