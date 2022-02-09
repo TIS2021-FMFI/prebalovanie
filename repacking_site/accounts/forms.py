@@ -26,6 +26,7 @@ class NewUserForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(NewUserForm, self).__init__(*args, **kwargs)
         self.fields['password'].label = "Heslo"
+        self.fields['password'].widget = forms.PasswordInput(attrs={'autocomplete': "new-password"})
         if self.instance.pk is not None:
             self.fields['password'].widget = forms.HiddenInput()
 
