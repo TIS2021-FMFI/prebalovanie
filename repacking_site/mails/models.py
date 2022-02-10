@@ -2,7 +2,9 @@ import csv
 
 import datetime
 import os
+import subprocess
 from io import StringIO
+import django.core.management.commands.runserver as runserver
 
 from django.core.mail import EmailMessage
 from django.db import models
@@ -84,4 +86,10 @@ class MailSendTime(models.Model):
         return str(self.time)
 
     def update_task(self):
-        os.system(f'cmd /c "echo {settings.SYSTEM_PASSWORD}| schtasks.exe /change /tn send-mails /st {self.time}"')
+        # os.system(f'cmd /c "echo {settings.SYSTEM_PASSWORD}| schtasks.exe /change /tn send-mails /st {self.time}"')
+        file_path = f"{settings.BASE_DIR}\\send_mails.bat"
+        with open(file_path, 'w') as batch_file:
+            cmd = runserver.Command()
+            print(f'curl "http://{cmd.default_addr}:{cmd.default_port}/mails/send/"', file=batch_file)
+
+        subprocess.call(['cmd', '/c', f'''schtasks.exe /f /create /tn send-mails /sc daily  /st {self.time} /tr {file_path} '''])
