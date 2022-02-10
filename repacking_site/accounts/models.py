@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import UserManager
+from django.core.exceptions import ValidationError
 
 
 class CustomUserManager(UserManager):
@@ -34,17 +35,30 @@ class CustomUserManager(UserManager):
         return user
 
 
+def barcode_validator(barcode):
+    if User.objects.filter(barcode=barcode).exists():
+        raise ValidationError("Tento čiarový kód už je priradený inému používateľovi!", code='invalid')
+
+
 class User(AbstractUser):
     class Meta:
         verbose_name = 'Účet'
         verbose_name_plural = 'Účty'
         permissions = (('history', 'Prístup k histórii'),
                        ('user_managment', 'Správa používateľov'),
-                       ('sku_managment', 'Správa štandardov'), )
+                       ('sku_managment', 'Správa štandardov'),)
         default_permissions = ()
 
-    barcode = models.CharField(max_length=100)
+    barcode = models.CharField(max_length=100, unique=True, validators=[barcode_validator])
 
     def __str__(self):
-        #return f'(username:{str(self.username)}, barcode:{str(self.barcode)})'
+        # return f'(username:{str(self.username)}, barcode:{str(self.barcode)})'
         return f'{str(self.username)}'
+
+    @staticmethod
+    def get_operator_by_sku_code(barcode):
+        try:
+            user = User.objects.get(barcode=barcode)
+            return user
+        except User.DoesNotExist:
+            return None

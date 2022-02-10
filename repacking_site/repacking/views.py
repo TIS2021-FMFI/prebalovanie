@@ -1,22 +1,20 @@
 import csv
-import os
-from io import BytesIO
 
+import openpyxl
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.staticfiles import finders
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, redirect
-from django.template.loader import get_template
-from django.views import View
-from xhtml2pdf import pisa
+from openpyxl import Workbook
+from openpyxl.drawing.image import Image
+from openpyxl.styles import Fill, PatternFill, Border, Side
+from openpyxl.utils import column_index_from_string, get_column_letter
+from openpyxl.worksheet import drawing
 
-from accounts.models import *
 from logs.models import Log
 from repacking_site.methods import filtered_records
 from .filters import *
 from .forms import *
 from .models import *
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 repack_start_key = 'repack_start'
 paused_repack_last_start_key = 'paused_repack_last_start'
@@ -42,10 +40,14 @@ def repacking(request, sku_code, idp_code, operators):
         request.session[repack_duration_key] = 0
     if request.session.get(repack_last_start_key, None) is None:
         request.session[repack_last_start_key] = datetime.now().strftime(repack_time_format)
+    list_of_operator_names = []
+    for operator in operators.split(','):
+        list_of_operator_names.append(User.objects.get(barcode=operator).username)
 
     return render(request, 'repacking/repack.html', {'standard': standard, 'idp': idp_code, 'operators': operators,
                                                      'duration': int(request.session[repack_duration_key]),
-                                                     repack_last_start_key: request.session[repack_last_start_key]})
+                                                     repack_last_start_key: request.session[repack_last_start_key],
+                                                     'list_of_operator_names': list_of_operator_names})
 
 
 @login_required
@@ -57,26 +59,6 @@ def detail(request, sku_code):
     return render(request, 'repacking/detail.html', {'standard': standard})
 
 
-class GeneratePdf(View):
-    def get(self, request, *args, **kwargs):
-        standard = RepackingStandard.get_repacking_standard_by_sku("58.125.155.15")
-        # getting the template
-        pdf = html_to_pdf('repacking/detail.html', {'standard': standard})
-
-        # rendering the template
-        return HttpResponse(pdf, content_type='application/pdf')
-
-
-def html_to_pdf(template_src, context_dict={}):
-    template = get_template(template_src)
-    html = template.render(context_dict)
-    result = BytesIO()
-    pdf = pisa.pisaDocument(BytesIO(html.encode("utf-8")), result)
-    if not pdf.err:
-        return HttpResponse(result.getvalue(), content_type='application/pdf')
-    return None
-
-
 @login_required
 def export(request, sku_code):
     cancel_sessions(request)
@@ -84,52 +66,165 @@ def export(request, sku_code):
     if standard is None:
         raise Http404("Standard does not exist")
 
-    template_path = 'repacking/detail.html'
-    # Create a Django response object, and specify content_type as pdf
-    response = HttpResponse(content_type='application/pdf')
-    # response['Content-Disposition'] = f'attachment; filename="{sku_code}.pdf"'
-    # find the template and render it.
-    template = get_template(template_path)
-    html = template.render({'standard': standard})
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename={sku_code}.xlsx'
+    workbook = Workbook()
 
-    # create a pdf
-    pisa_status = pisa.CreatePDF(html, dest=response, link_callback=link_callback)
-    # if error then show some funy view
-    if pisa_status.err:
-        return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    # Get active worksheet/tab
+    worksheet = workbook.active
+    worksheet.title = f'{sku_code}'
+
+    orange_fill = PatternFill(
+        start_color='f3d39b',
+        end_color='f3d39b',
+        fill_type='solid',
+    )
+
+    blue_fill = PatternFill(
+        start_color='b3e4f3',
+        end_color='b3e4f3',
+        fill_type='solid',
+    )
+
+    green_fill = PatternFill(
+        start_color='b9e5a0',
+        end_color='b9e5a0',
+        fill_type='solid',
+    )
+
+    side = Side(border_style='thin')
+
+    border = Border(left=side, right=side, top=side, bottom=side)
+
+    worksheet.cell(row=1, column=1).fill = orange_fill
+    worksheet.cell(row=1, column=1).value = f'Referencia:'
+    # worksheet.cell(row=1, column=1).border = border
+    worksheet.merge_cells(start_row=1, start_column=1, end_row=1, end_column=2)
+    worksheet.cell(row=1, column=3).fill = orange_fill
+    worksheet.cell(row=1, column=3).value = f'Cofor:'
+    # worksheet.cell(row=1, column=3).border = border
+    worksheet.merge_cells(start_row=1, start_column=3, end_row=1, end_column=4)
+    worksheet.cell(row=1, column=5).fill = orange_fill
+    worksheet.cell(row=1, column=5).value = f'Dodávateľ:'
+    # worksheet.cell(row=1, column=5).border = border
+    worksheet.merge_cells(start_row=1, start_column=5, end_row=1, end_column=6)
+    worksheet.cell(row=1, column=7).fill = orange_fill
+    worksheet.cell(row=1, column=7).value = f'Destinácia:'
+    # worksheet.cell(row=1, column=7).border = border
+    worksheet.merge_cells(start_row=1, start_column=7, end_row=1, end_column=8)
+
+    worksheet.row_dimensions[1].height = 35
+
+    worksheet.merge_cells(start_row=2, start_column=1, end_row=2, end_column=2)
+    worksheet.cell(row=2, column=1).value = f'{standard.SKU}'
+    # worksheet.cell(row=2, column=1).border = border
+    worksheet.merge_cells(start_row=2, start_column=3, end_row=2, end_column=4)
+    worksheet.cell(row=2, column=3).value = f'{standard.COFOR}'
+    # worksheet.cell(row=2, column=3).border = border
+    worksheet.merge_cells(start_row=2, start_column=5, end_row=2, end_column=6)
+    worksheet.cell(row=2, column=5).value = f'{standard.supplier}'
+    # worksheet.cell(row=2, column=5).border = border
+    worksheet.merge_cells(start_row=2, start_column=7, end_row=2, end_column=8)
+    worksheet.cell(row=2, column=7).value = f'{standard.destination}'
+    # worksheet.cell(row=2, column=7).border = border
+
+    worksheet.merge_cells(start_row=3, start_column=1, end_row=3, end_column=4)
+    worksheet.cell(row=3, column=1).value = f'Balenie na príjme:'
+    worksheet.row_dimensions[4].height = 100
+    for i, image in enumerate(standard.input_photos.all()):
+        img = Image(settings.MEDIA_ROOT + image.photo.url)
+        ratio = img.height / 100
+        img.height = img.height / ratio
+        img.width = img.width / ratio
+        worksheet.add_image(img, f'{get_column_letter(i + 1)}4')
+
+    worksheet.merge_cells(start_row=3, start_column=5, end_row=3, end_column=8)
+    worksheet.cell(row=3, column=5).value = f'Balenie na expedícii:'
+    worksheet.row_dimensions[4].height = 100
+    for i, image in enumerate(standard.output_photos.all()):
+        img = Image(settings.MEDIA_ROOT + image.photo.url)
+        ratio = img.height / 100
+        img.height = img.height / ratio
+        img.width = img.width / ratio
+        worksheet.add_image(img, f'{get_column_letter(i + 5)}4')
+
+    worksheet.cell(row=5, column=1).value = f'OPP:'
+    worksheet.row_dimensions[5].height = 75
+    for i, image in enumerate(standard.tools.all()):
+        img = Image(settings.MEDIA_ROOT + image.photo.url)
+        ratio = img.height/75
+        img.height = img.height/ratio
+        img.width = img.width/ratio
+        worksheet.add_image(img, f'{get_column_letter(i+2)}5')
+
+    worksheet.cell(row=6, column=1).value = f'Typ balenia:'
+    worksheet.cell(row=6, column=1).fill = blue_fill
+    # worksheet.cell(row=6, column=1).border = border
+    worksheet.cell(row=6, column=2).value = f'{standard.input_type_of_package}'
+    # worksheet.cell(row=6, column=2).border = border
+    worksheet.cell(row=6, column=3).fill = blue_fill
+    worksheet.cell(row=6, column=3).value = f'Počet boxov na palete:'
+    # worksheet.cell(row=6, column=3).border = border
+    worksheet.cell(row=6, column=4).value = f'{standard.input_count_of_boxes_on_pallet}'
+    # worksheet.cell(row=6, column=4).border = border
+    worksheet.cell(row=6, column=5).fill = green_fill
+    worksheet.cell(row=6, column=5).value = f'Typ balenia:'
+    # worksheet.cell(row=6, column=5).border = border
+    worksheet.cell(row=6, column=6).value = f'{standard.output_type_of_package}'
+    # worksheet.cell(row=6, column=6).border = border
+    worksheet.cell(row=6, column=7).fill = green_fill
+    worksheet.cell(row=6, column=7).value = f'Počet boxov na palete:'
+    # worksheet.cell(row=6, column=7).border = border
+    worksheet.cell(row=6, column=8).value = f'{standard.output_count_of_boxes_on_pallet}'
+    # worksheet.cell(row=6, column=8).border = border
+
+    worksheet.cell(row=7, column=1).fill = blue_fill
+    worksheet.cell(row=7, column=1).value = f'Počet kusov v balení:'
+    # worksheet.cell(row=7, column=1).border = border
+    worksheet.cell(row=7, column=2).value = f'{standard.input_count_of_items_in_package}'
+    # worksheet.cell(row=7, column=2).border = border
+    worksheet.cell(row=7, column=3).fill = blue_fill
+    worksheet.cell(row=7, column=3).value = f'Počet kusov na palete:'
+    # worksheet.cell(row=7, column=3).border = border
+    worksheet.cell(row=7, column=4).value = f'{standard.input_count_of_items_on_pallet}'
+    # worksheet.cell(row=7, column=4).border = border
+    worksheet.cell(row=7, column=5).fill = green_fill
+    worksheet.cell(row=7, column=5).value = f'Počet kusov v balení:'
+    # worksheet.cell(row=7, column=5).border = border
+    worksheet.cell(row=7, column=6).value = f'{standard.output_count_of_items_in_package}'
+    # worksheet.cell(row=7, column=6).border = border
+    worksheet.cell(row=7, column=7).fill = green_fill
+    worksheet.cell(row=7, column=7).value = f'Počet kusov na palete:'
+    # worksheet.cell(row=7, column=7).border = border
+    worksheet.cell(row=7, column=8).value = f'{standard.output_count_of_items_on_pallet}'
+    # worksheet.cell(row=7, column=8).border = border
+
+    worksheet.cell(row=8, column=1).fill = orange_fill
+    worksheet.cell(row=8, column=1).value = f'Počet kusov na 1 pohyb:'
+    # worksheet.cell(row=8, column=1).border = border
+    worksheet.cell(row=8, column=2).value = f'{standard.items_per_move}'
+    # worksheet.cell(row=8, column=2).border = border
+    worksheet.cell(row=8, column=3).fill = orange_fill
+    worksheet.cell(row=8, column=3).value = f'Jednotková váha:'
+    # worksheet.cell(row=8, column=3).border = border
+    worksheet.cell(row=8, column=4).value = f'{standard.unit_weight}'
+    # worksheet.cell(row=8, column=4).border = border
+    worksheet.cell(row=8, column=5).fill = orange_fill
+    worksheet.cell(row=8, column=5).value = f'Čas prebalu:"'
+    # worksheet.cell(row=8, column=5).border = border
+    worksheet.cell(row=8, column=6).value = f'{standard.repacking_duration}'
+    # worksheet.cell(row=8, column=6).border = border
+    worksheet.cell(row=8, column=7).fill = orange_fill
+    worksheet.cell(row=8, column=7).value = f'Poznámka:'
+    # worksheet.cell(row=8, column=7).border = border
+
+    worksheet.merge_cells(start_row=9, start_column=1, end_row=10, end_column=8)
+    worksheet.cell(row=9, column=1).value = f'{standard.instructions}'
+    # worksheet.cell(row=9, column=1).border = border
+
+    workbook.save(response)
+
     return response
-
-
-def link_callback(uri, rel):
-    """
-    Convert HTML URIs to absolute system paths so xhtml2pdf can access those
-    resources
-    """
-    result = finders.find(uri)
-    if result:
-        if not isinstance(result, (list, tuple)):
-            result = [result]
-        result = list(os.path.realpath(path) for path in result)
-        path = result[0]
-    else:
-        sUrl = settings.STATIC_URL  # Typically /static/
-        sRoot = settings.STATIC_ROOT  # Typically /home/userX/project_static/
-        mUrl = settings.MEDIA_URL  # Typically /media/
-        mRoot = settings.MEDIA_ROOT  # Typically /home/userX/project_static/media/
-
-        if uri.startswith(mUrl):
-            path = os.path.join(mRoot, uri.replace(mUrl, ""))
-        elif uri.startswith(sUrl):
-            path = os.path.join(sRoot, uri.replace(sUrl, ""))
-        else:
-            return uri
-
-    # make sure that file exists
-    if not os.path.isfile(path):
-        raise Exception(
-            'media URI must start with %s or %s' % (sUrl, mUrl)
-        )
-    return path
 
 
 @permission_required('accounts.history')
@@ -344,6 +439,9 @@ def update(request, sku_code):
         form = StandardUpdateForm(request.POST, instance=standard)
         if form.is_valid():
             form.save()
+            standard.input_photos.clear()
+            standard.output_photos.clear()
+            standard.tools.clear()
             for photo_id in request.POST.getlist('existing_input_photos'):
                 standard.input_photos.add(Photos.objects.get(id=photo_id))
             for photo_id in request.POST.getlist('existing_output_photos'):
@@ -391,9 +489,13 @@ def pause(request, sku_code, idp_code, operators):
 
     else:
         Log.make_log(Log.App.REPACKING, Log.Priority.ERROR, request.user, "Prebal bez začiatku bol pozastavený.")
+    list_of_operator_names = []
+    for operator in operators.split(','):
+        list_of_operator_names.append(User.objects.get(barcode=operator).username)
 
     context = {'sku_code': sku_code, 'idp_code': idp_code, 'operators': operators,
-               'duration': int(request.session[repack_duration_key])}
+               'duration': int(request.session[repack_duration_key]),
+               'list_of_operator_names': list_of_operator_names}
     return render(request, 'repacking/pause.html', context)
 
 
@@ -414,7 +516,7 @@ def make_new_standard(request):
                 destination=form.cleaned_data['destination'],
                 items_per_move=form.cleaned_data['items_per_move'],
                 unit_weight=form.cleaned_data['unit_weight'],
-                repacking_duration=timedelta(seconds=form.cleaned_data['repacking_duration']),
+                repacking_duration=timedelta(seconds=form.cleaned_data['repacking_duration'].total_seconds()),
                 instructions=form.cleaned_data['instructions'],
                 input_count_of_items_in_package=form.cleaned_data['input_count_of_items_in_package'],
                 output_count_of_items_in_package=form.cleaned_data['output_count_of_items_in_package'],

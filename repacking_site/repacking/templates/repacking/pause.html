@@ -4,19 +4,21 @@
 
 {% load static %}
 
-    {% block content %}
+{% block content %}
 
     <h1>Prebaľovanie pozastavené</h1>
 
-        <div class="btn-group">
+    <div class="btn-group">
         <button type="button" class="active-btn" style="width: fit-content"
                 onclick="location.href='/repacking/{{ sku_code }}/{{ idp_code }}/{{ operators }}/';">
             <img id="btn-image" src="{% static 'icons/211876_play_icon.png' %}">
-            Pokračuj v prebale</button>
+            Pokračuj v prebale
+        </button>
     </div>
 
     <p>
-    SKU aktuálne prebaľovaného štandardu: {{ sku_code }}<br>
-    IDP aktuálne prebaľovaného štandardu: {{ idp_code }}
+        SKU aktuálne prebaľovaného štandardu: {{ sku_code }}<br>
+        IDP aktuálne prebaľovaného štandardu: {{ idp_code }}<br>
+        Operátor/i: {{ list_of_operator_names|join:", " }}
     </p>
-    {% endblock %}
+{% endblock %}

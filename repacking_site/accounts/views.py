@@ -1,8 +1,6 @@
 import csv
 
-from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.models import Group
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
