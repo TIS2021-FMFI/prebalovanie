@@ -17,9 +17,7 @@ def index(request):
             if MailSendSetting.get_mail(form.cleaned_data['email']) is not None:
                 raise FileExistsError("Email address already exists")
 
-            mail_form = MailSendSetting(
-                mail=form.cleaned_data['email']
-            )
+            mail_form = MailSendSetting(mail=form.cleaned_data['email'])
             mail_form.save()
 
             Log.make_log(Log.App.MAIL_REPORTS, Log.Priority.DEBUG, request.user, "Pridaná mailová adresa")
@@ -27,6 +25,23 @@ def index(request):
             return HttpResponseRedirect("/mails/index/")
     else:
         mail_form = AddEmailForm()
+
+    if request.method == 'POST' and 'update_time' in request.POST:
+        time_form = EmailTimeForm(request.POST)
+        if time_form.is_valid():
+            time = MailSendTime.objects.all()[0]
+            time.time = time_form.cleaned_data['time']
+            time.save()
+
+            Log.make_log(Log.App.MAIL_REPORTS, Log.Priority.DEBUG, request.user, "Zmenený čas posielania mailov")
+
+            time.update_task()
+
+            return HttpResponseRedirect("/mails/index/")
+    else:
+        time_form = EmailTimeForm()
+
+    time_form.initial['time'] = MailSendTime.objects.all()[0].time
 
     email_list_all = MailSendSetting.filter_and_order_emails_by_get(request.GET)
     email_list_filter = EmailListFilter(request.GET, queryset=email_list_all)
@@ -55,7 +70,7 @@ def index(request):
     email_list = filtered_records(request, email_list_filter, paginate_by)
     context = {"email_list": email_list,
                'email_list_filter': email_list_filter, 'paginate_by': paginate_by, "open_filter": open_filter,
-               "filter_GET": filter_GET_code, "add_email_form": mail_form, "update_date_form": None}
+               "filter_GET": filter_GET_code, "add_email_form": mail_form, "update_date_form": time_form}
     return render(request, 'mails/index.html', context)
 
 

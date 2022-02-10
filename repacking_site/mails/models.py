@@ -1,12 +1,14 @@
 import csv
 
 import datetime
+import os
 from io import StringIO
 
 from django.core.mail import EmailMessage
 from django.db import models
 
 from repacking.models import RepackHistory
+from repacking_site import settings
 
 
 class MailSendSetting(models.Model):
@@ -68,3 +70,18 @@ class MailSendSetting(models.Model):
 
         email.send(fail_silently=False)
 
+
+class MailSendTime(models.Model):
+    class Meta:
+        verbose_name = 'Čas posielania mailov'
+        verbose_name_plural = 'Časy posielania mailov'
+        permissions = ()
+        default_permissions = ()
+
+    time = models.TimeField(verbose_name="Čas")
+
+    def __str__(self):
+        return str(self.time)
+
+    def update_task(self):
+        os.system(f'cmd /c "echo {settings.SYSTEM_PASSWORD}| schtasks.exe /change /tn send-mails /st {self.time}"')
