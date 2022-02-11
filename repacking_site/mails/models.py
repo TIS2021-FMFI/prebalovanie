@@ -88,7 +88,6 @@ class MailSendTime(models.Model):
     def update_task(self):
         # os.system(f'cmd /c "echo {settings.SYSTEM_PASSWORD}| schtasks.exe /change /tn send-mails /st {self.time}"')
         file_path = f'{settings.BASE_DIR}\\send_mails.bat'
-        print(file_path)
         with open(file_path, 'w') as batch_file:
             cmd = runserver.Command()
             print(f'curl "http://{cmd.default_addr}:{cmd.default_port}/mails/send/"', file=batch_file)
