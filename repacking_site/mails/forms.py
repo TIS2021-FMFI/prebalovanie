@@ -1,8 +1,8 @@
 from django import forms
 
 
-class ExportUpdateForm(forms.Form):
-    date = forms.DurationField(label='Time of update (days)', required=True)
+class EmailTimeForm(forms.Form):
+    time = forms.TimeField(label='Čas posielania mailov', required=True)
 
 
 class AddEmailForm(forms.Form):

@@ -4,3 +4,4 @@ prebalovanie-env/
 repacking_site/.idea/*
 repacking_site/venv/*
 repacking_site/repacking_site/secrets.json
+repacking_site/send_mails.bat

@@ -43,6 +43,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_crontab',
     'accounts.apps.EmployeesConfig',
     'repacking.apps.RepackingConfig',
     'mails.apps.MailsConfig',
@@ -145,3 +146,5 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = 'prebalovanie@gefcoslovakia.sk'
 EMAIL_HOST_PASSWORD = get_secret('mail_password')
 EMAIL_USE_SSL = True
+
+SYSTEM_PASSWORD = get_secret('system_password')

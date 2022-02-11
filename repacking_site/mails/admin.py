@@ -4,3 +4,4 @@ from .models import *
 
 
 admin.site.register(MailSendSetting)
+admin.site.register(MailSendTime)

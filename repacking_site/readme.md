@@ -1,6 +1,6 @@
 # Readme - inštalácia
 
-- aplikáca je implementovaná v Pythone, resp. v Djangu
+- aplikácia je implementovaná v Pythone, resp. v Djangu
 - na spustenie je potrebné nainštalovať veci, ktoré sú uvedené v `requirements.txt`
 - najprv treba naicializovať databázu `python manage.py migrate`
 - spustenie development servera sa vykonáva príkazom: `python manage.py runserver <port>`
