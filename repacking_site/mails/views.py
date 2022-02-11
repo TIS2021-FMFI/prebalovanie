@@ -29,6 +29,11 @@ def index(request):
     if request.method == 'POST' and 'update_time' in request.POST:
         time_form = EmailTimeForm(request.POST)
         if time_form.is_valid():
+            if len(MailSendTime.objects.all()) == 0:
+                MailSendTime(time='18:00:00').save()
+            if len(MailSendTime.objects.all()) > 1:
+                pass
+                # TODO
             time = MailSendTime.objects.all()[0]
             time.time = time_form.cleaned_data['time']
             time.save()
