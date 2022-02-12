@@ -43,7 +43,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django_crontab',
     'accounts.apps.EmployeesConfig',
     'repacking.apps.RepackingConfig',
     'mails.apps.MailsConfig',
