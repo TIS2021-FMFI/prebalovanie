@@ -67,7 +67,7 @@ def export(request, sku_code, destination):
         raise Http404("Standard does not exist")
 
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = f'attachment; filename={sku_code}.xlsx'
+    response['Content-Disposition'] = f'attachment; filename={sku_code}-{destination}.xlsx'
     workbook = Workbook()
 
     # Get active worksheet/tab
@@ -330,7 +330,7 @@ def start(request):
                 f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["destination"]}/{form.cleaned_data["IDP"]}/{",".join(operators)}/')
 
     else:
-        form = RepackingForm(initial={'SKU': request.GET.get('SKU', "")})
+        form = RepackingForm(initial={'SKU': request.GET.get('SKU', ""), 'destination': request.GET.get('destination', "")})
     return render(request, 'repacking/start.html', {'form': form})
 
 
@@ -507,7 +507,6 @@ def make_new_standard(request):
     if request.method == 'POST':
         form = RepackingStandardForm(request.POST, request.FILES)
         if form.is_valid() and form.cleaned_data['repacking_duration'] is not None:
-            # TODO
             if RepackingStandard.get_standard(form.cleaned_data['SKU'], form.cleaned_data['destination']) is not None:
                 raise FileExistsError("RepackingForm standard w/ this SKU already exists")
 

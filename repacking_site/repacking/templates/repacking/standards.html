@@ -113,18 +113,18 @@
 
                 <tr>
                     <td class="actions">
-                        <button type="button" class="active-btn" onclick="location.href='/repacking/{{ standard.SKU }}/';" >
+                        <button type="button" class="active-btn" onclick="location.href='/repacking/{{ standard.SKU }}/{{ standard.destination }}/';" >
                             <img id="btn-image" src="{% static 'icons/2931184_glass_search_magnifying_magnifier_zoom_regular_normal.png' %}">
                             Detail</button>
-                        <button type="button" class="active-btn" onclick="location.href='/repacking/update/{{ standard.SKU }}/';" >
+                        <button type="button" class="active-btn" onclick="location.href='/repacking/update/{{ standard.SKU }}/{{ standard.destination }}/';" >
                             <img id="btn-image" src="{% static 'icons/2931178_creative_edit_pencil_change_draw_design_pen.png' %}">
                             Editovať</button>
                         <button type="button" class="active-btn"
-                                onclick="if(confirm('Chcete naozaj vymazať štandard?')){window.location.href='/repacking/delete/{{ standard.SKU }}/'}">
+                                onclick="if(confirm('Chcete naozaj vymazať štandard?')){window.location.href='/repacking/delete/{{ standard.SKU }}/{{ standard.destination }}/'}">
                             <img id="btn-image" src="{% static 'icons/2931151_delete_x_bin_recycle_remove_exit_close.png' %}">
                             Vymazať
                         </button>
-                        <button type="button" class="active-btn" onclick="location.href='/repacking/{{ standard.SKU }}/export';">
+                        <button type="button" class="active-btn" onclick="location.href='/repacking/{{ standard.SKU }}/{{ standard.destination }}/export';">
                             <img id="btn-image" src="{% static 'icons/2931143_up_upload_export_share.png' %}">
                             Export
                         </button>

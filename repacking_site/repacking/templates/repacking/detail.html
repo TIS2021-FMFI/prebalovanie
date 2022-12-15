@@ -5,11 +5,11 @@
 
 {% block content %}
 
-    <h1>Detail štandardu {{ standard.SKU }}</h1>
+    <h1>Detail štandardu {{ standard.SKU }}, destinácia {{ standard.destination }}</h1>
 
     <div class="btn-group">
         <button type="button" class="active-btn" style="width: fit-content"
-                onclick="location.href='/repacking/repacking/start/?SKU={{ standard.SKU }}';">
+                onclick="location.href='/repacking/repacking/start/?SKU={{ standard.SKU }}&destination={{ standard.destination }}';">
             <img id="btn-image" src="{% static 'icons/211876_play_icon.png' %}">
             Začni prebal</button>
     </div>
