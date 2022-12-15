@@ -11,18 +11,21 @@ class RepackingStandardsModelTests(TestCase):
 
     def test_get_repacking_standard_by_sku(self):
         sku = "sku"
+        destination = "destination"
         cofor = "cofor"
-        standard = RepackingStandard(SKU=sku, COFOR=cofor)
+        standard = RepackingStandard(SKU=sku, COFOR=cofor, destination=destination)
         standard.save()
         for i in range(10):
-            RepackingStandard(SKU=sku + str(i), COFOR=cofor).save()
+            RepackingStandard(SKU=sku + str(i), COFOR=cofor, destination=destination).save()
 
-        self.assertEqual(standard.SKU, RepackingStandard.get_repacking_standard_by_sku(sku).SKU)
-        self.assertEqual(sku, RepackingStandard.get_repacking_standard_by_sku(sku).SKU)
+        self.assertEqual(standard.SKU, RepackingStandard.get_standard(sku, destination).SKU)
+        self.assertEqual(sku, RepackingStandard.get_standard(sku, destination).SKU)
 
-        self.assertEqual(cofor, RepackingStandard.get_repacking_standard_by_sku(sku).COFOR)
+        self.assertEqual(cofor, RepackingStandard.get_standard(sku, destination).COFOR)
 
-        self.assertNotEqual(standard.SKU, RepackingStandard.get_repacking_standard_by_sku(sku + str(1)).SKU)
+        self.assertNotEqual(standard.SKU, RepackingStandard.get_standard(sku + '1', destination).SKU)
+        self.assertIsNone(RepackingStandard.get_standard(sku, destination + '1'))
+        self.assertIsNone(RepackingStandard.get_standard(destination, sku))
 
     def test_order_repacking_standard(self):
         sku1 = "a"

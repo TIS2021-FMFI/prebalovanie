@@ -30,8 +30,8 @@ def index(request):
 
 
 @login_required
-def repacking(request, sku_code, idp_code, operators):
-    standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
+def repacking(request, sku_code, destination, idp_code, operators):
+    standard = RepackingStandard.get_standard(sku_code, destination)
     if standard is None:
         raise Http404("Standard does not exist")
 
@@ -51,18 +51,18 @@ def repacking(request, sku_code, idp_code, operators):
 
 
 @login_required
-def detail(request, sku_code):
+def detail(request, sku_code, destination):
     cancel_sessions(request)
-    standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
+    standard = RepackingStandard.get_standard(sku_code, destination)
     if standard is None:
         raise Http404("Standard does not exist")
     return render(request, 'repacking/detail.html', {'standard': standard})
 
 
 @login_required
-def export(request, sku_code):
+def export(request, sku_code, destination):
     cancel_sessions(request)
-    standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
+    standard = RepackingStandard.get_standard(sku_code, destination)
     if standard is None:
         raise Http404("Standard does not exist")
 
@@ -305,9 +305,10 @@ def start(request):
     if request.method == 'POST':
         form = RepackingForm(request.POST)
         if form.is_valid():
-            if RepackingStandard.get_repacking_standard_by_sku(form.cleaned_data['SKU']) is None:
+            if RepackingStandard.get_standard(form.cleaned_data['SKU'], form.cleaned_data['destination']) is None:
                 sku = form.cleaned_data['SKU']
-                context = {"SKU": sku}
+                destination = form.cleaned_data['destination']
+                context = {"SKU": sku, 'destination': destination}
             operators = set()
             i = 1
             while f'operator_{i}' in request.POST.keys():
@@ -326,7 +327,7 @@ def start(request):
             if context is not None:
                 return render(request, 'repacking/non_existing.html', context)
             return HttpResponseRedirect(
-                f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["IDP"]}/{",".join(operators)}/')
+                f'/repacking/{form.cleaned_data["SKU"]}/{form.cleaned_data["destination"]}/{form.cleaned_data["IDP"]}/{",".join(operators)}/')
 
     else:
         form = RepackingForm(initial={'SKU': request.GET.get('SKU', "")})
@@ -368,8 +369,8 @@ def show_standards(request):
 
 
 @login_required
-def finish(request, sku_code, idp_code, operators):
-    standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
+def finish(request, sku_code, destination, idp_code, operators):
+    standard = RepackingStandard.get_standard(sku_code, destination)
     if standard is None:
         raise Http404("Standard does not exist")
 
@@ -400,8 +401,8 @@ def finish(request, sku_code, idp_code, operators):
 
 @permission_required('accounts.sku_managment')
 @login_required
-def delete(request, sku_code):
-    standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
+def delete(request, sku_code, destination):
+    standard = RepackingStandard.get_standard(sku_code, destination)
     if standard is None:
         deleted = False
     else:
@@ -412,9 +413,9 @@ def delete(request, sku_code):
 
 @permission_required('accounts.sku_managment')
 @login_required
-def update(request, sku_code):
+def update(request, sku_code, destination):
     # inspiracia: https://www.youtube.com/watch?v=EX6Tt-ZW0so
-    standard = RepackingStandard.get_repacking_standard_by_sku(sku_code)
+    standard = RepackingStandard.get_standard(sku_code, destination)
     form = StandardUpdateForm(instance=standard)
     input_photos = list(Photos.objects.all())
     for photo in input_photos:
@@ -471,13 +472,13 @@ def cancel_sessions(request):
 
 
 @login_required
-def cancel(request, sku_code, idp_code, operators):
+def cancel(request, sku_code, destination, idp_code, operators):
     cancel_sessions(request)
     return HttpResponseRedirect('/repacking/')
 
 
 @login_required
-def pause(request, sku_code, idp_code, operators):
+def pause(request, sku_code, destination, idp_code, operators):
     repack_paused = datetime.now()
     if request.session.get(repack_duration_key, None) is not None:
 
@@ -506,7 +507,8 @@ def make_new_standard(request):
     if request.method == 'POST':
         form = RepackingStandardForm(request.POST, request.FILES)
         if form.is_valid() and form.cleaned_data['repacking_duration'] is not None:
-            if RepackingStandard.get_repacking_standard_by_sku(form.cleaned_data['SKU']) is not None:
+            # TODO
+            if RepackingStandard.get_standard(form.cleaned_data['SKU'], form.cleaned_data['destination']) is not None:
                 raise FileExistsError("RepackingForm standard w/ this SKU already exists")
 
             standard = RepackingStandard(

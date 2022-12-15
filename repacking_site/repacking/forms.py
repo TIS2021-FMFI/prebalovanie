@@ -82,6 +82,7 @@ class RepackingStandardForm(forms.Form):
 
 
 class RepackingForm(forms.Form):
-    SKU = forms.CharField(max_length=50, required=True)
-    IDP = forms.CharField(max_length=50, required=True)
-    operator_1 = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'id': 'id_operator-1'}))
+    SKU = forms.CharField(max_length=50, required=True, label="SKU")
+    destination = forms.CharField(max_length=50, required=True, label="Destinácia")
+    IDP = forms.CharField(max_length=50, required=True, label="IDP")
+    operator_1 = forms.CharField(max_length=50, required=True, widget=forms.TextInput(attrs={'id': 'id_operator-1'}), label="Operátor 1")

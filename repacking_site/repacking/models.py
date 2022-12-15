@@ -73,9 +73,9 @@ class RepackingStandard(models.Model):
         return f'Štandard {str(self.id)}'
 
     @staticmethod
-    def get_repacking_standard_by_sku(sku_code):
+    def get_standard(sku_code, destination):
         try:
-            standard = RepackingStandard.objects.get(SKU=sku_code)
+            standard = RepackingStandard.objects.get(SKU=sku_code, destination=destination)
             return standard
         except RepackingStandard.DoesNotExist:
             return None

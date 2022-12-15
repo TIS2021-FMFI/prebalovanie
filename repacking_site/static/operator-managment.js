@@ -12,8 +12,7 @@ const $e = (elName, cl, parEl) => {
 
 function next_operator_number(){
 	let button = document.getElementById('add-operator');
-    let form = document.getElementById('repack-start');
-	let id = button.previousElementSibling.id;
+	let id = button.previousElementSibling.getElementsByTagName("input")[0].id;
 	let pos = id.search('-');
 	return id.substr(pos+1, id.length)*1+1;
 }
@@ -22,14 +21,15 @@ function add_operator(){
     let button = document.getElementById('add-operator');
     let form = document.getElementById('repack-start');
 
+	let div = $e("div", [], null);
+
 	let next_operator_id = next_operator_number();
 
-    let new_label = $e('label', [['for', 'id_operator-'+next_operator_id]], null);
-	new_label.innerHTML = "Operator "+next_operator_id;
+    let new_label = $e('label', [['for', 'id_operator-'+next_operator_id]], div);
+	new_label.innerHTML = "Operátor "+next_operator_id;
     let new_input = $e('input', [['type', 'text'], ['id', 'id_operator-'+next_operator_id],
-											['name', 'operator_'+next_operator_id], ['maxlength', '50'], ['required', '']]);
-    form.insertBefore(new_label, button);
-    form.insertBefore(new_input, button);
+											['name', 'operator_'+next_operator_id], ['maxlength', '50'], ['required', '']], div);
+    form.insertBefore(div, button);
 }
 
 function remove_last_operator(){
@@ -38,8 +38,7 @@ function remove_last_operator(){
 		return;
 	}
 	let form = document.getElementById('repack-start');
-	form.removeChild(document.getElementById('id_operator-'+id).previousElementSibling);
-	form.removeChild(document.getElementById('id_operator-'+id));
+	form.removeChild(document.getElementById('id_operator-'+id).parentElement);
 }
 
 function make_timer(){
