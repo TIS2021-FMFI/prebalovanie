@@ -29,7 +29,7 @@ class LogModelTests(TestCase):
         self.assertRaises(Exception, Log.objects.get, text=f"Logging test6")
 
     def test_order_logs(self):
-        user1 = get_user_model().objects.create_user('cccc', 'johns@email.com', 'johnpassword')
+        user1 = get_user_model().objects.create_user('cccc', 'johns@email.com', 'johnpassword', barcode='cccc')
         user1.save()
         text1 = "abc"
         time1 = datetime.datetime(2014, 10, 10)
@@ -40,7 +40,7 @@ class LogModelTests(TestCase):
         Log.objects.filter(text=text1).update(action_time=time1)
         log1.created = time1
 
-        user2 = get_user_model().objects.create_user('bbbb', 'johns@email.com', 'johnpassword')
+        user2 = get_user_model().objects.create_user('bbbb', 'johns@email.com', 'johnpassword', barcode='bbbb')
         user2.save()
         text2 = 'xyz'
         time2 = datetime.datetime(2012, 12, 12)
@@ -74,7 +74,7 @@ class LogModelTests(TestCase):
         self.assertEquals(len(logs), 2)
 
     def test_order_reverse_logs(self):
-        user1 = get_user_model().objects.create_user('bbbb', 'johns@email.com', 'johnpassword')
+        user1 = get_user_model().objects.create_user('bbbb', 'johns@email.com', 'johnpassword', barcode='bbbb')
         user1.save()
         text1 = "abc"
         time1 = datetime.datetime(2012, 10, 10)
@@ -85,7 +85,7 @@ class LogModelTests(TestCase):
         Log.objects.filter(text=text1).update(action_time=time1)
         log1.created = time1
 
-        user2 = get_user_model().objects.create_user('cccc', 'johns@email.com', 'johnpassword')
+        user2 = get_user_model().objects.create_user('cccc', 'johns@email.com', 'johnpassword', barcode='cccc')
         user2.save()
         text2 = 'xyz'
         time2 = datetime.datetime(2018, 12, 12)
@@ -112,7 +112,7 @@ class LogModelTests(TestCase):
         self.assertEquals(len(logs), 2)
 
     def test_filter_logs(self):
-        user1 = get_user_model().objects.create_user('xyz', 'johns@email.com', 'johnpassword')
+        user1 = get_user_model().objects.create_user('xyz', 'johns@email.com', 'johnpassword', barcode='xyz')
         user1.save()
         text1 = "abcd"
         priority1 = Log.Priority.TRACE
@@ -120,7 +120,7 @@ class LogModelTests(TestCase):
         log1 = Log(text=text1, priority=priority1, app=app1, user=user1)
         log1.save()
 
-        user2 = get_user_model().objects.create_user('yz', 'johns@email.com', 'johnpassword')
+        user2 = get_user_model().objects.create_user('yz', 'johns@email.com', 'johnpassword', barcode='yz')
         user2.save()
         text2 = 'bcde'
         priority2 = Log.Priority.ERROR
