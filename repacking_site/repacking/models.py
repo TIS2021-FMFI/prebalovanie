@@ -37,8 +37,9 @@ class RepackingStandard(models.Model):
         verbose_name_plural = 'Štandardy'
         permissions = ()
         default_permissions = ()
+        unique_together = ('SKU', 'destination')
 
-    SKU = models.CharField(max_length=50, default="", unique=True, verbose_name="SKU")
+    SKU = models.CharField(max_length=50, default="", verbose_name="SKU")
     COFOR = models.CharField(max_length=50, default="", verbose_name="COFOR")
     supplier = models.CharField(max_length=50, default="", verbose_name="Dodávateľ")
     destination = models.CharField(max_length=50, default="", verbose_name="Destinácia")
