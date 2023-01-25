@@ -1,4 +1,7 @@
+import csv
+
 from django.contrib.auth.decorators import login_required, permission_required
+from django.http import HttpResponse
 from django.shortcuts import render
 
 from repacking_site.methods import filtered_records
@@ -36,3 +39,17 @@ def index(request):
                'log_filter': log_filter, 'paginate_by': paginate_by, 'open_filter': open_filter,
                "filter_GET": filter_GET_code}
     return render(request, 'logs/index.html', context)
+
+
+@permission_required('accounts.user_managment')
+@login_required
+def logs_export(request):
+    response = HttpResponse(
+        content_type='text/csv',
+        headers={'Content-Disposition': 'attachment; filename="logs-export.csv"'},
+    )
+
+    response.write(u'\ufeff'.encode('utf8'))
+    writer = csv.writer(response, dialect='excel', delimiter=';')
+    Log.write_logs_to_csv(Log.objects.all(), writer)
+    return response

@@ -8,10 +8,10 @@
     <h1>Detail štandardu {{ standard.SKU }}, destinácia {{ standard.destination }}</h1>
 
     <div class="btn-group">
-        <button type="button" class="active-btn" style="width: fit-content"
-                onclick="location.href='/repacking/repacking/start/?SKU={{ standard.SKU }}&destination={{ standard.destination }}';">
-            <img id="btn-image" src="{% static 'icons/211876_play_icon.png' %}">
-            Začni prebal</button>
+        <button class="active-btn" onclick="history.back()">
+            <img id="btn-image" src="{% static 'icons/2931166_left_arrow_back_undo_navigation.png' %}">
+            Späť
+        </button>
     </div>
 
     <table class="standard-table">

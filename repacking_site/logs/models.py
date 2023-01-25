@@ -56,3 +56,10 @@ class Log(models.Model):
 
     def __str__(self):
         return f"Log {str(self.id)}"
+
+    @staticmethod
+    def write_logs_to_csv(logs, writer):
+        writer.writerow(['Vytvorené', 'Typ', 'Úroveň', 'Používateľ', 'Informácie'])
+
+        for log in logs:
+            writer.writerow([log.action_time, log.app, log.priority, log.user, log.text])

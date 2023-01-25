@@ -1,7 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %} Neexistujúci štandard {% endblock %}
 
 {% block content %}
+
+    <button class="active-btn" style="margin-top: 20px" onclick="history.back()"><img id="btn-image" src="{% static 'icons/2931166_left_arrow_back_undo_navigation.png' %}"> Späť</button>
 
     {% if SKU %}
     <h1>Zadali ste neexistujúce číslo štandardu ({{ SKU }}), a/alebo neexistujúcu destináciu ({{ destination }})</h1>

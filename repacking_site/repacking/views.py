@@ -474,7 +474,7 @@ def cancel_sessions(request):
 @login_required
 def cancel(request, sku_code, destination, idp_code, operators):
     cancel_sessions(request)
-    return HttpResponseRedirect('/repacking/')
+    return HttpResponseRedirect('/repacking/start/')
 
 
 @login_required
@@ -494,7 +494,7 @@ def pause(request, sku_code, destination, idp_code, operators):
     for operator in operators.split(','):
         list_of_operator_names.append(User.objects.get(barcode=operator).username)
 
-    context = {'sku_code': sku_code, 'idp_code': idp_code, 'operators': operators,
+    context = {'sku_code': sku_code, 'idp_code': idp_code, 'operators': operators, 'destination': destination,
                'duration': int(request.session[repack_duration_key]),
                'list_of_operator_names': list_of_operator_names}
     return render(request, 'repacking/pause.html', context)
